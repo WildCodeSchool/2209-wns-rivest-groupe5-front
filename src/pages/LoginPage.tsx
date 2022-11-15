@@ -1,9 +1,12 @@
+import Navbar from "../components/Navbar";
+
 const LoginPage = () => {
     return (
-        <div>
-            LoginPage
-        </div>
-    )
+      <div>
+        <Navbar />
+        LoginPage
+      </div>
+    );
 }
 
 export default LoginPage;
