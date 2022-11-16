@@ -16,18 +16,30 @@ const LoginPage = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const userInfos = {
-        email: email,
-        password: password
-    }
+      email: email,
+      password: password,
+    };
     console.log("user infos >>>>", userInfos);
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="email">email</label>
-      <input id="email" type="text" required onChange={handleEmail} />
+      <input
+        id="email"
+        type="text"
+        required
+        value={email}
+        onChange={handleEmail}
+      />
       <label htmlFor="password">password</label>
-      <input id="password" type="password"  required onChange={handlePassword} />
+      <input
+        id="password"
+        type="password"
+        required
+        value={password}
+        onChange={handlePassword}
+      />
       <button>Login</button>
     </form>
   );
