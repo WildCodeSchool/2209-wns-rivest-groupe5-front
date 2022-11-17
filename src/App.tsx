@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
+import PrivateRoutes from "./components/PrivateRoute";
 import AdminPage from "./pages/AdminPage";
 import Contribution from "./pages/Contribution";
 import Dashboard from "./pages/Dashboard";
@@ -20,16 +21,20 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <Routes>
+            <Route element={<PrivateRoutes />}>
+              <Route path="/my-account" element={<MyAccount />} />
+              <Route path="/profile/:userId" element={<ProfilePage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/good-deals-form" element={<GoodDealsForm />} />
+              <Route path="/admin" element={<AdminPage />} />
+            </Route>
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/my-account" element={<MyAccount />} />
-            <Route path="/profile/:userId" element={<ProfilePage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+
             <Route path="/good-deals-feed" element={<GoodDealsFeed />} />
-            <Route path="/good-deals-form" element={<GoodDealsForm />} />
+
             <Route path="/contribution" element={<Contribution />} />
-            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </BrowserRouter>
       </div>
