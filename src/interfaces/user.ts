@@ -3,4 +3,5 @@ export interface UserInterface {
     lastname: string;
     email: string;
     password: string;
+    passwordConfirm: string
   }

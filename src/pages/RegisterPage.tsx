@@ -2,8 +2,6 @@ import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { UserInterface } from "../interfaces/user";
 
-
-
 const CREATE_USER = gql`
   mutation CreateUser(
     $firstname: String!
@@ -26,29 +24,37 @@ const CREATE_USER = gql`
 `;
 
 const RegisterPage = () => {
+  const [passwordsMatching, setPasswordsMatching] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserInterface>({
     firstname: "",
     lastname: "",
     email: "",
     password: "",
+    passwordConfirm: "",
   });
 
   const [createUser, { loading, error }] = useMutation(CREATE_USER);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setPasswordsMatching(false);
     setUserData({ ...userData, [e.target.name]: e.target.value });
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    createUser({
-      variables: {
-        firstname: userData.firstname,
-        lastname: userData.lastname,
-        email: userData.email,
-        password: userData.password,
-      },
-    });
+    const { password, passwordConfirm } = userData;
+    if (password !== passwordConfirm) {
+      setPasswordsMatching(true);
+    } else {
+      createUser({
+        variables: {
+          firstname: userData.firstname,
+          lastname: userData.lastname,
+          email: userData.email,
+          password: userData.password,
+        },
+      });
+    }
   }
 
   if (loading) return <h1>Loading....</h1>;
@@ -100,6 +106,17 @@ const RegisterPage = () => {
           value={userData.password}
           onChange={handleChange}
         />
+
+        {/* password confirm */}
+        {!passwordsMatching && <h1>Passwords don't match</h1>}
+        <label>Confirm password</label>
+        <input
+          type="password"
+          name="passwordConfim"
+          value={userData.passwordConfirm}
+          onChange={handleChange}
+        />
+
         <button>Register</button>
       </form>
     </div>

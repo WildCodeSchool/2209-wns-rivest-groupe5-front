@@ -1,26 +1,36 @@
+import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
+
+const GET_TOKEN_LOGIN = gql`
+  query GetToken($email: String!, $password: String!) {
+    getToken(email: $email, password: $password)
+  }
+`;
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [getToken, { data, loading, error }] = useLazyQuery(GET_TOKEN_LOGIN);
+
   function handleEmail(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
-    console.log("email typed >>>>", email);
   }
   function handlePassword(e: React.ChangeEvent<HTMLInputElement>) {
     setPassword(e.target.value);
-    console.log("password type >>>>", password);
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const userInfos = {
-      email: email,
-      password: password,
-    };
-    console.log("user infos >>>>", userInfos);
+    const response = await getToken({ variables: { email, password } });
+    console.log(">>>>data received after login >>>>>", response);
+    if (response.data.getToken) {
+      localStorage.setItem("token", JSON.stringify(response.data.getToken));
+    }
   }
+
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1>Error during login...</h1>;
 
   return (
     <form onSubmit={handleSubmit}>
