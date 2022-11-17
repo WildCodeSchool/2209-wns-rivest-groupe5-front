@@ -1,5 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserInterface } from "../interfaces/user";
 
 const CREATE_USER = gql`
@@ -24,27 +25,28 @@ const CREATE_USER = gql`
 `;
 
 const RegisterPage = () => {
-  const [passwordsMatching, setPasswordsMatching] = useState<boolean>(false);
+  const [passwordsMatching, setPasswordsMatching] = useState<boolean>(true);
   const [userData, setUserData] = useState<UserInterface>({
     firstname: "",
     lastname: "",
     email: "",
     password: "",
-    passwordConfirm: "",
+    passwordconfirm: "",
   });
 
+  const navigate = useNavigate();
   const [createUser, { loading, error }] = useMutation(CREATE_USER);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setPasswordsMatching(false);
+    setPasswordsMatching(true);
     setUserData({ ...userData, [e.target.name]: e.target.value });
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { password, passwordConfirm } = userData;
-    if (password !== passwordConfirm) {
-      setPasswordsMatching(true);
+    const { password, passwordconfirm } = userData;
+    if (password !== passwordconfirm) {
+      setPasswordsMatching(false);
     } else {
       createUser({
         variables: {
@@ -52,6 +54,13 @@ const RegisterPage = () => {
           lastname: userData.lastname,
           email: userData.email,
           password: userData.password,
+        },
+        onCompleted(data) {
+          alert("Account created with success");
+          navigate("/login");
+        },
+        onError(error) {
+          alert(`Registration failed: ${error.message}`);
         },
       });
     }
@@ -112,8 +121,8 @@ const RegisterPage = () => {
         <label>Confirm password</label>
         <input
           type="password"
-          name="passwordConfim"
-          value={userData.passwordConfirm}
+          name="passwordconfirm"
+          value={userData.passwordconfirm}
           onChange={handleChange}
         />
 
