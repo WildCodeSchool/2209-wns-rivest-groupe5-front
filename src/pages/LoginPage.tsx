@@ -1,21 +1,28 @@
 import { gql, useLazyQuery } from "@apollo/client";
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GET_TOKEN_LOGIN = gql`
   query GetToken($email: String!, $password: String!) {
-    getToken(email: $email, password: $password)
+    getToken(email: $email, password: $password) {
+      token
+      userFromDB {
+        lastname
+        firstname
+        email
+        userId
+      }
+    }
   }
 `;
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const [getToken, {loading, error}] = useLazyQuery(GET_TOKEN_LOGIN);
+  const [getToken, { loading, error }] = useLazyQuery(GET_TOKEN_LOGIN);
 
   function handleEmail(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
@@ -23,15 +30,14 @@ const LoginPage = () => {
   function handlePassword(e: React.ChangeEvent<HTMLInputElement>) {
     setPassword(e.target.value);
   }
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await getToken({
-      variables: {email, password},
+      variables: { email, password },
       onCompleted(data) {
-        console.log('>>>>>token >>>>>>', data.getToken);
-        localStorage.setItem('token', data.getToken);
-        navigate('/');
+        console.log(">>>>>token >>>>>>", data.getToken);
+        localStorage.setItem("token", data.getToken.token);
+        navigate("/");
       },
       onError(error) {
         console.log(error);
