@@ -1,9 +1,15 @@
-import React from 'react';
-import {ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apollo/client';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+import ReactDOM from "react-dom/client";
 import { setContext } from "@apollo/client/link/context";
-import './index.css';
-import App from './App';
+import "./index.css";
+import App from "./App";
+import { RecoilRoot } from "recoil";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:5050/",
@@ -27,16 +33,15 @@ const client = new ApolloClient({
 });
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
+  document.getElementById("root") as HTMLElement
 );
-
 
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
     </ApolloProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
-
-
