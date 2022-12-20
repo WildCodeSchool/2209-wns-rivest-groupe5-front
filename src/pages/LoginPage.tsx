@@ -7,10 +7,10 @@ const GET_TOKEN_LOGIN = gql`
     getToken(email: $email, password: $password) {
       token
       userFromDB {
-        lastname
-        firstname
-        email
         userId
+        email
+        firstname
+        lastname
       }
     }
   }
@@ -36,7 +36,7 @@ const LoginPage = () => {
       variables: { email, password },
       onCompleted(data) {
         console.log(">>>>>token >>>>>>", data.getToken);
-        localStorage.setItem("token", data.getToken.token);
+        localStorage.setItem("token", data.getToken);
         navigate("/");
       },
       onError(error) {
