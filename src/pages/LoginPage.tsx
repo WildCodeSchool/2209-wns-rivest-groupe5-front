@@ -30,7 +30,15 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 const GET_TOKEN_LOGIN = gql`
   query GetToken($email: String!, $password: String!) {
-    getToken(email: $email, password: $password)
+    getToken(email: $email, password: $password) {
+      token
+      userFromDB {
+        userId
+        email
+        firstname
+        lastname
+      }
+    }
   }
 `;
 
@@ -44,7 +52,7 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const [getToken, {loading, error}] = useLazyQuery(GET_TOKEN_LOGIN);
+  const [getToken, { loading, error }] = useLazyQuery(GET_TOKEN_LOGIN);
 
   function handleEmail(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
@@ -56,11 +64,11 @@ const LoginPage = () => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await getToken({
-      variables: {email, password},
+      variables: { email, password },
       onCompleted(data) {
-        console.log('>>>>>token >>>>>>', data.getToken);
-        localStorage.setItem('token', data.getToken);
-        navigate('/');
+        console.log(">>>>>token >>>>>>", data.getToken);
+        localStorage.setItem("token", data.getToken);
+        navigate("/");
       },
       onError(error) {
         console.log(error);
