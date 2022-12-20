@@ -13,13 +13,30 @@ import LoginPage from "./pages/LoginPage";
 import MyAccount from "./pages/MyAccount";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+
 
 function App() {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#2196F3',
+        dark: '#1565C0',
+        light: '#E3F2FD',
+      },
+      secondary: {
+        main: '#673AB7',
+        dark: '#5E35B1',
+        light: '#EDE7F6',
+      },
+    },
+  });
+
   return (
     <div>
-      <div>
+      <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <Navbar />
+          {/* <Navbar /> */}
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/my-account" element={<MyAccount />} />
@@ -37,7 +54,7 @@ function App() {
             <Route path="/contribution" element={<Contribution />} />
           </Routes>
         </BrowserRouter>
-      </div>
+      </ThemeProvider>
     </div>
   );
 }
