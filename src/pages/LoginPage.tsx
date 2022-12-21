@@ -1,6 +1,6 @@
-import {gql, useLazyQuery} from '@apollo/client';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import CloseIcon from '@mui/icons-material/Close';
+import { gql, useLazyQuery } from "@apollo/client";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
 
 import {
   Card,
@@ -20,13 +20,12 @@ import {
   IconButton,
   Collapse,
   Alert,
-} from '@mui/material';
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import Header from '../components/Header';
-import Wrapper from '../components/Wrapper';
-import LoadingButton from '@mui/lab/LoadingButton';
-
+} from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Wrapper from "../components/Wrapper";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const GET_TOKEN_LOGIN = gql`
   query GetToken($email: String!, $password: String!) {
@@ -43,12 +42,12 @@ const GET_TOKEN_LOGIN = gql`
 `;
 
 const LoginPage = () => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('');
-  const [openError, setOpenError] = useState<boolean>(false)
-  const [showPassword, setShowPassword] = useState<boolean>(false)
-  const handleClickShowPassword = () => setShowPassword(!showPassword)
-  const handleMouseDownPassword = () => setShowPassword(!showPassword)
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [openError, setOpenError] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const navigate = useNavigate();
 
@@ -60,7 +59,6 @@ const LoginPage = () => {
   function handlePassword(e: React.ChangeEvent<HTMLInputElement>) {
     setPassword(e.target.value);
   }
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await getToken({
@@ -81,17 +79,27 @@ const LoginPage = () => {
     <div>
       <Header />
       <Wrapper>
-        <Container component="main" maxWidth="xs" sx={{pt: 5}}>
-          <Card sx={{pt: 5, pb: 5, pr: 4, pl: 4, borderRadius: 4, border: '1px solid', borderColor: '#90CAF9'}}>
+        <Container component="main" maxWidth="xs" sx={{ pt: 5 }}>
+          <Card
+            sx={{
+              pt: 5,
+              pb: 5,
+              pr: 4,
+              pl: 4,
+              borderRadius: 4,
+              border: "1px solid",
+              borderColor: "#90CAF9",
+            }}
+          >
             <CssBaseline />
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
-              <Typography component="h1" variant="h5" sx={{mb:2}}>
+              <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
                 Sign in
               </Typography>
               <Collapse in={openError}>
@@ -117,7 +125,7 @@ const LoginPage = () => {
                 component="form"
                 onSubmit={handleSubmit}
                 noValidate
-                sx={{mt: 1}}
+                sx={{ mt: 1 }}
               >
                 <TextField
                   margin="normal"
@@ -137,7 +145,7 @@ const LoginPage = () => {
                   id="password"
                   label="Password"
                   variant="outlined"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={handlePassword}
                   InputProps={{
@@ -159,7 +167,7 @@ const LoginPage = () => {
                   fullWidth
                   loading={loading}
                   variant="contained"
-                  sx={{mt: 2, mb:2}}
+                  sx={{ mt: 2, mb: 2 }}
                 >
                   Login
                 </LoadingButton>
