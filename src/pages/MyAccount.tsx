@@ -1,32 +1,69 @@
 import { gql, useQuery } from "@apollo/client";
+import { Box, TextField, Typography } from "@mui/material";
 
 const GET_USER = gql`
   query getUserById($userId: Float!) {
     getUserById(userId: $userId) {
-      lastname
-      firstname
       email
+      firstname
+      lastname
     }
   }
 `;
 
 const MyAccount = () => {
-  {
-    /*const { error, loading, data } = useQuery(GET_USER, {
-    variables: { userId: 1 },
+  //TODO Add user context to get userId
+  const userId = 1;
+  const { error, loading, data } = useQuery(GET_USER, {
+    variables: { userId },
   });
-  const user = data.getUserById;
-  if (loading) <h1>Loading...</h1>;
-  if (error) <h1>{error.message}</h1>;*/
-  }
+
+  if (loading) return <p>Is loading</p>;
+  if (error) return <p>{error.message}</p>;
 
   return (
-    <div>
-      <h1>Mes infos personnelles</h1>
-      {/*<p>Prénom : {user.firstname}</p>
-      <p>Nom : {user.lastname}</p>
-      <p>Email : {user.email}</p>*/}
-    </div>
+    <Box
+      sx={{
+        width: 500,
+        maxWidth: "100%",
+      }}
+    >
+      <Typography variant="h1" gutterBottom>
+        Mes infos personnelles
+      </Typography>
+      <div>
+        <TextField
+          fullWidth
+          margin="dense"
+          label="Prènom"
+          defaultValue={data.getUserById.firstname}
+          sx={{ mb: 4 }}
+          InputProps={{
+            readOnly: true,
+          }}
+        />
+        <TextField
+          fullWidth
+          margin="dense"
+          label="Nom"
+          defaultValue={data.getUserById.lastname}
+          sx={{ mb: 4 }}
+          InputProps={{
+            readOnly: true,
+          }}
+        />
+        <TextField
+          fullWidth
+          margin="dense"
+          label="Email"
+          defaultValue={data.getUserById.email}
+          sx={{ mb: 4 }}
+          InputProps={{
+            readOnly: true,
+          }}
+        />
+      </div>
+    </Box>
   );
 };
 

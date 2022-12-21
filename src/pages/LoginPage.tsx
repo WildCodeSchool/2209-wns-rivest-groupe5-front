@@ -36,7 +36,7 @@ const LoginPage = () => {
       variables: { email, password },
       onCompleted(data) {
         console.log(">>>>>token >>>>>>", data.getToken);
-        localStorage.setItem("token", data.getToken);
+        localStorage.setItem("token", data.getToken.token);
         navigate("/");
       },
       onError(error) {
