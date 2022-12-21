@@ -1,6 +1,10 @@
 import { gql, useLazyQuery } from "@apollo/client";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
+import { currentUserState } from "../atom/currentUserAtom";
+import {
+  useRecoilState,
+} from 'recoil';
 
 import {
   Card,
@@ -42,6 +46,7 @@ const GET_TOKEN_LOGIN = gql`
 `;
 
 const LoginPage = () => {
+  const [user, setUser] = useRecoilState(currentUserState)
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [openError, setOpenError] = useState<boolean>(false);
@@ -64,8 +69,9 @@ const LoginPage = () => {
     await getToken({
       variables: { email, password },
       onCompleted(data) {
-        console.log(">>>>>token >>>>>>", data.getToken);
         localStorage.setItem("token", data.getToken.token);
+        localStorage.setItem("user", JSON.stringify(data.getToken.userFromDB));
+        setUser(data.getToken.userFromDB);
         navigate("/dashboard");
       },
       onError(error) {

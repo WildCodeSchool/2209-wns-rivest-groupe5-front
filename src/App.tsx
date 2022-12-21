@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -13,10 +13,19 @@ import LoginPage from "./pages/LoginPage";
 import MyAccount from "./pages/MyAccount";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
+import { currentUserState } from "./atom/currentUserAtom";
+import { useRecoilState } from "recoil";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 
 
 function App() {
+  const [user, setUser] = useRecoilState(currentUserState);
+  useEffect(() => {
+    const currentUserInLocalStorage = JSON.parse(
+      localStorage.getItem("user") || "{}"
+    );
+    setUser(currentUserInLocalStorage);
+  },[]);
   const theme = createTheme({
     palette: {
       primary: {
@@ -31,7 +40,6 @@ function App() {
       },
     },
   });
-
   return (
     <div>
       <ThemeProvider theme={theme}>
