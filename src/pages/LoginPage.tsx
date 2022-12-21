@@ -46,6 +46,7 @@ const GET_TOKEN_LOGIN = gql`
 `;
 
 const LoginPage = () => {
+  const [user, setUser] = useRecoilState(currentUserState)
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [openError, setOpenError] = useState<boolean>(false);
