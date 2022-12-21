@@ -79,8 +79,6 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Header />
-      <Wrapper>
         <Container component="main" maxWidth="xs" sx={{pt: 5}}>
           <Card sx={{pt: 5, pb: 5, pr: 4, pl: 4, borderRadius: 4, border: '1px solid', borderColor: '#90CAF9'}}>
             <CssBaseline />
@@ -174,7 +172,6 @@ const LoginPage = () => {
             </Box>
           </Card>
         </Container>
-      </Wrapper>
     </div>
   );
 };
