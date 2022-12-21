@@ -14,7 +14,11 @@ import MyAccount from "./pages/MyAccount";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+<<<<<<< HEAD
 import Header from "./components/Header";
+=======
+
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
 
 function App() {
   const theme = createTheme({
@@ -36,7 +40,11 @@ function App() {
     <div>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
+<<<<<<< HEAD
           <Header/>
+=======
+          {/* <Navbar /> */}
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/my-account" element={<MyAccount />} />

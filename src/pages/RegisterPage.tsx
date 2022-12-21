@@ -114,6 +114,7 @@ const RegisterPage = () => {
 
   return (
     <div>
+<<<<<<< HEAD
         <Container component="main" maxWidth="md" sx={{pt: 5}}>
           <Card
             sx={{
@@ -121,6 +122,17 @@ const RegisterPage = () => {
               pb: 4,
               pr: 5,
               pl: 5,
+=======
+      <Header />
+      <Wrapper>
+        <Container component="main" maxWidth="md" sx={{pt: 5}}>
+          <Card
+            sx={{
+              pt: 5,
+              pb: 5,
+              pr: 4,
+              pl: 4,
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
               borderRadius: 4,
               border: '1px solid',
               borderColor: '#90CAF9',
@@ -260,6 +272,10 @@ const RegisterPage = () => {
             </Box>
           </Card>
         </Container>
+<<<<<<< HEAD
+=======
+      </Wrapper>
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
     </div>
   );
 };

@@ -17,12 +17,22 @@ import {
   createStyles,
   Theme,
 } from '@mui/material';
+<<<<<<< HEAD
 import Card from '@mui/material/Card';
+=======
+import AdbIcon from '@mui/icons-material/Adb';
+import MenuIcon from '@mui/icons-material/Menu';
+import {Link} from 'react-router-dom';
+import * as React from 'react';
+import Header from '../components/Header';
+import FirstPart from '../components/FirstPart';
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
 
 const HomePage = () => {
 
   return (
     <div>
+<<<<<<< HEAD
       <Container
         component="main"
         maxWidth="xl"
@@ -84,6 +94,10 @@ const HomePage = () => {
           </Card>
         </Stack>
       </Container>
+=======
+      <Header />
+      <FirstPart />
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
     </div>
   );
 };

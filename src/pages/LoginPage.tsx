@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import {gql, useLazyQuery} from '@apollo/client';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
+=======
+import { gql, useLazyQuery } from "@apollo/client";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
 
 import {
   Card,
@@ -20,6 +26,7 @@ import {
   IconButton,
   Collapse,
   Alert,
+<<<<<<< HEAD
 } from '@mui/material';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -27,6 +34,14 @@ import Header from '../components/Header';
 import Wrapper from '../components/Wrapper';
 import LoadingButton from '@mui/lab/LoadingButton';
 
+=======
+} from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Wrapper from "../components/Wrapper";
+import LoadingButton from "@mui/lab/LoadingButton";
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
 
 const GET_TOKEN_LOGIN = gql`
   query GetToken($email: String!, $password: String!) {
@@ -43,12 +58,21 @@ const GET_TOKEN_LOGIN = gql`
 `;
 
 const LoginPage = () => {
+<<<<<<< HEAD
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('');
   const [openError, setOpenError] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
+=======
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [openError, setOpenError] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
 
   const navigate = useNavigate();
 
@@ -60,7 +84,6 @@ const LoginPage = () => {
   function handlePassword(e: React.ChangeEvent<HTMLInputElement>) {
     setPassword(e.target.value);
   }
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await getToken({
@@ -79,6 +102,7 @@ const LoginPage = () => {
 
   return (
     <div>
+<<<<<<< HEAD
         <Container component="main" maxWidth="xs" sx={{pt: 5}}>
           <Card sx={{pt: 5, pb: 5, pr: 4, pl: 4, borderRadius: 4, border: '1px solid', borderColor: '#90CAF9'}}>
             <CssBaseline />
@@ -90,6 +114,31 @@ const LoginPage = () => {
               }}
             >
               <Typography component="h1" variant="h5" sx={{mb:2}}>
+=======
+      <Header />
+      <Wrapper>
+        <Container component="main" maxWidth="xs" sx={{ pt: 5 }}>
+          <Card
+            sx={{
+              pt: 5,
+              pb: 5,
+              pr: 4,
+              pl: 4,
+              borderRadius: 4,
+              border: "1px solid",
+              borderColor: "#90CAF9",
+            }}
+          >
+            <CssBaseline />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
                 Sign in
               </Typography>
               <Collapse in={openError}>
@@ -115,7 +164,11 @@ const LoginPage = () => {
                 component="form"
                 onSubmit={handleSubmit}
                 noValidate
+<<<<<<< HEAD
                 sx={{mt: 1}}
+=======
+                sx={{ mt: 1 }}
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
               >
                 <TextField
                   margin="normal"
@@ -135,7 +188,11 @@ const LoginPage = () => {
                   id="password"
                   label="Password"
                   variant="outlined"
+<<<<<<< HEAD
                   type={showPassword ? 'text' : 'password'}
+=======
+                  type={showPassword ? "text" : "password"}
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
                   value={password}
                   onChange={handlePassword}
                   InputProps={{
@@ -157,7 +214,11 @@ const LoginPage = () => {
                   fullWidth
                   loading={loading}
                   variant="contained"
+<<<<<<< HEAD
                   sx={{mt: 2, mb:2}}
+=======
+                  sx={{ mt: 2, mb: 2 }}
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
                 >
                   Login
                 </LoadingButton>
@@ -172,6 +233,10 @@ const LoginPage = () => {
             </Box>
           </Card>
         </Container>
+<<<<<<< HEAD
+=======
+      </Wrapper>
+>>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
     </div>
   );
 };
