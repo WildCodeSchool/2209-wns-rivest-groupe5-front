@@ -16,7 +16,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { currentUserState } from "./atom/currentUserAtom";
 import { useRecoilState } from "recoil";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-
+import Header from "./components/Header";
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState);
@@ -44,7 +44,7 @@ function App() {
     <div>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          {/* <Navbar /> */}
+          <Header/>
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/my-account" element={<MyAccount />} />

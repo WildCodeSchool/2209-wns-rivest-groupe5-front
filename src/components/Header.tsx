@@ -18,7 +18,7 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="static" sx={{backgroundColor: 'transparent', boxShadow: 'none'}}>
       <Toolbar sx={{justifyContent: 'space-between'}}>
         <Box sx={{flex: 1}} />
         <Link to={'/'} style={linkStyle}>
@@ -33,7 +33,7 @@ export default function Header() {
             component={Link}
             to="/login"
           >
-            Se connecter
+            Sign in
           </Button>
           <Button
             color="secondary"
@@ -44,7 +44,7 @@ export default function Header() {
             component={Link}
             to="/register"
           >
-            S'inscrire
+            Register
           </Button>
         </Box>
       </Toolbar>

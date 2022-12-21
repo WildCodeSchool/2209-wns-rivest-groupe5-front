@@ -24,7 +24,7 @@ import {
   IconButton,
   Collapse,
   Alert,
-} from "@mui/material";
+} from '@mui/material';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
@@ -83,29 +83,17 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Header />
-      <Wrapper>
-        <Container component="main" maxWidth="xs" sx={{ pt: 5 }}>
-          <Card
-            sx={{
-              pt: 5,
-              pb: 5,
-              pr: 4,
-              pl: 4,
-              borderRadius: 4,
-              border: "1px solid",
-              borderColor: "#90CAF9",
-            }}
-          >
+        <Container component="main" maxWidth="xs" sx={{pt: 5}}>
+          <Card sx={{pt: 5, pb: 5, pr: 4, pl: 4, borderRadius: 4, border: '1px solid', borderColor: '#90CAF9'}}>
             <CssBaseline />
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
               }}
             >
-              <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+              <Typography component="h1" variant="h5" sx={{mb:2}}>
                 Sign in
               </Typography>
               <Collapse in={openError}>
@@ -131,7 +119,7 @@ const LoginPage = () => {
                 component="form"
                 onSubmit={handleSubmit}
                 noValidate
-                sx={{ mt: 1 }}
+                sx={{mt: 1}}
               >
                 <TextField
                   margin="normal"
@@ -151,7 +139,7 @@ const LoginPage = () => {
                   id="password"
                   label="Password"
                   variant="outlined"
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={handlePassword}
                   InputProps={{
@@ -173,7 +161,7 @@ const LoginPage = () => {
                   fullWidth
                   loading={loading}
                   variant="contained"
-                  sx={{ mt: 2, mb: 2 }}
+                  sx={{mt: 2, mb:2}}
                 >
                   Login
                 </LoadingButton>
@@ -188,7 +176,6 @@ const LoginPage = () => {
             </Box>
           </Card>
         </Container>
-      </Wrapper>
     </div>
   );
 };
