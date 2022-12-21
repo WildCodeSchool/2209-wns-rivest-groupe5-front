@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+.root {
+  flex-grow: 1;
+  padding: 0 15px;
+}
+
+.paper {
+  padding: 16px;
+  text-align: 'center';
+  color: 'black';
+}
+
+.container {
+  width: unset !important;
+  margin-left: 0 !important;
+  align-items: center;
+}
+
+a:visited{
+  color: black;
+}
