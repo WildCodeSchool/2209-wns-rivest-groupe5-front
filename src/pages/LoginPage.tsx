@@ -1,12 +1,10 @@
-<<<<<<< HEAD
-import {gql, useLazyQuery} from '@apollo/client';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import CloseIcon from '@mui/icons-material/Close';
-=======
 import { gql, useLazyQuery } from "@apollo/client";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
->>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
+import { currentUserState } from "../atom/currentUserAtom";
+import {
+  useRecoilState,
+} from 'recoil';
 
 import {
   Card,
@@ -26,22 +24,12 @@ import {
   IconButton,
   Collapse,
   Alert,
-<<<<<<< HEAD
 } from '@mui/material';
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import Header from '../components/Header';
-import Wrapper from '../components/Wrapper';
-import LoadingButton from '@mui/lab/LoadingButton';
-
-=======
-} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Wrapper from "../components/Wrapper";
 import LoadingButton from "@mui/lab/LoadingButton";
->>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
 
 const GET_TOKEN_LOGIN = gql`
   query GetToken($email: String!, $password: String!) {
@@ -58,21 +46,12 @@ const GET_TOKEN_LOGIN = gql`
 `;
 
 const LoginPage = () => {
-<<<<<<< HEAD
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('');
-  const [openError, setOpenError] = useState<boolean>(false)
-  const [showPassword, setShowPassword] = useState<boolean>(false)
-  const handleClickShowPassword = () => setShowPassword(!showPassword)
-  const handleMouseDownPassword = () => setShowPassword(!showPassword)
-=======
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [openError, setOpenError] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
->>>>>>> 9c4ec9b925d044931f0a1385a70bf744b53735ae
 
   const navigate = useNavigate();
 
@@ -89,8 +68,9 @@ const LoginPage = () => {
     await getToken({
       variables: { email, password },
       onCompleted(data) {
-        console.log(">>>>>token >>>>>>", data.getToken);
         localStorage.setItem("token", data.getToken.token);
+        localStorage.setItem("user", JSON.stringify(data.getToken.userFromDB));
+        setUser(data.getToken.userFromDB);
         navigate("/dashboard");
       },
       onError(error) {
