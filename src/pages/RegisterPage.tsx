@@ -96,7 +96,7 @@ const RegisterPage = () => {
           password: userData.password,
         },
         onCompleted(data) {
-          alert('Account created with success');
+          //alert('Account created with success');
           navigate('/login');
         },
         onError(error) {
