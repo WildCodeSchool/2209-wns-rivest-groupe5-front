@@ -253,6 +253,7 @@ const RegisterPage = () => {
                   loading={loading}
                   variant="contained"
                   sx={{mt: 2, mb: 2}}
+                  id='submit-button'
                 >
                   Create account
                 </LoadingButton>
