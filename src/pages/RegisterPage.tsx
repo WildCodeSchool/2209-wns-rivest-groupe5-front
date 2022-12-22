@@ -2,16 +2,9 @@ import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserInterface } from "../interfaces/user";
-<<<<<<< HEAD
 import LoadingButton from '@mui/lab/LoadingButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
-=======
-import Wrapper from "../components/Wrapper";
-import LoadingButton from "@mui/lab/LoadingButton";
-import CloseIcon from "@mui/icons-material/Close";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
->>>>>>> 39376bc (current User context via recoil wip)
 import {
   Snackbar,
   Card,
