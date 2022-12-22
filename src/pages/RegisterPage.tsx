@@ -2,10 +2,18 @@ import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserInterface } from "../interfaces/user";
+<<<<<<< HEAD
 import LoadingButton from '@mui/lab/LoadingButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
+=======
+import Wrapper from "../components/Wrapper";
+import LoadingButton from "@mui/lab/LoadingButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+>>>>>>> 39376bc (current User context via recoil wip)
 import {
+  Snackbar,
   Card,
   Container,
   CssBaseline,
@@ -16,8 +24,9 @@ import {
   IconButton,
   Collapse,
   Alert,
-  Stack
-} from '@mui/material';
+  Stack,
+} from "@mui/material";
+import BasicModal from "../components/common/Modal";
 
 const CREATE_USER = gql`
   mutation CreateUser(
@@ -43,12 +52,15 @@ const CREATE_USER = gql`
 const RegisterPage = () => {
   const [openError, setOpenError] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string>('')
+  const [showPasswordConfirm, setShowPasswordConfirm] =
+    useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleClickShowPasswordConfirm = () => setShowPasswordConfirm(!showPasswordConfirm);
+  const handleClickShowPasswordConfirm = () =>
+    setShowPasswordConfirm(!showPasswordConfirm);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPasswordConfirm = () => setShowPasswordConfirm(!showPasswordConfirm);
+  const handleMouseDownPasswordConfirm = () =>
+    setShowPasswordConfirm(!showPasswordConfirm);
   const [passwordsMatching, setPasswordsMatching] = useState<boolean>(true);
   const [userData, setUserData] = useState<UserInterface>({
     firstname: "",
@@ -62,7 +74,7 @@ const RegisterPage = () => {
   const [createUser, { loading, error }] = useMutation(CREATE_USER);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setOpenError(false)
+    setOpenError(false);
     setPasswordsMatching(true);
     setUserData({ ...userData, [e.target.name]: e.target.value });
   }
@@ -70,13 +82,19 @@ const RegisterPage = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { password, passwordconfirm } = userData;
-    console.log(userData)
-    if (userData.email === '' || userData.firstname === '' || userData.lastname === '' || userData.password === '' || userData.passwordconfirm === '') {
+    console.log(userData);
+    if (
+      userData.email === "" ||
+      userData.firstname === "" ||
+      userData.lastname === "" ||
+      userData.password === "" ||
+      userData.passwordconfirm === ""
+    ) {
       setPasswordsMatching(false);
-      setErrorMsg('Please fill in all required fields !');
+      setErrorMsg("Please fill in all required fields !");
       setOpenError(true);
     } else if (password !== passwordconfirm) {
-      setErrorMsg('Passwords do not match !');
+      setErrorMsg("Passwords do not match !");
       setOpenError(true);
     } else {
       createUser({
@@ -87,8 +105,7 @@ const RegisterPage = () => {
           password: userData.password,
         },
         onCompleted(data) {
-          //alert('Account created with success');
-          navigate('/login');
+          navigate("/login")
         },
         onError(error) {
           setErrorMsg(error.message);
@@ -99,159 +116,162 @@ const RegisterPage = () => {
   }
 
   if (error) {
-    setErrorMsg('Error when trying to register')
+    setErrorMsg("Error when trying to register");
   }
-
 
   return (
     <div>
-        <Container component="main" maxWidth="md" sx={{pt: 5}}>
-          <Card
+      <Container component="main" maxWidth="md" sx={{ pt: 5 }}>
+        <Card
+          sx={{
+            pt: 4,
+            pb: 4,
+            pr: 5,
+            pl: 5,
+            borderRadius: 4,
+            border: "1px solid",
+            borderColor: "#90CAF9",
+          }}
+        >
+          <CssBaseline />
+          <Box
             sx={{
-              pt: 4,
-              pb: 4,
-              pr: 5,
-              pl: 5,
-              borderRadius: 4,
-              border: '1px solid',
-              borderColor: '#90CAF9',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <CssBaseline />
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <Typography component="h1" variant="h5" sx={{mb: 1}}>
-                Register
-              </Typography>
-              <Collapse in={openError}>
-                <Alert
-                  severity="error"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setOpenError(false);
-                      }}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  {errorMsg}
-                </Alert>
-              </Collapse>
-              <Box
-                component="form"
-                onSubmit={handleSubmit}
-                noValidate
-                sx={{mt: 2}}
+            <Typography component="h1" variant="h5" sx={{ mb: 1 }}>
+              Register
+            </Typography>
+            <Collapse in={openError}>
+              <Alert
+                severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpenError(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
               >
-                <Stack direction="row" spacing={2} sx={{mb: 1}}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="firstname"
-                    label="Firstname"
-                    name="firstname"
-                    autoComplete="firstname"
-                    onChange={handleChange}
-                    value={userData.firstname}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="lastname"
-                    label="Lastname"
-                    name="lastname"
-                    autoComplete="lastname"
-                    onChange={handleChange}
-                    value={userData.lastname}
-                  />
-                </Stack>
+                {errorMsg}
+              </Alert>
+            </Collapse>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 2 }}
+            >
+              <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
+                <TextField
+                  required
+                  fullWidth
+                  id="firstname"
+                  label="Firstname"
+                  name="firstname"
+                  autoComplete="firstname"
+                  onChange={handleChange}
+                  value={userData.firstname}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="lastname"
+                  label="Lastname"
+                  name="lastname"
+                  autoComplete="lastname"
+                  onChange={handleChange}
+                  value={userData.lastname}
+                />
+              </Stack>
 
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={handleChange}
-                  value={userData.email}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  id="password"
-                  label="Password"
-                  variant="outlined"
-                  type={showPassword ? 'text' : 'password'}
-                  value={userData.password}
-                  onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="passwordconfirm"
-                  id="passwordconfirm"
-                  label="Password Confirm"
-                  variant="outlined"
-                  type={showPasswordConfirm ? 'text' : 'password'}
-                  value={userData.passwordconfirm}
-                  onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPasswordConfirm}
-                          onMouseDown={handleMouseDownPasswordConfirm}
-                        >
-                          {showPasswordConfirm ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <LoadingButton
-                  type="submit"
-                  fullWidth
-                  loading={loading}
-                  variant="contained"
-                  sx={{mt: 2, mb: 2}}
-                  id='submit-button'
-                >
-                  Create account
-                </LoadingButton>
-              </Box>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={handleChange}
+                value={userData.email}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                id="password"
+                label="Password"
+                variant="outlined"
+                type={showPassword ? "text" : "password"}
+                value={userData.password}
+                onChange={handleChange}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="passwordconfirm"
+                id="passwordconfirm"
+                label="Password Confirm"
+                variant="outlined"
+                type={showPasswordConfirm ? "text" : "password"}
+                value={userData.passwordconfirm}
+                onChange={handleChange}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPasswordConfirm}
+                        onMouseDown={handleMouseDownPasswordConfirm}
+                      >
+                        {showPasswordConfirm ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <LoadingButton
+                type="submit"
+                fullWidth
+                loading={loading}
+                variant="contained"
+                sx={{ mt: 2, mb: 2 }}
+                id="submit-button"
+              >
+                Create account
+              </LoadingButton>
             </Box>
-          </Card>
-        </Container>
+          </Box>
+        </Card>
+      </Container>
     </div>
   );
 };
