@@ -11,8 +11,18 @@ import "./index.css";
 import App from "./App";
 import { RecoilRoot } from "recoil";
 
+const getServerUri = () => {
+  if (
+    process.env.REACT_APP_DB === "dbdev" ||
+    process.env.REACT_APP_DB === "dbprod"
+  ) {
+    return "http://localhost:5050/";
+  } else {
+    return "http://back:5050/";
+  }
+};
 const httpLink = createHttpLink({
-  uri: "http://localhost:5050/",
+  uri: getServerUri(),
 });
 
 const authLink = setContext((_, { headers }) => {
