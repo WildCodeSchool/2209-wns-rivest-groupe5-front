@@ -1,26 +1,17 @@
 import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
 import { UserInterface } from "../interfaces/user";
-import Wrapper from '../components/Wrapper';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
 import {
   Card,
-  Grid,
-  CardHeader,
-  ThemeProvider,
   Container,
   CssBaseline,
   Box,
   Typography,
   TextField,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  Link,
   InputAdornment,
   IconButton,
   Collapse,
