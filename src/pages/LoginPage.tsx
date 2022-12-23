@@ -9,16 +9,11 @@ import {
 import {
   Card,
   Grid,
-  CardHeader,
-  ThemeProvider,
   Container,
   CssBaseline,
   Box,
   Typography,
   TextField,
-  FormControlLabel,
-  Checkbox,
-  Button,
   Link,
   InputAdornment,
   IconButton,
@@ -27,8 +22,6 @@ import {
 } from '@mui/material';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Wrapper from "../components/Wrapper";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 const GET_TOKEN_LOGIN = gql`
