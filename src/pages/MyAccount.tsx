@@ -1,5 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 import { Box, TextField, Typography } from "@mui/material";
+import {currentUserState} from '../atom/currentUserAtom';
+import {useRecoilValue} from 'recoil';
+import { useState } from "react";
 
 const GET_USER = gql`
   query getUserById($userId: Float!) {
@@ -13,19 +16,16 @@ const GET_USER = gql`
 
 const MyAccount = () => {
   //TODO Add user context to get userId
-  const userId = 1;
-  const { error, loading, data } = useQuery(GET_USER, {
-    variables: { userId },
-  });
+  const currentUser = useRecoilValue(currentUserState);
+  // const [user, setUser] = useState([])
 
-  if (loading) return <p>Is loading</p>;
-  if (error) return <p>{error.message}</p>;
+  // setUser(currentUser?)
 
   return (
     <Box
       sx={{
         width: 500,
-        maxWidth: "100%",
+        maxWidth: '100%',
       }}
     >
       <Typography variant="h1" gutterBottom>
@@ -35,9 +35,9 @@ const MyAccount = () => {
         <TextField
           fullWidth
           margin="dense"
-          label="Prènom"
-          defaultValue={data.getUserById.firstname}
-          sx={{ mb: 4 }}
+          label="Prénom"
+          defaultValue={currentUser?.firstname}
+          sx={{mb: 4}}
           InputProps={{
             readOnly: true,
           }}
@@ -46,8 +46,8 @@ const MyAccount = () => {
           fullWidth
           margin="dense"
           label="Nom"
-          defaultValue={data.getUserById.lastname}
-          sx={{ mb: 4 }}
+          defaultValue={currentUser?.lastname}
+          sx={{mb: 4}}
           InputProps={{
             readOnly: true,
           }}
@@ -56,8 +56,8 @@ const MyAccount = () => {
           fullWidth
           margin="dense"
           label="Email"
-          defaultValue={data.getUserById.email}
-          sx={{ mb: 4 }}
+          defaultValue={currentUser?.email}
+          sx={{mb: 4}}
           InputProps={{
             readOnly: true,
           }}
