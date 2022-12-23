@@ -2,6 +2,9 @@ import { atom } from "recoil";
 
 interface userInterface {
   email: string;
+  userId: string;
+  firstname: string;
+  lastname: string;
 }
 
 export const currentUserState = atom<userInterface | null>({

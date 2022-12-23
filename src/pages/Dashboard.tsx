@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { currentUserState } from "../atom/currentUserAtom";
+import { useRecoilValue } from "recoil";
 import {styled, createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -73,6 +75,7 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 function DashboardContent() {
+  const currentUser = useRecoilValue(currentUserState)
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
