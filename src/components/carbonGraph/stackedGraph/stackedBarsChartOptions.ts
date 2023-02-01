@@ -1,5 +1,3 @@
-import {} from "react-chartjs-2";
-
 export const stackedBarsChartOptions = {
   responsive: true,
   scales: {
