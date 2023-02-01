@@ -239,7 +239,8 @@ const RegisterPage = () => {
                   }}
                 />
                 <LoadingButton
-                  type="submit"
+                type="submit"
+                id="submit-button"
                   fullWidth
                   loading={loading}
                   variant="contained"
