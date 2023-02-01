@@ -1,0 +1,9 @@
+.barchartSelect {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.barchartGraph {
+  height: 400px;
+}

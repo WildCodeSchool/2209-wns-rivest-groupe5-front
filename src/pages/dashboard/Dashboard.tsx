@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -16,12 +16,21 @@ import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { mainListItems } from "../components/ListItems";
-import { currentUserState } from "../atom/currentUserAtom";
+import { mainListItems } from "../../components/ListItems";
+import { currentUserState } from "../../atom/currentUserAtom";
 import { useRecoilValue } from "recoil";
-import CarbonGraphEmissions from "../components/carbonGraph/stackedGraph/CarbonGraphEmissions";
-import AccountMenu from "../components/MenuAccount";
-import CarbonGraphSums from "../components/carbonGraph/pieGraph/CarbonGraphSums";
+import CarbonGraphEmissions from "../../components/carbonGraph/stackedGraph/CarbonGraphEmissions";
+import AccountMenu from "../../components/MenuAccount";
+import CarbonGraphSums from "../../components/carbonGraph/pieGraph/CarbonGraphSums";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import styles from "./Dashboard.module.css";
+import { GET_MY_LAST_WEEK_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/carbonGraphs/getMyLastWeekActivitiesGraphData";
+import { ApolloError, useLazyQuery } from "@apollo/client";
+import { IChartDataState } from "../../interfaces/graphs/IChartDataState";
+import { GET_MY_LAST_MONTH_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/carbonGraphs/getMyLastMonthActivitiesGraphData";
 
 const drawerWidth: number = 240;
 
@@ -76,19 +85,64 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 function DashboardContent() {
-  const currentUser = useRecoilValue(currentUserState);
-  const [open, setOpen] = React.useState(true);
+  type barChartTimeUnitType = "week" | "month" | "year";
+
+  const [getWeekBarChartData] = useLazyQuery(
+    GET_MY_LAST_WEEK_ACTIVITIES_GRAPH_DATA,
+    {
+      fetchPolicy: "no-cache",
+    }
+  );
+
+  const [getMonthBarChartData] = useLazyQuery(
+    GET_MY_LAST_MONTH_ACTIVITIES_GRAPH_DATA,
+    {
+      fetchPolicy: "no-cache",
+    }
+  );
+
+  const [barChartTimeUnit, setBarChartTimeUnit] =
+    useState<barChartTimeUnitType>("week");
+
+  const [barChartData, setBarChartData] = useState<IChartDataState>({
+    data: undefined,
+    loading: true,
+    error: undefined,
+  });
+
+  const [open, setOpen] = useState(true);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const openAnchor = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+
+  const handleTimeUnitBarChartChange = (event: SelectChangeEvent) => {
+    setBarChartTimeUnit(event.target.value as barChartTimeUnitType);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
+  useEffect(() => {
+    (async () => {
+      if (barChartTimeUnit === "month") {
+        const res = await getMonthBarChartData();
+
+        setBarChartData({
+          data: res.data.getMyLastMonthActivities,
+          loading: res.loading,
+          error: res.error,
+        });
+      } else if (barChartTimeUnit === "year") {
+        // TODO ajouter cas year
+      } else {
+        const res = await getWeekBarChartData();
+
+        setBarChartData({
+          data: res.data.getMyLastWeekActivities,
+          loading: res.loading,
+          error: res.error,
+        });
+      }
+    })();
+  }, [barChartTimeUnit, getWeekBarChartData]);
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -164,10 +218,29 @@ function DashboardContent() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 400,
                   }}
                 >
-                  <CarbonGraphEmissions />
+                  <div className={styles.barchartSelect}>
+                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                      <InputLabel id="demo-simple-select-label">
+                        Données à afficher
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={barChartTimeUnit}
+                        label="Données à afficher"
+                        onChange={handleTimeUnitBarChartChange}
+                      >
+                        <MenuItem value={"week"}>Dernière semaine</MenuItem>
+                        <MenuItem value={"month"}>Dernier mois</MenuItem>
+                        {/* TODO ajouter option year quand back en place */}
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className={styles.barchartGraph}>
+                    <CarbonGraphEmissions barChartData={barChartData} />
+                  </div>
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
@@ -176,7 +249,7 @@ function DashboardContent() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 400,
+                    height: "100%",
                   }}
                 >
                   <CarbonGraphSums />
