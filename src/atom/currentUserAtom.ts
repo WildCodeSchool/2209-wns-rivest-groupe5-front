@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-
 interface userInterface {
   email: string;
   userId: string;

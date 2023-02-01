@@ -98,7 +98,8 @@ const RegisterPage = () => {
           password: userData.password,
         },
         onCompleted(data) {
-          navigate("/login")
+          alert('Account created with success');
+          navigate('/login');
         },
         onError(error) {
           setErrorMsg(error.message);
