@@ -3,11 +3,15 @@ import {
   Container,
   Card,
 } from '@mui/material';
+import Header from '../components/Header';
+
 
 const HomePage = () => {
 
   return (
     <div>
+      <Header />
+
       <Container
         component="main"
         maxWidth="xl"
