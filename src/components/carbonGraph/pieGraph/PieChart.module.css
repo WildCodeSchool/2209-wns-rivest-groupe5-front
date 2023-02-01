@@ -1,0 +1,13 @@
+.textWrapper {
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.quantity {
+  font-size: 28px;
+  font-weight: bold;
+}

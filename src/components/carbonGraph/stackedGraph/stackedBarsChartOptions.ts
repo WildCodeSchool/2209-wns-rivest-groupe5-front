@@ -1,3 +1,5 @@
+import {} from "react-chartjs-2";
+
 export const stackedBarsChartOptions = {
   responsive: true,
   scales: {
@@ -9,4 +11,9 @@ export const stackedBarsChartOptions = {
     },
   },
   maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "bottom" as const,
+    },
+  },
 };

@@ -10,7 +10,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import { stackedBarsChartOptions } from "./stackedBarsChartOptions";
 import { useQuery } from "@apollo/client";
-import { GET_MY_LAST_WEEK_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/carbonGraphs/getMyLastWeekActivitiesGraphData";
+import { GET_MY_LAST_WEEK_ACTIVITIES_GRAPH_DATA } from "../../../graphql/queries/carbonGraphs/getMyLastWeekActivitiesGraphData";
 
 ChartJS.register(
   CategoryScale,
