@@ -19,8 +19,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { mainListItems } from "../components/ListItems";
 import { currentUserState } from "../atom/currentUserAtom";
 import { useRecoilValue } from "recoil";
-import CarbonGraphEmissions from "../components/carbonGraph/CarbonGraphEmissions";
-import AccountMenu from '../components/MenuAccount';
+import CarbonGraphEmissions from "../components/carbonGraph/stackedGraph/CarbonGraphEmissions";
+import AccountMenu from "../components/MenuAccount";
+import CarbonGraphSums from "../components/carbonGraph/pieGraph/CarbonGraphSums";
 
 const drawerWidth: number = 240;
 
@@ -91,12 +92,12 @@ function DashboardContent() {
 
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{display: 'flex'}}>
+      <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              pr: "24px", // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -105,8 +106,8 @@ function DashboardContent() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
-                ...(open && {display: 'none'}),
+                marginRight: "36px",
+                ...(open && { display: "none" }),
               }}
             >
               <MenuIcon />
@@ -116,7 +117,7 @@ function DashboardContent() {
               variant="h6"
               color="inherit"
               noWrap
-              sx={{flexGrow: 1}}
+              sx={{ flexGrow: 1 }}
             >
               Dashboard
             </Typography>
@@ -126,9 +127,9 @@ function DashboardContent() {
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
               px: [1],
             }}
           >
@@ -139,30 +140,30 @@ function DashboardContent() {
           <Divider />
           <List component="nav">
             {mainListItems}
-            <Divider sx={{my: 1}} />
+            <Divider sx={{ my: 1 }} />
           </List>
         </Drawer>
         <Box
           component="main"
           sx={{
             backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
+              theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
+            height: "100vh",
+            overflow: "auto",
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
                     p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
+                    display: "flex",
+                    flexDirection: "column",
                     height: 400,
                   }}
                 >
@@ -173,16 +174,16 @@ function DashboardContent() {
                 <Paper
                   sx={{
                     p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
+                    display: "flex",
+                    flexDirection: "column",
                     height: 400,
                   }}
                 >
-                  2
+                  <CarbonGraphSums />
                 </Paper>
               </Grid>
               <Grid item xs={12}>
-                <Paper sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                   3
                 </Paper>
               </Grid>
