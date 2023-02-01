@@ -16,10 +16,10 @@ import RegisterPage from "./pages/RegisterPage";
 import { currentUserState } from "./atom/currentUserAtom";
 import { useRecoilState } from "recoil";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import Header from "./components/Header";
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState);
+  console.log(user)
   useEffect(() => {
     const currentUserInLocalStorage = JSON.parse(
       localStorage.getItem("user") || "{}"
@@ -44,7 +44,6 @@ function App() {
     <div>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <Header/>
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/my-account" element={<MyAccount />} />
