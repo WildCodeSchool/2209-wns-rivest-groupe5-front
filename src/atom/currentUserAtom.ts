@@ -1,6 +1,4 @@
 import { atom } from "recoil";
-import {UserInterface} from "../interfaces/user"
-
 interface userInterface {
   email: string;
   userId: string;
@@ -8,7 +6,7 @@ interface userInterface {
   lastname: string;
 }
 
-export const currentUserState = atom<UserInterface | null>({
+export const currentUserState = atom<userInterface | null>({
   key: "currentUserState", // unique ID (with respect to other atoms/selectors)
   default: null, // default value (aka initial value)
 });
