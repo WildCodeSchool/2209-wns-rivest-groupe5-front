@@ -142,7 +142,7 @@ function DashboardContent() {
         });
       }
     })();
-  }, [barChartTimeUnit, getWeekBarChartData]);
+  }, [barChartTimeUnit, getMonthBarChartData, getWeekBarChartData]);
 
   return (
     <ThemeProvider theme={mdTheme}>
