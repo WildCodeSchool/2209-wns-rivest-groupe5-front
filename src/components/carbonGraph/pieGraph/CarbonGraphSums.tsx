@@ -42,9 +42,10 @@ const CarbonGraphSums = () => {
       />
       <div className={styles.textWrapper}>
         <div className={styles.quantity}>
-          {data.getMyTotalCarbonPerActivityType.datasets[0].data.reduce(
-            (acc: number, curr: number) => acc + curr,
-            0
+          {parseFloat(
+            data.getMyTotalCarbonPerActivityType.datasets[0].data
+              .reduce((acc: number, curr: number) => acc + curr, 0)
+              .toFixed(2)
           )}{" "}
           kg
         </div>
