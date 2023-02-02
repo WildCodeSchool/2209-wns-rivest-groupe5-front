@@ -31,6 +31,7 @@ import { GET_MY_LAST_WEEK_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/ca
 import { ApolloError, useLazyQuery } from "@apollo/client";
 import { IChartDataState } from "../../interfaces/graphs/IChartDataState";
 import { GET_MY_LAST_MONTH_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/carbonGraphs/getMyLastMonthActivitiesGraphData";
+import { GET_MY_LAST_YEAR_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/carbonGraphs/getMyLastYearActivitiesGraphData";
 
 const drawerWidth: number = 240;
 
@@ -101,6 +102,13 @@ function DashboardContent() {
     }
   );
 
+  const [getYearBarChartData] = useLazyQuery(
+    GET_MY_LAST_YEAR_ACTIVITIES_GRAPH_DATA,
+    {
+      fetchPolicy: "no-cache",
+    }
+  );
+
   const [barChartTimeUnit, setBarChartTimeUnit] =
     useState<barChartTimeUnitType>("week");
 
@@ -131,7 +139,13 @@ function DashboardContent() {
           error: res.error,
         });
       } else if (barChartTimeUnit === "year") {
-        // TODO ajouter cas year
+        const res = await getYearBarChartData();
+
+        setBarChartData({
+          data: res.data.getMyLastYearActivities,
+          loading: res.loading,
+          error: res.error,
+        });
       } else {
         const res = await getWeekBarChartData();
 
@@ -142,7 +156,12 @@ function DashboardContent() {
         });
       }
     })();
-  }, [barChartTimeUnit, getMonthBarChartData, getWeekBarChartData]);
+  }, [
+    barChartTimeUnit,
+    getMonthBarChartData,
+    getWeekBarChartData,
+    getYearBarChartData,
+  ]);
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -234,7 +253,7 @@ function DashboardContent() {
                       >
                         <MenuItem value={"week"}>Dernière semaine</MenuItem>
                         <MenuItem value={"month"}>Dernier mois</MenuItem>
-                        {/* TODO ajouter option year quand back en place */}
+                        <MenuItem value={"year"}>Dernière année</MenuItem>
                       </Select>
                     </FormControl>
                   </div>
