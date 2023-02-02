@@ -240,6 +240,7 @@ function DashboardContent() {
                   }}
                 >
                   <div className={styles.barchartSelect}>
+                    <h2 className={styles.barChartTitle}>Vos émissions (kg)</h2>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                       <InputLabel id="demo-simple-select-label">
                         Données à afficher

@@ -35,22 +35,21 @@ const CarbonGraphSums = () => {
 
   return (
     <div>
+      <h2 className={styles.title}>Total émissions</h2>
       <Doughnut
         options={pieChartOptions}
         data={data.getMyTotalCarbonPerActivityType}
       />
       <div className={styles.textWrapper}>
-        <h2 className={styles.title}>Total (depuis toujours)</h2>
-        <div>
-          <div className={styles.quantity}>
-            {data.getMyTotalCarbonPerActivityType.datasets[0].data.reduce(
-              (acc: number, curr: number) => acc + curr,
-              0
-            )}{" "}
-            kg
-          </div>
-          <div>de CO2</div>
+        <div className={styles.quantity}>
+          {parseFloat(
+            data.getMyTotalCarbonPerActivityType.datasets[0].data
+              .reduce((acc: number, curr: number) => acc + curr, 0)
+              .toFixed(2)
+          )}{" "}
+          kg
         </div>
+        <div>de CO2</div>
       </div>
     </div>
   );

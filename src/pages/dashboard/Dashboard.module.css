@@ -1,9 +1,14 @@
 .barchartSelect {
   margin-bottom: 15px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .barchartGraph {
   height: 400px;
+}
+
+.barChartTitle {
+  margin: 0;
 }
