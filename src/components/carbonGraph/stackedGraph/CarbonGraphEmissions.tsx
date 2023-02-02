@@ -8,9 +8,8 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { IChartDataState } from "../../../interfaces/graphs/IChartDataState";
 import { stackedBarsChartOptions } from "./stackedBarsChartOptions";
-import { useQuery } from "@apollo/client";
-import { GET_MY_LAST_WEEK_ACTIVITIES_GRAPH_DATA } from "../../../graphql/queries/carbonGraphs/getMyLastWeekActivitiesGraphData";
 
 ChartJS.register(
   CategoryScale,
@@ -21,19 +20,24 @@ ChartJS.register(
   Legend
 );
 
-const CarbonGraphEmissions = () => {
-  const { data, loading, error } = useQuery(
-    GET_MY_LAST_WEEK_ACTIVITIES_GRAPH_DATA
-  );
+const CarbonGraphEmissions = ({
+  barChartData,
+}: {
+  barChartData: IChartDataState;
+}) => {
+  if (barChartData.loading) return <div>Chargement...</div>;
 
-  if (loading) return <div>Chargement...</div>;
+  if (barChartData.error)
+    return <div>Une erreur est survenue :{barChartData.error.message}</div>;
 
-  if (error) return <div>Une erreur est survenue :{error.message}</div>;
+  if (!barChartData.data)
+    return <div>Aucune donnée n'a pu être récupérée.</div>;
 
   return (
     <Bar
       options={stackedBarsChartOptions}
-      data={data.getMyLastWeekActivities}
+      data={barChartData.data}
+      redraw={true}
     />
   );
 };
