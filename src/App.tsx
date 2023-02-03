@@ -19,7 +19,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState);
-  console.log(user);
+  console.log(">>>>Current user >>>", user);
   useEffect(() => {
     const currentUserInLocalStorage = JSON.parse(
       localStorage.getItem("user") || "{}"
@@ -47,9 +47,9 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path="/my-account" element={<MyAccount />} />
+              <Route path="/good-deals-form" element={<GoodDealsForm />} />
               <Route path="/profile/:userId" element={<ProfilePage />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/good-deals-form" element={<GoodDealsForm />} />
               <Route path="/admin" element={<AdminPage />} />
             </Route>
             <Route path="/" element={<HomePage />} />
