@@ -252,9 +252,11 @@ function DashboardContent() {
                         label="Données à afficher"
                         onChange={handleTimeUnitBarChartChange}
                       >
-                        <MenuItem value={"week"}>Dernière semaine</MenuItem>
-                        <MenuItem value={"month"}>Dernier mois</MenuItem>
-                        <MenuItem value={"year"}>Dernière année</MenuItem>
+                        <MenuItem value={"week"}>7 derniers jours</MenuItem>
+                        <MenuItem value={"month"}>
+                          4 dernières semaines
+                        </MenuItem>
+                        <MenuItem value={"year"}>12 derniers mois</MenuItem>
                       </Select>
                     </FormControl>
                   </div>
