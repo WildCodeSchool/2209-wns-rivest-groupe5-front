@@ -1,8 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { Box, TextField, Typography } from "@mui/material";
-import {currentUserState} from '../atom/currentUserAtom';
-import {useRecoilValue} from 'recoil';
-import { useState } from "react";
+import { currentUserState } from "../atom/currentUserAtom";
+import { useRecoilValue } from "recoil";
 
 const GET_USER = gql`
   query getUserById($userId: Float!) {
@@ -25,7 +24,7 @@ const MyAccount = () => {
     <Box
       sx={{
         width: 500,
-        maxWidth: '100%',
+        maxWidth: "100%",
       }}
     >
       <Typography variant="h1" gutterBottom>
@@ -37,7 +36,7 @@ const MyAccount = () => {
           margin="dense"
           label="Prénom"
           defaultValue={currentUser?.firstname}
-          sx={{mb: 4}}
+          sx={{ mb: 4 }}
           InputProps={{
             readOnly: true,
           }}
@@ -47,7 +46,7 @@ const MyAccount = () => {
           margin="dense"
           label="Nom"
           defaultValue={currentUser?.lastname}
-          sx={{mb: 4}}
+          sx={{ mb: 4 }}
           InputProps={{
             readOnly: true,
           }}
@@ -57,7 +56,7 @@ const MyAccount = () => {
           margin="dense"
           label="Email"
           defaultValue={currentUser?.email}
-          sx={{mb: 4}}
+          sx={{ mb: 4 }}
           InputProps={{
             readOnly: true,
           }}

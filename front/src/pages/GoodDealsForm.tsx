@@ -2,7 +2,6 @@ import { gql, useMutation } from "@apollo/client";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -188,7 +187,11 @@ const GoodDealsForm = () => {
           }}
         />
         {fileCloudinaryUrl !== "" && (
-          <img style={{width:"100px", height:"100px"}} alt="uploaded file" src={fileCloudinaryUrl} />
+          <img
+            style={{ width: "100px", height: "100px" }}
+            alt="uploaded file"
+            src={fileCloudinaryUrl}
+          />
         )}
 
         <LoadingButton

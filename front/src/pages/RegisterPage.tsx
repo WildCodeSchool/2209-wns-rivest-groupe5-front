@@ -2,11 +2,10 @@ import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserInterface } from "../interfaces/user";
-import LoadingButton from '@mui/lab/LoadingButton';
-import CloseIcon from '@mui/icons-material/Close';
-import {Visibility, VisibilityOff} from '@mui/icons-material';
+import LoadingButton from "@mui/lab/LoadingButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
-  Snackbar,
   Card,
   Container,
   CssBaseline,
@@ -19,7 +18,6 @@ import {
   Alert,
   Stack,
 } from "@mui/material";
-import BasicModal from "../components/common/Modal";
 
 const CREATE_USER = gql`
   mutation CreateUser(
@@ -98,8 +96,8 @@ const RegisterPage = () => {
           password: userData.password,
         },
         onCompleted(data) {
-          alert('Account created with success');
-          navigate('/login');
+          alert("Account created with success");
+          navigate("/login");
         },
         onError(error) {
           setErrorMsg(error.message);

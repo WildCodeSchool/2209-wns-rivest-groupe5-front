@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar";
 import PrivateRoutes from "./components/PrivateRoute";
 import AdminPage from "./pages/AdminPage";
 import Contribution from "./pages/Contribution";
