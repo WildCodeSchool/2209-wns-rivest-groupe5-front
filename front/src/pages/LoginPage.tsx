@@ -162,8 +162,8 @@ const LoginPage = () => {
                 </LoadingButton>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
-                      Forgot password?
+                    <Link href="/resetPassword/stepOne" variant="body2">
+                      Mot de passe oublié?
                     </Link>
                   </Grid>
                 </Grid>
