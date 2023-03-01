@@ -13,10 +13,10 @@ jobs:
         - name: Check out code
           uses: actions/checkout@v2
         - name: create env file
-              run: |
-                  cd front/
-                  touch .env
-                  echo "" >> .env
+          run: |
+              cd front/
+              touch .env
+              echo "" >> .env
         - name: Goto client and run tests
           run: cd front && npm i && npm test
   docker:
