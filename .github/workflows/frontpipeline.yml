@@ -15,7 +15,7 @@ jobs:
         - name: Goto client and run tests
           run: cd front && npm i && npm test
   docker:
-    needs: test-front
+    needs: test-client
     if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
