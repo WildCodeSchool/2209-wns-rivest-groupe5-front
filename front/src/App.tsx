@@ -16,6 +16,8 @@ import RegisterPage from "./pages/RegisterPage";
 import { currentUserState } from "./atom/currentUserAtom";
 import { useRecoilState } from "recoil";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ResetPasswordStepOnePage from "./pages/ResetPasswordStepOnePage";
+import ResetPasswordStepTwoPage from "./pages/ResetPasswordStepTwoPage";
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState);
@@ -55,6 +57,14 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/resetPassword/stepOne"
+              element={<ResetPasswordStepOnePage />}
+            />
+            <Route
+              path="/reset-password/*"
+              element={<ResetPasswordStepTwoPage />}
+            />
 
             <Route path="/good-deals-feed" element={<GoodDealsFeed />} />
 
