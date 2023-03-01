@@ -123,6 +123,7 @@ const LoginPage = () => {
                   name="email"
                   autoComplete="email"
                   onChange={handleEmail}
+                  value={email}
                 />
                 <TextField
                   margin="normal"
@@ -130,6 +131,7 @@ const LoginPage = () => {
                   fullWidth
                   name="password"
                   id="password"
+                  data-testid="password"
                   label="Password"
                   variant="outlined"
                   type={showPassword ? 'text' : 'password'}
