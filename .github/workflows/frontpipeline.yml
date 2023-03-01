@@ -16,7 +16,7 @@ jobs:
           run: |
               cd front/
               touch .env
-              echo "" >> .env
+              echo "test" >> .env
         - name: Goto client and run tests
           run: cd front && npm i && npm test
   docker:
