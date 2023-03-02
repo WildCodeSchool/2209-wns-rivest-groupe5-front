@@ -4,7 +4,6 @@ import "./App.css";
 import PrivateRoutes from "./components/PrivateRoute";
 import AdminPage from "./pages/AdminPage";
 import Contribution from "./pages/Contribution";
-import Dashboard from "./pages/dashboard/Dashboard";
 import GoodDealsFeed from "./pages/GoodDealsFeed";
 import GoodDealsForm from "./pages/GoodDealsForm";
 import HomePage from "./pages/HomePage";
@@ -18,6 +17,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ActivityList from "./pages/ActivityList";
 import ResetPasswordStepOnePage from "./pages/ResetPasswordStepOnePage";
 import ResetPasswordStepTwoPage from "./pages/ResetPasswordStepTwoPage";
+import LayoutRoot from "./layout/LayoutRoot";
+import CarbonGraphs from "./pages/CarbonGraphs/CarbonGraphs";
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState);
@@ -28,6 +29,7 @@ function App() {
     );
     setUser(currentUserInLocalStorage);
   }, []);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -47,17 +49,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routes>
-            <Route element={<PrivateRoutes />}>
-              <Route path="/my-account" element={<MyAccount />} />
-              <Route path="/good-deals-form" element={<GoodDealsForm />} />
-              <Route path="/profile/:userId" element={<ProfilePage />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/admin" element={<AdminPage />} />
-              <Route path="/my-activities" element={<ActivityList />} />
-            </Route>
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/contribution" element={<Contribution />} />
             <Route
               path="/resetPassword/stepOne"
               element={<ResetPasswordStepOnePage />}
@@ -67,9 +62,26 @@ function App() {
               element={<ResetPasswordStepTwoPage />}
             />
 
-            <Route path="/good-deals-feed" element={<GoodDealsFeed />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/my-account" element={<MyAccount />} />
+              <Route path="/admin" element={<AdminPage />} />
+            </Route>
 
-            <Route path="/contribution" element={<Contribution />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/profile/:userId" element={<ProfilePage />} />
+              <Route path="/admin" element={<AdminPage />} />
+            </Route>
+
+            <Route element={<LayoutRoot />}>
+              <Route element={<PrivateRoutes />}>
+                <Route path="/dashboard" element={<CarbonGraphs />} />
+                <Route path="/good-deals-feed" element={<GoodDealsFeed />} />
+                <Route path="/my-activities" element={<ActivityList />} />
+                <Route path="/good-deals-form" element={<GoodDealsForm />} />
+                <Route path="/my-account" element={<MyAccount />} />
+                <Route path="/profile/:userId" element={<ProfilePage />} />
+              </Route>
+            </Route>
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
