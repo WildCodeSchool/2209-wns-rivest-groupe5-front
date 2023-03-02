@@ -35,6 +35,9 @@ const ResetPasswordStepTwoPage = () => {
         alert("Mot de passe mis à jour avec succès");
         navigate("/login");
       },
+      onError(error) {
+        alert(`Password change failed: ${error.message}`);
+      },
     });
   }
 
