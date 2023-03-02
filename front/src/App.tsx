@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar";
 import PrivateRoutes from "./components/PrivateRoute";
 import AdminPage from "./pages/AdminPage";
 import Contribution from "./pages/Contribution";
@@ -16,6 +15,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { currentUserState } from "./atom/currentUserAtom";
 import { useRecoilState } from "recoil";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ActivityList from "./pages/ActivityList";
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState);
@@ -51,6 +51,7 @@ function App() {
               <Route path="/profile/:userId" element={<ProfilePage />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<AdminPage />} />
+              <Route path="/my-activities" element={<ActivityList />} />
             </Route>
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterPage />} />
