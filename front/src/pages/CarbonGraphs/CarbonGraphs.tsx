@@ -14,6 +14,7 @@ import { GET_MY_LAST_MONTH_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/c
 import { GET_MY_LAST_YEAR_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/carbonGraphs/getMyLastYearActivitiesGraphData";
 import CarbonGraphEmissions from "../../components/carbonGraph/stackedGraph/CarbonGraphEmissions";
 import CarbonGraphSums from "../../components/carbonGraph/pieGraph/CarbonGraphSums";
+import ActivityList from "../ActivityList";
 
 const CarbonGraphs = () => {
   type barChartTimeUnitType = "week" | "month" | "year";
@@ -136,7 +137,7 @@ const CarbonGraphs = () => {
         </Grid>
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-            3
+            <ActivityList />
           </Paper>
         </Grid>
       </Grid>
