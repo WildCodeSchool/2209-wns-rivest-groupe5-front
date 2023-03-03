@@ -1,8 +1,5 @@
-
-
-
 # dependencies
-/front/node_modules
+/frontweb/node_modules
 /.pnp
 .pnp.js
 
