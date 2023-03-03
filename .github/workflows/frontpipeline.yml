@@ -37,5 +37,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: "{{defaultContext}}:front"
+          context: "{{defaultContext}}:frontweb"
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonfront:latest
