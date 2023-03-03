@@ -9,16 +9,12 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { mainListItems } from "../../components/ListItems";
-import { currentUserState } from "../../atom/currentUserAtom";
-import { useRecoilValue } from "recoil";
 import CarbonGraphEmissions from "../../components/carbonGraph/stackedGraph/CarbonGraphEmissions";
 import AccountMenu from "../../components/MenuAccount";
 import CarbonGraphSums from "../../components/carbonGraph/pieGraph/CarbonGraphSums";
@@ -28,10 +24,11 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import styles from "./Dashboard.module.css";
 import { GET_MY_LAST_WEEK_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/carbonGraphs/getMyLastWeekActivitiesGraphData";
-import { ApolloError, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { IChartDataState } from "../../interfaces/graphs/IChartDataState";
 import { GET_MY_LAST_MONTH_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/carbonGraphs/getMyLastMonthActivitiesGraphData";
 import { GET_MY_LAST_YEAR_ACTIVITIES_GRAPH_DATA } from "../../graphql/queries/carbonGraphs/getMyLastYearActivitiesGraphData";
+import ActivityList from "../ActivityList";
 
 const drawerWidth: number = 240;
 
@@ -279,7 +276,7 @@ function DashboardContent() {
               </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  3
+                  <ActivityList />
                 </Paper>
               </Grid>
             </Grid>
