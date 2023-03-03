@@ -61,3 +61,26 @@ a:visited{
 body{
   background-color: #E3F2FD !important;
 }
+
+.wc-flex{
+  display: flex;
+}
+
+.wc-image-gooddeals{
+  width: 150px;
+  height: 150px;
+}
+
+.ml-15{
+  margin-left: 15px;
+}
+
+.w-75{
+  width: 75%;
+}
+
+.btn-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
