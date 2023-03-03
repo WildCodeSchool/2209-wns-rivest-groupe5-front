@@ -39,7 +39,6 @@ const ResetPasswordStepOnePage = () => {
 
   return (
     <Box
-      component="form"
       sx={{
         background: "#FFFFFF",
         width: "30%",

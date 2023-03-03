@@ -15,12 +15,9 @@ import RegisterPage from "./pages/RegisterPage";
 import { currentUserState } from "./atom/currentUserAtom";
 import { useRecoilState } from "recoil";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-<<<<<<< HEAD
 import ActivityList from "./pages/ActivityList";
-=======
 import ResetPasswordStepOnePage from "./pages/ResetPasswordStepOnePage";
 import ResetPasswordStepTwoPage from "./pages/ResetPasswordStepTwoPage";
->>>>>>> eea6cf8 (reset password working but need makeup)
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState);
