@@ -1,21 +1,15 @@
-import {
-  fireEvent,
-  render,
-  screen,
-} from "@testing-library/react";
-import { gql } from "@apollo/client";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { RecoilRoot } from "recoil";
 import LoginPage from "../pages/LoginPage";
 import { BrowserRouter } from "react-router-dom";
-
 
 describe("login page", () => {
   it("should render user email and password after typing these inputs", async () => {
     const userEmail = "bibi@email.com";
     const userPassword = "azerty";
     const { container } = render(
-      <MockedProvider  addTypename={false}>
+      <MockedProvider addTypename={false}>
         <RecoilRoot>
           <BrowserRouter>
             <LoginPage />
