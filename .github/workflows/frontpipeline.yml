@@ -2,23 +2,23 @@ name: front-tests-workflow
 
 on:
   push:
-    branches: ['main', 'dev'] 
+    branches: ["main", "dev"]
   pull_request:
-    branches: ['main', 'dev'] 
+    branches: ["main", "dev"]
 
 jobs:
   test-client:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check out code
-          uses: actions/checkout@v2
-        - name: create env file
-          run: |
-              cd front/
-              touch .env
-              echo "test" >> .env
-        - name: Goto client and run tests
-          run: cd front && npm i && npm test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: create env file
+        run: |
+          cd frontweb/
+          touch .env
+          echo "test" >> .env
+      - name: Goto client and run tests
+        run: cd frontweb && npm i && npm test
   docker:
     needs: test-client
     if: github.ref == 'refs/heads/dev'
