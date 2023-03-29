@@ -29,7 +29,7 @@ export default function Header() {
             Sign in
           </Button>
           <Button
-            color="secondary"
+            color="primary"
             disabled={false}
             size="medium"
             variant="contained"
