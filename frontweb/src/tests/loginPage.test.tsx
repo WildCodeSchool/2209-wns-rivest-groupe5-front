@@ -18,7 +18,7 @@ describe("login page", () => {
       </MockedProvider>
     );
 
-    const emailInputElement = screen.getByRole("textbox", { name: /email/i });
+    const emailInputElement = screen.getByRole("textbox", { name: /E-mail/i });
 
     // eslint-disable-next-line
     const passwordInputElement = container.querySelector(
