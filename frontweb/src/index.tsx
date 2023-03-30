@@ -23,7 +23,7 @@ const getServerUri = () => {
   }
 };
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: getServerUri()
 });
 
 const authLink = setContext((_, { headers }) => {
