@@ -2,9 +2,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import { currentUserState } from "../atom/currentUserAtom";
-import {
-  useRecoilState,
-} from 'recoil';
+import { useRecoilState } from "recoil";
 
 import {
   Card,
@@ -19,7 +17,7 @@ import {
   IconButton,
   Collapse,
   Alert,
-} from '@mui/material';
+} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -39,7 +37,7 @@ const GET_TOKEN_LOGIN = gql`
 `;
 
 const LoginPage = () => {
-  const [user, setUser] = useRecoilState(currentUserState)
+  const [user, setUser] = useRecoilState(currentUserState);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [openError, setOpenError] = useState<boolean>(false);
@@ -76,101 +74,117 @@ const LoginPage = () => {
 
   return (
     <div>
-        <Container component="main" maxWidth="xs" sx={{pt: 5}}>
-          <Card sx={{pt: 5, pb: 5, pr: 4, pl: 4, borderRadius: 4, border: '1px solid', borderColor: '#90CAF9'}}>
-            <CssBaseline />
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <Typography component="h1" variant="h5" sx={{mb:2}}>
-                Sign in
-              </Typography>
-              <Collapse in={openError}>
-                <Alert
-                  severity="error"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setOpenError(false);
-                      }}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  Error during login
-                </Alert>
-              </Collapse>
-              <Box
-                component="form"
-                onSubmit={handleSubmit}
-                noValidate
-                sx={{mt: 1}}
+      <Container component="main" maxWidth="xs" sx={{ pt: 5 }}>
+        <Card
+          sx={{
+            pt: 5,
+            pb: 5,
+            pr: 4,
+            pl: 4,
+            borderRadius: 4,
+            border: "1px solid",
+            borderColor: "#90CAF9",
+          }}
+        >
+          <CssBaseline />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+              Sign in
+            </Typography>
+            <Collapse in={openError}>
+              <Alert
+                severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpenError(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
               >
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={handleEmail}
-                  value={email}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  id="password"
-                  data-testid="password"
-                  label="Password"
-                  variant="outlined"
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={handlePassword}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <LoadingButton
-                  type="submit"
-                  fullWidth
-                  loading={loading}
-                  variant="contained"
-                  sx={{mt: 2, mb:2}}
-                >
-                  Login
-                </LoadingButton>
-                <Grid container>
-                  <Grid item xs>
-                    <Link href="/resetPassword/stepOne" variant="body2">
-                      Mot de passe oublié?
-                    </Link>
-                  </Grid>
+                Error during login
+              </Alert>
+            </Collapse>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={handleEmail}
+                value={email}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                id="password"
+                data-testid="password"
+                label="Password"
+                variant="outlined"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={handlePassword}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <LoadingButton
+                type="submit"
+                fullWidth
+                loading={loading}
+                variant="contained"
+                sx={{ mt: 2, mb: 2 }}
+              >
+                Login
+              </LoadingButton>
+              <Grid container >
+                <Grid item xs>
+                  <Link href="/register" variant="body2">
+                    Créer un compte?
+                  </Link>
                 </Grid>
-              </Box>
+
+                <Grid item xs>
+                  <Link href="/resetPassword/stepOne" variant="body2">
+                    Mot de passe oublié?
+                  </Link>
+                </Grid>
+              </Grid>
             </Box>
-          </Card>
-        </Container>
+          </Box>
+        </Card>
+      </Container>
     </div>
   );
 };
