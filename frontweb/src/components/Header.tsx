@@ -1,43 +1,47 @@
-import * as React from 'react';
-import Toolbar from '@mui/material/Toolbar';
-import {Link} from 'react-router-dom';
-import {AppBar, Box, Typography, Button} from '@mui/material';
+import * as React from "react";
+import Toolbar from "@mui/material/Toolbar";
+import { Link } from "react-router-dom";
+import { AppBar, Box, Typography, Button } from "@mui/material";
+import LoginIcon from '@mui/icons-material/Login';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 export default function Header() {
-
-  const linkStyle = {
-    textDecoration: 'none',
-    color: 'rgba(0,0,0,0.87)',
-  }
-
   return (
-    <AppBar position="static" sx={{backgroundColor: 'transparent', boxShadow: 'none'}}>
-      <Toolbar sx={{justifyContent: 'space-between'}}>
-        <Box sx={{flex: 1}} />
-        <Link to={'/'} style={linkStyle}>
-          <Typography fontSize={20}>WildCarbon </Typography>
-        </Link>
-        <Box sx={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
+    <AppBar
+      position="static"
+      elevation={16}
+      sx={{
+        backgroundColor: "transparent",
+        boxShadow: "none",
+        borderRadius: "20px",
+        bgcolor: "primary.main",
+        paddingY: "10px",
+      }}
+    >
+      <Toolbar sx={{ justifyContent: "space-between" }}>
+        <Typography sx={{ fontWeight: "bold", fontSize: "40px" }}>
+          WildCarbon{" "}
+        </Typography>
+        <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
           <Button
-            color="secondary"
-            disabled={false}
+            variant="contained"
+            sx={{bgcolor:"white"}}
+            startIcon={<LoginIcon/>}
             size="medium"
-            variant="outlined"
             component={Link}
             to="/login"
           >
-            Sign in
+            Connexion
           </Button>
           <Button
-            color="secondary"
-            disabled={false}
-            size="medium"
             variant="contained"
-            sx={{ml: 2}}
+            sx={{bgcolor:"white", ml: 2 }}
+            startIcon={<HowToRegIcon/>}
+            size="medium"
             component={Link}
             to="/register"
           >
-            Register
+            S'inscrire
           </Button>
         </Box>
       </Toolbar>
