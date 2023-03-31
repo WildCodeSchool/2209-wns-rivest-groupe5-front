@@ -1,79 +1,78 @@
-import {
-  Stack,
-  Container,
-  Card,
-} from '@mui/material';
-import Header from '../components/Header';
-
+import { Box, Typography } from "@mui/material";
+import HomePageCard from "../components/HomePageCard";
+import Header from "../components/Header";
+import carbonFootprint from "../assets/carbon-footprint.jpg";
+import carbonNeutral from "../assets/carbon-neutral.jpg";
+import joinUs from "../assets/join-us.jpg";
 
 const HomePage = () => {
-
   return (
-    <div>
+    <Box
+      component="main"
+      sx={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "#FFFFFF",
+        paddingTop: "20px",
+        paddingX: "20px",
+      }}
+    >
       <Header />
-
-      <Container
-        component="main"
-        maxWidth="xl"
+      <Box
         sx={{
-          mt: 3,
-          mb: 14,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          marginTop: "20px",
+          width: "100%",
+          borderRadius: 4,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
         }}
       >
-        <Stack direction="row" sx={{width: '100%'}}>
-          <Card
-            sx={{
-              pt: 4,
-              pb: 4,
-              pr: 3,
-              pl: 3,
-              width: '100%',
-              borderRadius: 4,
-              border: '1px solid',
-              borderColor: '#90CAF9',
-              height: '25rem',
-            }}
-          >
-            BLABLABLA
-          </Card>
-        </Stack>
-
-        <Stack direction="row" spacing={5} width="100%" sx={{mt: 5}}>
-          <Card
-            sx={{
-              pt: 4,
-              pb: 4,
-              pr: 3,
-              pl: 3,
-              borderRadius: 4,
-              border: '1px solid',
-              borderColor: '#90CAF9',
-              width: '50rem',
-            }}
-          >
-            BLABLABLA BLABLABLA BLABLABLA BLABLABLA BLABLABLA BLABLABLA
-            BLABLABLA BLABLABLA
-          </Card>
-          <Card
-            sx={{
-              pt: 4,
-              pb: 4,
-              pr: 3,
-              pl: 3,
-              borderRadius: 4,
-              border: '1px solid',
-              borderColor: '#90CAF9',
-              width: '50rem',
-            }}
-          >
-            BLABLABLA BLABLABLA BLABLABLA BLABLABLA BLABLABLA
-          </Card>
-        </Stack>
-      </Container>
-    </div>
+        <Typography
+          variant="h3"
+          sx={{ fontWeight: "bold", textAlign: "center", marginTop: "20px" }}
+        >
+          Du bilan carbone à la réduction <br />
+          de vos émissions
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{ textAlign: "center", marginTop: "20px" }}
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br /> Donec
+          turpis massa, convallis ut sapien quis, eleifend dapibus ipsum
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            marginTop: "100px",
+            marginBottom: "100px",
+            justifyContent: "space-around",
+          }}
+        >
+          <HomePageCard
+            title="Réaliser un bilan carbone"
+            content="Lizards are a widespread group of squamate reptiles, with over 6,000
+            species, ranging across all continents except Antarctica"
+            image={carbonFootprint}
+          />
+          <HomePageCard
+            title="Partager vos bons plans éco"
+            content="Lizards are a widespread group of squamate reptiles, with over 6,000
+            species, ranging across all continents except Antarctica"
+            image={carbonNeutral}
+          />
+          <HomePageCard
+            title="Inviter vos amis"
+            content="Lizards are a widespread group of squamate reptiles, with over 6,000
+            species, ranging across all continents except Antarctica"
+            image={joinUs}
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

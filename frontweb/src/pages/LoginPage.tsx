@@ -169,7 +169,7 @@ const LoginPage = () => {
             <Grid container mt={5}>
               <Grid item xs>
                 <Link
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate("/resetPassword/stepOne")}
                   style={{ cursor: "pointer" }}
                 >
                   Mot de passe oublié?
