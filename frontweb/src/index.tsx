@@ -12,18 +12,16 @@ import App from "./App";
 import { RecoilRoot } from "recoil";
 
 const getServerUri = () => {
-  if (
-    process.env.REACT_APP_DB === "dbdev" 
-  ) {
+  if (process.env.REACT_APP_DB === "dbdev") {
     return "http://localhost:5050/";
-  } else if( process.env.REACT_APP_DB === "dbprod" ) {
-    return "http://back:5050/";
+  } else if (process.env.REACT_APP_DB === "dbprod") {
+    return "/graphql";
   } else {
-    return 'http://back:5050/';
+    return "http://back:5050/";
   }
 };
 const httpLink = createHttpLink({
-  uri: getServerUri()
+  uri: getServerUri(),
 });
 
 const authLink = setContext((_, { headers }) => {
