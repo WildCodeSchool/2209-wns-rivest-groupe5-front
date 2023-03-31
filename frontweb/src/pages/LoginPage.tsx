@@ -164,7 +164,7 @@ const LoginPage = () => {
               variant="contained"
               sx={{ mt: 2, mb: 2 }}
             >
-              Login
+              Se connecter
             </LoadingButton>
             <Grid container mt={5}>
               <Grid item xs>
