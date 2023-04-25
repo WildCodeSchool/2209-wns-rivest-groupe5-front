@@ -20,7 +20,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { textAlign } from "@mui/system";
+
 
 const GET_TOKEN_LOGIN = gql`
   query GetToken($email: String!, $password: String!) {
