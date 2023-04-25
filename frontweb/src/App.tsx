@@ -60,6 +60,10 @@ function App() {
                             element={<Contribution />}
                         />
                         <Route
+                            path="/good-deals-feed"
+                            element={<GoodDealsFeed />}
+                        />
+                        <Route
                             path="/resetPassword/stepOne"
                             element={<ResetPasswordStepOnePage />}
                         />
@@ -102,12 +106,8 @@ function App() {
                                     element={<GoodDealsFeed />}
                                 />
                                 <Route
-                                    path="/followed-activities-feed"
-                                    element={<FollowedUsersActivitiesList />}
-                                />
-                                <Route
                                     path="/my-activities"
-                                    element={<MyActivitiesPage />}
+                                    element={<ActivityList />}
                                 />
                                 <Route
                                     path="/good-deals-form"

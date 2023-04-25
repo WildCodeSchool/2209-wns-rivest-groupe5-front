@@ -47,7 +47,7 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const [getToken, { loading, error }] = useLazyQuery(GET_TOKEN_LOGIN);
+  const [getToken, { loading }] = useLazyQuery(GET_TOKEN_LOGIN);
 
   function handleEmail(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
@@ -111,7 +111,8 @@ const LoginPage = () => {
                 </IconButton>
               }
             >
-              Error during login
+              Un problème est survenu lors de la connexion. Vérifiez votre
+              adresse e-mail et votre mot de passe ou créez un compte.
             </Alert>
           </Collapse>
           <Box
@@ -175,10 +176,10 @@ const LoginPage = () => {
                   Mot de passe oublié?
                 </Link>
               </Grid>
-              <Grid item xs sx={{textAlign:"end"}}>
+              <Grid item xs sx={{ textAlign: "end" }}>
                 <Link
                   onClick={() => navigate("/register")}
-                  style={{ cursor: "pointer"}}
+                  style={{ cursor: "pointer" }}
                 >
                   Créer un compte?
                 </Link>

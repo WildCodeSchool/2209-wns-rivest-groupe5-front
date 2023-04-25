@@ -2,11 +2,12 @@ import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserInterface } from "../interfaces/user";
-import LoadingButton from '@mui/lab/LoadingButton';
-import CloseIcon from '@mui/icons-material/Close';
-import {Visibility, VisibilityOff} from '@mui/icons-material';
+import LoadingButton from "@mui/lab/LoadingButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Snackbar,
+  Link,
   Card,
   Container,
   CssBaseline,
@@ -43,6 +44,7 @@ const CREATE_USER = gql`
 `;
 
 const RegisterPage = () => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [openError, setOpenError] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showPasswordConfirm, setShowPasswordConfirm] =
@@ -98,8 +100,7 @@ const RegisterPage = () => {
           password: userData.password,
         },
         onCompleted(data) {
-          alert('Account created with success');
-          navigate('/login');
+          setOpenModal(true);
         },
         onError(error) {
           setErrorMsg(error.message);
@@ -115,6 +116,16 @@ const RegisterPage = () => {
 
   return (
     <div>
+      <BasicModal
+        text="Compte crée avec succès!"
+        buttonText="Se connecter"
+        openModal={openModal}
+        handleClose={() => {
+          setOpenModal(false);
+        }}
+        action={()=> {navigate("/login")}}
+        iconType="success"
+      />
       <Container component="main" maxWidth="md" sx={{ pt: 5 }}>
         <Card
           sx={{
@@ -262,6 +273,12 @@ const RegisterPage = () => {
               >
                 Create account
               </LoadingButton>
+              <Link
+                  onClick={() => navigate("/login")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Se connecter?
+                </Link>
             </Box>
           </Box>
         </Card>
