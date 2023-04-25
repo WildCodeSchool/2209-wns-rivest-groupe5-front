@@ -14,13 +14,11 @@ import RegisterPage from "./pages/RegisterPage";
 import { currentUserState } from "./atom/currentUserAtom";
 import { useRecoilState } from "recoil";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ActivityList from "./pages/ActivityList";
 import ResetPasswordStepOnePage from "./pages/ResetPasswordStepOnePage";
 import ResetPasswordStepTwoPage from "./pages/ResetPasswordStepTwoPage";
 import LayoutRoot from "./layout/LayoutRoot";
 import CarbonGraphs from "./pages/CarbonGraphs/CarbonGraphs";
 import FollowedUsersActivitiesList from "./pages/FollowedUsersAcitivities";
-import { GET_MY_ACTIVITIES } from "./graphql/queries/activities/getMyActivitiesQuery";
 import MyActivitiesPage from "./pages/MyActivitiesPage";
 
 function App() {
@@ -106,8 +104,12 @@ function App() {
                                     element={<GoodDealsFeed />}
                                 />
                                 <Route
+                                    path="/followed-activities-feed"
+                                    element={<FollowedUsersActivitiesList />}
+                                />
+                                <Route
                                     path="/my-activities"
-                                    element={<ActivityList />}
+                                    element={<MyActivitiesPage />}
                                 />
                                 <Route
                                     path="/good-deals-form"
