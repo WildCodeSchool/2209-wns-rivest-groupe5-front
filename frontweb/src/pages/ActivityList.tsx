@@ -11,7 +11,6 @@ const ActivityList = ({
     data: any;
     forCurrentUser: boolean;
 }) => {
-    console.log("🚀 ~ file: ActivityList.tsx:8 ~ ActivityList ~ data:", data);
     if (!data) {
         return <div>Loading...</div>;
     }
