@@ -19,74 +19,115 @@ import ResetPasswordStepOnePage from "./pages/ResetPasswordStepOnePage";
 import ResetPasswordStepTwoPage from "./pages/ResetPasswordStepTwoPage";
 import LayoutRoot from "./layout/LayoutRoot";
 import CarbonGraphs from "./pages/CarbonGraphs/CarbonGraphs";
+import FollowedUsersActivitiesList from "./pages/FollowedUsersAcitivities";
+import { GET_MY_ACTIVITIES } from "./graphql/queries/activities/getMyActivitiesQuery";
+import MyActivitiesPage from "./pages/MyActivitiesPage";
 
 function App() {
-  const [user, setUser] = useRecoilState(currentUserState);
-  console.log(">>>>Current user >>>", user);
-  useEffect(() => {
-    const currentUserInLocalStorage = JSON.parse(
-      localStorage.getItem("user") || "{}"
+    const [user, setUser] = useRecoilState(currentUserState);
+    console.log(">>>>Current user >>>", user);
+    useEffect(() => {
+        const currentUserInLocalStorage = JSON.parse(
+            localStorage.getItem("user") || "{}"
+        );
+        setUser(currentUserInLocalStorage);
+    }, []);
+
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: "#2196F3",
+                dark: "#1565C0",
+                light: "#E3F2FD",
+            },
+            secondary: {
+                main: "#673AB7",
+                dark: "#5E35B1",
+                light: "#EDE7F6",
+            },
+        },
+    });
+    return (
+        <div>
+            <ThemeProvider theme={theme}>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route
+                            path="/contribution"
+                            element={<Contribution />}
+                        />
+                        <Route
+                            path="/resetPassword/stepOne"
+                            element={<ResetPasswordStepOnePage />}
+                        />
+                        <Route
+                            path="/reset-password/*"
+                            element={<ResetPasswordStepTwoPage />}
+                        />
+
+                        <Route element={<PrivateRoutes />}>
+                            <Route path="/my-account" element={<MyAccount />} />
+                            <Route path="/admin" element={<AdminPage />} />
+                        </Route>
+
+                        {user && Object.keys(user).length !== 0 ? (
+                            <Route element={<LayoutRoot />}>
+                                <Route
+                                    path="/profile/:userId"
+                                    element={<ProfilePage />}
+                                />
+                            </Route>
+                        ) : (
+                            <Route
+                                path="/profile/:userId"
+                                element={<ProfilePage />}
+                            />
+                        )}
+
+                        <Route element={<PrivateRoutes />}>
+                            <Route path="/admin" element={<AdminPage />} />
+                        </Route>
+
+                        <Route element={<LayoutRoot />}>
+                            <Route element={<PrivateRoutes />}>
+                                <Route
+                                    path="/dashboard"
+                                    element={<CarbonGraphs />}
+                                />
+                                <Route
+                                    path="/good-deals-feed"
+                                    element={<GoodDealsFeed />}
+                                />
+                                <Route
+                                    path="/followed-activities-feed"
+                                    element={<FollowedUsersActivitiesList />}
+                                />
+                                <Route
+                                    path="/my-activities"
+                                    element={<MyActivitiesPage />}
+                                />
+                                <Route
+                                    path="/good-deals-form"
+                                    element={<GoodDealsForm />}
+                                />
+                                <Route
+                                    path="/my-account"
+                                    element={<MyAccount />}
+                                />
+                                <Route
+                                    path="/profile/:userId"
+                                    element={<ProfilePage />}
+                                />
+                            </Route>
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </ThemeProvider>
+        </div>
     );
-    setUser(currentUserInLocalStorage);
-  }, []);
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#2196F3",
-        dark: "#1565C0",
-        light: "#E3F2FD",
-      },
-      secondary: {
-        main: "#673AB7",
-        dark: "#5E35B1",
-        light: "#EDE7F6",
-      },
-    },
-  });
-  return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/contribution" element={<Contribution />} />
-            <Route
-              path="/resetPassword/stepOne"
-              element={<ResetPasswordStepOnePage />}
-            />
-            <Route
-              path="/reset-password/*"
-              element={<ResetPasswordStepTwoPage />}
-            />
-
-            <Route element={<PrivateRoutes />}>
-              <Route path="/my-account" element={<MyAccount />} />
-              <Route path="/admin" element={<AdminPage />} />
-            </Route>
-
-            <Route element={<PrivateRoutes />}>
-              <Route path="/profile/:userId" element={<ProfilePage />} />
-              <Route path="/admin" element={<AdminPage />} />
-            </Route>
-
-            <Route element={<LayoutRoot />}>
-              <Route element={<PrivateRoutes />}>
-                <Route path="/dashboard" element={<CarbonGraphs />} />
-                <Route path="/good-deals-feed" element={<GoodDealsFeed />} />
-                <Route path="/my-activities" element={<ActivityList />} />
-                <Route path="/good-deals-form" element={<GoodDealsForm />} />
-                <Route path="/my-account" element={<MyAccount />} />
-                <Route path="/profile/:userId" element={<ProfilePage />} />
-              </Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </div>
-  );
 }
 
 export default App;
