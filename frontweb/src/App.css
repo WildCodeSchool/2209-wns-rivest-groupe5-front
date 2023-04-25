@@ -84,3 +84,7 @@ body{
     flex-direction: column;
     justify-content: flex-end;
 }
+
+.css-1b3hm6-MuiTypography-root:hover{
+  cursor: pointer;
+}

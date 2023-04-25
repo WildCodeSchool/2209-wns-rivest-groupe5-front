@@ -53,6 +53,8 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/contribution" element={<Contribution />} />
+            <Route path="/good-deals-feed" element={<GoodDealsFeed />} />
+
             <Route
               path="/resetPassword/stepOne"
               element={<ResetPasswordStepOnePage />}
@@ -75,7 +77,6 @@ function App() {
             <Route element={<LayoutRoot />}>
               <Route element={<PrivateRoutes />}>
                 <Route path="/dashboard" element={<CarbonGraphs />} />
-                <Route path="/good-deals-feed" element={<GoodDealsFeed />} />
                 <Route path="/my-activities" element={<ActivityList />} />
                 <Route path="/good-deals-form" element={<GoodDealsForm />} />
                 <Route path="/my-account" element={<MyAccount />} />
