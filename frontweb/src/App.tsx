@@ -19,6 +19,7 @@ import ResetPasswordStepOnePage from "./pages/ResetPasswordStepOnePage";
 import ResetPasswordStepTwoPage from "./pages/ResetPasswordStepTwoPage";
 import LayoutRoot from "./layout/LayoutRoot";
 import CarbonGraphs from "./pages/CarbonGraphs/CarbonGraphs";
+import {theme} from './assets/Styles/theme'
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState);
@@ -30,20 +31,6 @@ function App() {
     setUser(currentUserInLocalStorage);
   }, []);
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#2196F3",
-        dark: "#1565C0",
-        light: "#E3F2FD",
-      },
-      secondary: {
-        main: "#673AB7",
-        dark: "#5E35B1",
-        light: "#EDE7F6",
-      },
-    },
-  });
   return (
     <div>
       <ThemeProvider theme={theme}>
