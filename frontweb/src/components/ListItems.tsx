@@ -7,45 +7,54 @@ import { Link } from "react-router-dom";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import AddIcon from "@mui/icons-material/Add";
 import Co2Icon from "@mui/icons-material/Co2";
+import PeopleIcon from "@mui/icons-material/People";
 
 const linkStyle = {
-  textDecoration: "none",
-  color: "rgba(0,0,0,0.87)",
+    textDecoration: "none",
+    color: "rgba(0,0,0,0.87)",
 };
 
 export const mainListItems = (
-  <React.Fragment>
-    <Link to="/dashboard" style={linkStyle}>
-      <ListItemButton>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItemButton>
-    </Link>
-    <Link to="/my-activities" style={linkStyle}>
-      <ListItemButton>
-        <ListItemIcon>
-          <Co2Icon />
-        </ListItemIcon>
-        <ListItemText primary="Mes activités" />
-      </ListItemButton>
-    </Link>
-    <Link to="/good-deals-feed" style={linkStyle}>
-      <ListItemButton>
-        <ListItemIcon>
-          <DynamicFeedIcon />
-        </ListItemIcon>
-        <ListItemText primary="Feed Good Deals" />
-      </ListItemButton>
-    </Link>
-    <Link to="/good-deals-form" style={linkStyle}>
-      <ListItemButton>
-        <ListItemIcon>
-          <AddIcon />
-        </ListItemIcon>
-        <ListItemText primary="New Good Deal" />
-      </ListItemButton>
-    </Link>
-  </React.Fragment>
+    <React.Fragment>
+        <Link to="/dashboard" style={linkStyle}>
+            <ListItemButton>
+                <ListItemIcon>
+                    <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+            </ListItemButton>
+        </Link>
+        <Link to="/my-activities" style={linkStyle}>
+            <ListItemButton>
+                <ListItemIcon>
+                    <Co2Icon />
+                </ListItemIcon>
+                <ListItemText primary="Mes activités" />
+            </ListItemButton>
+        </Link>
+        <Link to="/followed-activities-feed" style={linkStyle}>
+            <ListItemButton>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Activités Abonnements" />
+            </ListItemButton>
+        </Link>
+        <Link to="/good-deals-feed" style={linkStyle}>
+            <ListItemButton>
+                <ListItemIcon>
+                    <DynamicFeedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Feed Good Deals" />
+            </ListItemButton>
+        </Link>
+        <Link to="/good-deals-form" style={linkStyle}>
+            <ListItemButton>
+                <ListItemIcon>
+                    <AddIcon />
+                </ListItemIcon>
+                <ListItemText primary="New Good Deal" />
+            </ListItemButton>
+        </Link>
+    </React.Fragment>
 );
