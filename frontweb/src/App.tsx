@@ -51,6 +51,7 @@ function App() {
             <ThemeProvider theme={theme}>
                 <BrowserRouter>
                     <Routes>
+                        {/* Public routes */}
                         <Route path="/" element={<HomePage />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/login" element={<LoginPage />} />
@@ -66,11 +67,6 @@ function App() {
                             path="/reset-password/*"
                             element={<ResetPasswordStepTwoPage />}
                         />
-
-                        <Route element={<PrivateRoutes />}>
-                            <Route path="/my-account" element={<MyAccount />} />
-                            <Route path="/admin" element={<AdminPage />} />
-                        </Route>
 
                         {/* Routes accessibles in public and in private, only layout around changes */}
                         {user && Object.keys(user).length !== 0 ? (
@@ -97,17 +93,18 @@ function App() {
                             </Route>
                         )}
 
-                        <Route element={<PrivateRoutes />}>
-                            <Route path="/admin" element={<AdminPage />} />
-                        </Route>
-
+                        {/* Private routes only */}
                         <Route element={<LayoutRoot />}>
                             <Route element={<PrivateRoutes />}>
                                 <Route
                                     path="/dashboard"
                                     element={<CarbonGraphs />}
                                 />
-
+                                <Route
+                                    path="/my-account"
+                                    element={<MyAccount />}
+                                />
+                                <Route path="/admin" element={<AdminPage />} />
                                 <Route
                                     path="/followed-activities-feed"
                                     element={<FollowedUsersActivitiesList />}
