@@ -1,10 +1,11 @@
-import { GET_MY_ACTIVITIES } from "../graphql/queries/activities/getMyActivitiesQuery";
-import { useLazyQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
+import { IActivity } from "../interfaces/IActivity";
+import { useLazyQuery } from "@apollo/client";
+import { GET_MY_ACTIVITIES } from "../graphql/queries/activities/getMyActivitiesQuery";
 import ActivityList from "../components/ActivityList";
 
-const MyActivitiesPage = () => {
-  const [allActivities, setAllActivities] = useState();
+const AllActivityListPage = () => {
+  const [allActivities, setAllActivities] = useState<IActivity[]>();
 
   const [getMyActivities, { loading, error }] = useLazyQuery(
     GET_MY_ACTIVITIES,
@@ -42,4 +43,4 @@ const MyActivitiesPage = () => {
   );
 };
 
-export default MyActivitiesPage;
+export default AllActivityListPage;
