@@ -4,6 +4,7 @@ export interface UserInterface {
     firstname: string;
     lastname: string;
     email: string;
-    password: string;
-    passwordconfirm: string;
+    password?: string;
+    passwordconfirm?: string;
+    visibility: "public" | "private";
 }
