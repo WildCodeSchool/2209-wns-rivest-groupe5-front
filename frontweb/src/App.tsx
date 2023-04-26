@@ -24,7 +24,7 @@ import PublicLayout from "./layout/PublicLayout";
 
 function App() {
     const [user, setUser] = useRecoilState(currentUserState);
-    // console.log(">>>>Current user >>>", user);
+    console.log(">>>>Current user >>>", user);
     useEffect(() => {
         const currentUserInLocalStorage = JSON.parse(
             localStorage.getItem("user") || "{}"

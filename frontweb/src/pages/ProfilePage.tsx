@@ -50,10 +50,6 @@ const ProfilePage = () => {
     useEffect(() => {
         (async () => {
             if (currentUser && Object.keys(currentUser).length > 0) {
-                console.log(
-                    "🚀 ~ file: ProfilePage.tsx:53 ~ currentUser:",
-                    currentUser
-                );
                 const res = await getIsUserFollowing();
                 setUserIsFollowing(res?.data?.getIsUserIsFollowing);
             }
