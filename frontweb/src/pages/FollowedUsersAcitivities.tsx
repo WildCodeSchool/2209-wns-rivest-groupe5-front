@@ -45,7 +45,6 @@ const FollowedUsersActivitiesList = () => {
                                     <h3>{activity.title}</h3>
                                     <Link
                                         to={`/profile/${activity.user?.userId}`}
-                                        target="_blank"
                                     >
                                         {activity.user?.firstname}{" "}
                                         {activity.user?.lastname}

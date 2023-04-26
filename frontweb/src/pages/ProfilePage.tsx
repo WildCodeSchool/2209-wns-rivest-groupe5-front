@@ -4,6 +4,7 @@ import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import Avatar from "@mui/material/Avatar";
 import { GET_USER_ACTIVITIES_STATS } from "../graphql/queries/activities/getUserActivitiesStatsQuery";
 import { GET_USER_TOTAL_CARBON_STATS } from "../graphql/queries/activities/getUserTotalCarbonStatsQuery";
 import styles from "./CarbonGraphs/carbonGraphs.module.css";
@@ -11,13 +12,13 @@ import CarbonGraphSums from "../components/carbonGraph/pieGraph/CarbonGraphSums"
 import ActivityList from "./ActivityList";
 import CarbonGraphEmissions from "../components/carbonGraph/stackedGraph/CarbonGraphEmissions";
 import { GET_USER_ACTIVITIES } from "../graphql/queries/activities/getUserActivitiesQuery";
-import AccountMenu from "../components/MenuAccount";
 import { GET_USER_BY_ID } from "../graphql/queries/users/getUserByIdQuery";
 import { GET_IS_USER_FOLLOWING } from "../graphql/queries/users/getIsUserFollowing";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../atom/currentUserAtom";
 import { TOGGLE_FOLLOW_USER } from "../graphql/mutations/follows/toggleFollow";
 import { Button } from "@mui/material";
+import { blue } from "@mui/material/colors";
 
 const ProfilePage = () => {
     const { userId } = useParams();
@@ -48,7 +49,11 @@ const ProfilePage = () => {
 
     useEffect(() => {
         (async () => {
-            if (currentUser) {
+            if (currentUser && Object.keys(currentUser).length > 0) {
+                console.log(
+                    "🚀 ~ file: ProfilePage.tsx:53 ~ currentUser:",
+                    currentUser
+                );
                 const res = await getIsUserFollowing();
                 setUserIsFollowing(res?.data?.getIsUserIsFollowing);
             }
@@ -86,10 +91,6 @@ const ProfilePage = () => {
         await toggleUserFollow();
         const res = await getIsUserFollowing();
         setUserIsFollowing(res?.data?.getIsUserIsFollowing);
-        console.log(
-            "🚀 ~ file: ProfilePage.tsx:89 ~ handleToggleFollow ~ res?.data?.getIsUserIsFollowing:",
-            res?.data?.getIsUserIsFollowing
-        );
     };
 
     if (
@@ -147,24 +148,42 @@ const ProfilePage = () => {
                     sx={{
                         p: 2,
                         display: "flex",
-                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 2,
                     }}
                 >
-                    <AccountMenu />
-                    <div>
-                        <p>
-                            {data?.getUserById?.firstname}{" "}
-                            {data?.getUserById?.lastname}
-                        </p>
+                    {data?.getUserById?.avatar ? (
+                        <Avatar
+                            alt={
+                                data?.getUserById?.firstname +
+                                data?.getUserById?.lastname
+                            }
+                            src={data.getUserById.avatar}
+                        />
+                    ) : (
+                        <Avatar sx={{ bgcolor: blue[500] }}>
+                            {data?.getUserById?.firstname
+                                .slice(0, 1)
+                                .toUpperCase() +
+                                data?.getUserById?.lastname
+                                    .slice(0, 1)
+                                    .toUpperCase()}
+                        </Avatar>
+                    )}
+                    <p>
+                        {data?.getUserById?.firstname}{" "}
+                        {data?.getUserById?.lastname}
+                    </p>
 
-                        {currentUser && (
-                            <Button onClick={handleToggleFollow}>
-                                {userIsFollowing
-                                    ? "Se désabonner"
-                                    : "s'abonner"}
-                            </Button>
-                        )}
-                    </div>
+                    {currentUser && Object.keys(currentUser).length > 0 && (
+                        <Button
+                            onClick={handleToggleFollow}
+                            sx={{ marginLeft: "auto" }}
+                            variant="contained"
+                        >
+                            {userIsFollowing ? "Se désabonner" : "s'abonner"}
+                        </Button>
+                    )}
                 </Paper>
             </Container>
 

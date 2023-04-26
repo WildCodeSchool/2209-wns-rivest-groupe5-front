@@ -20,10 +20,11 @@ import LayoutRoot from "./layout/LayoutRoot";
 import CarbonGraphs from "./pages/CarbonGraphs/CarbonGraphs";
 import FollowedUsersActivitiesList from "./pages/FollowedUsersAcitivities";
 import MyActivitiesPage from "./pages/MyActivitiesPage";
+import PublicLayout from "./layout/PublicLayout";
 
 function App() {
     const [user, setUser] = useRecoilState(currentUserState);
-    console.log(">>>>Current user >>>", user);
+    // console.log(">>>>Current user >>>", user);
     useEffect(() => {
         const currentUserInLocalStorage = JSON.parse(
             localStorage.getItem("user") || "{}"
@@ -58,10 +59,6 @@ function App() {
                             element={<Contribution />}
                         />
                         <Route
-                            path="/good-deals-feed"
-                            element={<GoodDealsFeed />}
-                        />
-                        <Route
                             path="/resetPassword/stepOne"
                             element={<ResetPasswordStepOnePage />}
                         />
@@ -75,18 +72,29 @@ function App() {
                             <Route path="/admin" element={<AdminPage />} />
                         </Route>
 
+                        {/* Routes accessibles in public and in private, only layout around changes */}
                         {user && Object.keys(user).length !== 0 ? (
                             <Route element={<LayoutRoot />}>
                                 <Route
                                     path="/profile/:userId"
                                     element={<ProfilePage />}
                                 />
+                                <Route
+                                    path="/good-deals-feed"
+                                    element={<GoodDealsFeed />}
+                                />
                             </Route>
                         ) : (
-                            <Route
-                                path="/profile/:userId"
-                                element={<ProfilePage />}
-                            />
+                            <Route element={<PublicLayout />}>
+                                <Route
+                                    path="/profile/:userId"
+                                    element={<ProfilePage />}
+                                />
+                                <Route
+                                    path="/good-deals-feed"
+                                    element={<GoodDealsFeed />}
+                                />
+                            </Route>
                         )}
 
                         <Route element={<PrivateRoutes />}>
@@ -99,10 +107,7 @@ function App() {
                                     path="/dashboard"
                                     element={<CarbonGraphs />}
                                 />
-                                <Route
-                                    path="/good-deals-feed"
-                                    element={<GoodDealsFeed />}
-                                />
+
                                 <Route
                                     path="/followed-activities-feed"
                                     element={<FollowedUsersActivitiesList />}
