@@ -7,6 +7,8 @@ import AccountMenu from "./MenuAccount";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../atom/currentUserAtom";
 import wildCarbonLogo from "../assets/wildcarbon_logo.png";
+import {useNavigate} from 'react-router-dom';
+
 
 export default function Header() {
   const currentUser = useRecoilValue(currentUserState);
@@ -36,28 +38,42 @@ export default function Header() {
     </>
   );
 
-  const render = currentUser !== null ? <AccountMenu /> : buttons;
+  const render = currentUser?.firstname !== undefined ? <AccountMenu /> : buttons;
+
+  const navigate = useNavigate();
 
   return (
     <AppBar
       position="static"
       elevation={16}
       sx={{
-        backgroundColor: "transparent",
-        boxShadow: "none",
-        borderRadius: "20px",
-        bgcolor: "primary.main",
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
+        borderRadius: '20px',
+        bgcolor: 'primary.main',
       }}
     >
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Box sx={{ display: "flex", height: "90px", margin: "0 0" }}>
+      <Toolbar sx={{justifyContent: 'space-between'}}>
+        <Box
+          onClick={() => {
+            navigate('/');
+          }}
+          sx={{
+            display: 'flex',
+            height: '90px',
+            margin: '0 0',
+            '&:hover': {
+              cursor: 'pointer'
+            },
+          }}
+        >
           <img
             src={wildCarbonLogo}
             alt="wildcarbon-logo"
-            style={{ objectFit: "contain" }}
+            style={{objectFit: 'contain'}}
           />
         </Box>
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+        <Box sx={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
           {render}
         </Box>
       </Toolbar>

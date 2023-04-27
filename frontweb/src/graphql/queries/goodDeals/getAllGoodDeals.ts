@@ -1,8 +1,8 @@
-import {gql } from '@apollo/client';
+import {gql} from '@apollo/client';
 
 export const GET_ALL_GOOD_DEALS = gql`
-  query getAllGoodDeals {
-    getAllGoodDeals {
+  query getAllGoodDeals($limit: Float, $order: FindOptionsOrderValue) {
+    getAllGoodDeals(limit: $limit, order: $order) {
       goodDealId
       goodDealTitle
       goodDealLink

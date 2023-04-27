@@ -22,8 +22,9 @@ const GoodDealsFeed = () => {
     }
 
     if (error) {
-        return <div>Error ...</div>;
+        return <div>Error ...</div>
     }
+
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
