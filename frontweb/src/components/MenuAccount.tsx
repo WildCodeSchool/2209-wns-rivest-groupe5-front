@@ -11,8 +11,9 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { Link, useNavigate } from "react-router-dom";
 import { ListItemButton } from "@mui/material";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { currentUserState } from "../atom/currentUserAtom";
+import UserAvatar from "./users/UserAvatar";
 
 const linkStyle = {
     textDecoration: "none",
@@ -22,7 +23,7 @@ const linkStyle = {
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate();
-    const setCurrentUser = useSetRecoilState(currentUserState);
+    const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -57,10 +58,7 @@ export default function AccountMenu() {
                         aria-haspopup="true"
                         aria-expanded={open ? "true" : undefined}
                     >
-                        <Avatar
-                            src="../assets/default-user.png"
-                            sx={{ width: 32, height: 32 }}
-                        />
+                        <UserAvatar user={currentUser} />
                     </IconButton>
                 </Tooltip>
             </Box>

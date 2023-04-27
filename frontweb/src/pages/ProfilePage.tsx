@@ -19,6 +19,7 @@ import { currentUserState } from "../atom/currentUserAtom";
 import { TOGGLE_FOLLOW_USER } from "../graphql/mutations/follows/toggleFollow";
 import { Button } from "@mui/material";
 import { blue } from "@mui/material/colors";
+import UserAvatar from "../components/users/UserAvatar";
 
 const ProfilePage = () => {
     const { userId } = useParams();
@@ -148,29 +149,11 @@ const ProfilePage = () => {
                         gap: 2,
                     }}
                 >
-                    {data?.getUserById?.avatar ? (
-                        <Avatar
-                            alt={
-                                data?.getUserById?.firstname +
-                                data?.getUserById?.lastname
-                            }
-                            src={data.getUserById.avatar}
-                        />
-                    ) : (
-                        <Avatar sx={{ bgcolor: blue[500] }}>
-                            {data?.getUserById?.firstname
-                                .slice(0, 1)
-                                .toUpperCase() +
-                                data?.getUserById?.lastname
-                                    .slice(0, 1)
-                                    .toUpperCase()}
-                        </Avatar>
-                    )}
+                    <UserAvatar user={data.getUserById} />
                     <p>
                         {data?.getUserById?.firstname}{" "}
                         {data?.getUserById?.lastname}
                     </p>
-
                     {currentUser && Object.keys(currentUser).length > 0 && (
                         <Button
                             onClick={handleToggleFollow}
