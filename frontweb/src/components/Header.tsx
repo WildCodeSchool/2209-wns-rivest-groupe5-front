@@ -36,7 +36,7 @@ export default function Header() {
     </>
   );
 
-  const render = currentUser !== null ? <AccountMenu /> : buttons;
+  const render = currentUser?.email !== undefined ? <AccountMenu /> : buttons;
 
   return (
     <AppBar

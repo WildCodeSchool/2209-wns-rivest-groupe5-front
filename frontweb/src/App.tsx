@@ -21,6 +21,7 @@ import CarbonGraphs from "./pages/CarbonGraphs/CarbonGraphs";
 import FollowedUsersActivitiesList from "./pages/FollowedUsersAcitivities";
 import MyActivitiesPage from "./pages/MyActivitiesPage";
 import PublicLayout from "./layout/PublicLayout";
+import { UpLoadImage } from "./pages/UploadImage";
 
 function App() {
     const [user, setUser] = useRecoilState(currentUserState);
@@ -52,6 +53,7 @@ function App() {
                 <BrowserRouter>
                     <Routes>
                         {/* Public routes */}
+                        <Route path="/azerty" element={<UpLoadImage/>} />
                         <Route path="/" element={<HomePage />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/login" element={<LoginPage />} />
