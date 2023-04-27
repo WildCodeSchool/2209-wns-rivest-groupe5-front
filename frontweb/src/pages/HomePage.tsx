@@ -1,6 +1,5 @@
-import { Box, Typography, Paper } from "@mui/material";
+import { Box, Typography, Paper, Button } from "@mui/material";
 import HomePageCard from "../components/HomePageCard";
-import Header from "../components/Header";
 import carbonFootprint from "../assets/carbon-footprint.jpg";
 import carbonNeutral from "../assets/carbon-neutral.jpg";
 import joinUs from "../assets/join-us.jpg";
@@ -13,8 +12,12 @@ import PhonelinkIcon from '@mui/icons-material/Phonelink';
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import LoginIcon from '@mui/icons-material/Login';
 import CardMedia from '@mui/material/CardMedia';
+import CarouselContent from "../components/Carousel";
+import {useNavigate} from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       component="main"
@@ -23,12 +26,10 @@ const HomePage = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
         paddingTop: '20px',
         paddingX: '20px',
       }}
     >
-      <Header />
       <Box
         sx={{
           marginTop: '20px',
@@ -55,7 +56,8 @@ const HomePage = () => {
             display: 'flex',
             marginTop: '100px',
             marginBottom: '100px',
-            justifyContent: 'space-around',
+            justifyContent: 'center',
+            gap: 8,
           }}
         >
           <HomePageCard
@@ -82,12 +84,13 @@ const HomePage = () => {
           sx={{
             display: 'flex',
             marginBottom: '100px',
-            justifyContent: 'space-around',
+            justifyContent: 'center',
+            gap: 8,
           }}
         >
           <Box
             sx={{
-              width: '450px',
+              width: '600px',
               minHeight: '700px',
             }}
           >
@@ -95,6 +98,9 @@ const HomePage = () => {
               sx={{
                 minHeight: '700px',
                 p: 5,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
               }}
             >
               <Typography variant="h6" sx={{textAlign: 'center', mb: 3}}>
@@ -218,8 +224,32 @@ const HomePage = () => {
           </Box>
         </Box>
 
-        
-
+        <Box
+          sx={{
+            display: 'flex',
+            marginBottom: '100px',
+            justifyContent: 'center',
+          }}
+        >
+          <Paper sx={{width: '80%', minHeight: '300px', p: 5}}>
+            <Typography variant="h6" sx={{textAlign: 'center', mb: 3}}>
+              Nos derniers good deals
+            </Typography>
+            <CarouselContent />
+            <Box sx={{display: 'flex', justifyContent: 'center'}}>
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{mt: 2}}
+                onClick={() => {
+                  navigate('/good-deals-feed');
+                }}
+              >
+                Voir tous les bons plans
+              </Button>
+            </Box>
+          </Paper>
+        </Box>
       </Box>
     </Box>
   );

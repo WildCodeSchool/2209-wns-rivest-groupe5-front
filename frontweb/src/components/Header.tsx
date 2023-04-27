@@ -38,7 +38,7 @@ export default function Header() {
     </>
   );
 
-  const render = currentUser !== null ? <AccountMenu /> : buttons;
+  const render = currentUser?.firstname !== undefined ? <AccountMenu /> : buttons;
 
   const navigate = useNavigate();
 
@@ -58,7 +58,14 @@ export default function Header() {
           onClick={() => {
             navigate('/');
           }}
-          sx={{display: 'flex', height: '90px', margin: '0 0'}}
+          sx={{
+            display: 'flex',
+            height: '90px',
+            margin: '0 0',
+            '&:hover': {
+              cursor: 'pointer'
+            },
+          }}
         >
           <img
             src={wildCarbonLogo}
