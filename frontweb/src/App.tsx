@@ -19,9 +19,9 @@ import ResetPasswordStepTwoPage from "./pages/ResetPasswordStepTwoPage";
 import LayoutRoot from "./layout/LayoutRoot";
 import Dashboard from "./pages/dashboard/Dashboard";
 import FollowedUsersActivitiesList from "./pages/FollowedUsersAcitivities";
-import MyActivitiesPage from "./pages/MyActivitiesPage";
 import PublicLayout from "./layout/PublicLayout";
 import { theme } from "./assets/Styles/theme";
+import AllActivityListPage from "./pages/AllActivityListPage";
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState);
@@ -79,7 +79,10 @@ function App() {
                   path="/followed-activities-feed"
                   element={<FollowedUsersActivitiesList />}
                 />
-                <Route path="/my-activities" element={<MyActivitiesPage />} />
+                <Route
+                  path="/my-activities"
+                  element={<AllActivityListPage />}
+                />
                 <Route path="/good-deals-form" element={<GoodDealsForm />} />
                 <Route path="/my-account" element={<MyAccount />} />
                 <Route path="/profile/:userId" element={<ProfilePage />} />
