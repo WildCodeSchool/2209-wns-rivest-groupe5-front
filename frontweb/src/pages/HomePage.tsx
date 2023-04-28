@@ -32,12 +32,12 @@ const HomePage = () => {
     >
       <Box
         sx={{
-          marginTop: "20px",
-          width: "100%",
+          marginTop: '20px',
+          width: '100%',
           borderRadius: 4,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
         }}
       >
         <Typography
@@ -47,10 +47,7 @@ const HomePage = () => {
           Du bilan carbone à la réduction <br />
           de vos émissions
         </Typography>
-        <Typography
-          variant="h6"
-          sx={{ textAlign: "center", marginTop: "20px" }}
-        >
+        <Typography variant="h6" sx={{textAlign: 'center', marginTop: '20px'}}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br /> Donec
           turpis massa, convallis ut sapien quis, eleifend dapibus ipsum
         </Typography>
