@@ -79,7 +79,15 @@ body{
 }
 
 .btn-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.image-good-deal{
+  width: 100%;
+  height: 100%;
+  object-fit: 'cover';
+  border-bottom-left-radius: 12px;
+  border-top-left-radius: 12px;
 }
