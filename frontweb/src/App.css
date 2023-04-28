@@ -43,8 +43,8 @@
 
 .paper {
   padding: 16px;
-  text-align: 'center';
-  color: 'black';
+  text-align: "center";
+  color: "black";
 }
 
 .container {
@@ -53,33 +53,33 @@
   align-items: center;
 }
 
-a:visited{
+a:visited {
   color: black;
 }
 
-body{
+body {
   background-color: #376775 !important;
 }
 
-.wc-flex{
+.wc-flex {
   display: flex;
 }
 
-.wc-image-gooddeals{
+.wc-image-gooddeals {
   width: 150px;
   height: 150px;
 }
 
-.ml-15{
+.ml-15 {
   margin-left: 15px;
 }
 
-.w-75{
+.w-75 {
   width: 75%;
 }
 
-.btn-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
