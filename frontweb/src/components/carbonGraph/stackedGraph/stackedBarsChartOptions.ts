@@ -11,7 +11,7 @@ export const stackedBarsChartOptions = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: "bottom" as const,
+      position: 'bottom' as const,
     },
   },
-};
+}

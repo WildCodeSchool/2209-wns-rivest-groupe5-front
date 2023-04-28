@@ -1,4 +1,4 @@
-import {gql} from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const GET_GOOD_DEAL = gql`
   query getGoodDeal($id: Float!) {
@@ -18,4 +18,4 @@ export const GET_GOOD_DEAL = gql`
       }
     }
   }
-`;
+`

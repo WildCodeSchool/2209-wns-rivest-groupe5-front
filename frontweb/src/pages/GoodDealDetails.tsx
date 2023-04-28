@@ -1,33 +1,33 @@
-import {useParams} from 'react-router-dom';
-import {Container, Box, Stack} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {useNavigate} from 'react-router-dom';
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import {GET_GOOD_DEAL} from '../graphql/queries/goodDeals/getGoodDeal';
-import {useQuery} from '@apollo/client';
-import Skeleton from '@mui/material/Skeleton';
-import {differenceInDays, differenceInHours} from 'date-fns';
-import Checkbox from '@mui/material/Checkbox';
-import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
-import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import Avatar from '@mui/material/Avatar';
+import { useParams } from 'react-router-dom'
+import { Container, Box, Stack } from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { useNavigate } from 'react-router-dom'
+import Typography from '@mui/material/Typography'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import { GET_GOOD_DEAL } from '../graphql/queries/goodDeals/getGoodDeal'
+import { useQuery } from '@apollo/client'
+import Skeleton from '@mui/material/Skeleton'
+import { differenceInDays, differenceInHours } from 'date-fns'
+import Checkbox from '@mui/material/Checkbox'
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt'
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt'
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
+import Avatar from '@mui/material/Avatar'
 
 const GoodDealDetails = () => {
-  const {goodDealId} = useParams();
-  const navigate = useNavigate();
+  const { goodDealId } = useParams()
+  const navigate = useNavigate()
 
-  const {data, error, loading} = useQuery(GET_GOOD_DEAL, {
+  const { data, error, loading } = useQuery(GET_GOOD_DEAL, {
     fetchPolicy: 'no-cache',
     variables: {
       id: parseInt(goodDealId!),
     },
-  });
+  })
 
   if (error) {
-    return <div>Error</div>;
+    return <div>Error</div>
   } else if (loading) {
     return (
       <Container>
@@ -51,10 +51,10 @@ const GoodDealDetails = () => {
               },
             }}
             onClick={() => {
-              navigate('/good-deals-feed');
+              navigate('/good-deals-feed')
             }}
           >
-            <ArrowBackIcon sx={{mr: 2}} />
+            <ArrowBackIcon sx={{ mr: 2 }} />
             Retour
           </Stack>
           <Breadcrumbs aria-label="breadcrumb">
@@ -67,7 +67,7 @@ const GoodDealDetails = () => {
                 },
               }}
               onClick={() => {
-                navigate('/good-deals-feed');
+                navigate('/good-deals-feed')
               }}
             >
               Feed good deals
@@ -91,30 +91,34 @@ const GoodDealDetails = () => {
             height="100%"
             animation="wave"
           />
-          <Box sx={{p: 3}} width="75%">
-            <Skeleton animation="wave" variant="text" sx={{fontSize: '1rem'}} />
+          <Box sx={{ p: 3 }} width="75%">
+            <Skeleton
+              animation="wave"
+              variant="text"
+              sx={{ fontSize: '1rem' }}
+            />
           </Box>
         </Box>
       </Container>
-    );
+    )
   } else {
-    const goodDeal = data.getGoodDeal;
+    const goodDeal = data.getGoodDeal
 
     const src =
       goodDeal.image !== ''
         ? goodDeal.image
-        : require('../assets/default-placeholder.png');
+        : require('../assets/default-placeholder.png')
 
     const avatar =
       goodDeal.user.avatar !== ''
         ? goodDeal.user.avatar
-        : require('../assets/default-user.png');
+        : require('../assets/default-user.png')
 
-    const diff = differenceInDays(new Date(), new Date(goodDeal.createdAt));
+    const diff = differenceInDays(new Date(), new Date(goodDeal.createdAt))
     const diffHours = differenceInHours(
       new Date(),
-      new Date(goodDeal.createdAt),
-    );
+      new Date(goodDeal.createdAt)
+    )
 
     return (
       <Container>
@@ -138,10 +142,10 @@ const GoodDealDetails = () => {
               },
             }}
             onClick={() => {
-              navigate('/good-deals-feed');
+              navigate('/good-deals-feed')
             }}
           >
-            <ArrowBackIcon sx={{mr: 2}} />
+            <ArrowBackIcon sx={{ mr: 2 }} />
             Retour
           </Stack>
           <Breadcrumbs aria-label="breadcrumb">
@@ -154,7 +158,7 @@ const GoodDealDetails = () => {
                 },
               }}
               onClick={() => {
-                navigate('/good-deals-feed');
+                navigate('/good-deals-feed')
               }}
             >
               Feed good deals
@@ -185,12 +189,12 @@ const GoodDealDetails = () => {
             <img src={src} alt="" className="image-good-deal"></img>
           </Box>
           <Box
-            sx={{p: 3, display: 'flex', flexDirection: 'column'}}
+            sx={{ p: 3, display: 'flex', flexDirection: 'column' }}
             width="75%"
           >
             <Typography
               variant="h5"
-              sx={{fontWeight: 700, textAlign: 'center', mb: 3}}
+              sx={{ fontWeight: 700, textAlign: 'center', mb: 3 }}
             >
               {goodDeal.goodDealTitle}
             </Typography>
@@ -206,7 +210,9 @@ const GoodDealDetails = () => {
               <Typography color="text.secondary" fontSize="12px">
                 Publié il y a{' '}
                 {diff > 0
-                  ? diff > 1 ? diff + ' jours' : diff + ' jour'
+                  ? diff > 1
+                    ? diff + ' jours'
+                    : diff + ' jour'
                   : diffHours > 1
                   ? diffHours + ' heures'
                   : diffHours + ' heure'}
@@ -239,8 +245,8 @@ const GoodDealDetails = () => {
                 alignItems: 'center',
               }}
             >
-              <Avatar alt="user" src={avatar} sx={{mr: 2}} />
-              Partagé par 
+              <Avatar alt="user" src={avatar} sx={{ mr: 2 }} />
+              Partagé par
               <strong>
                 {' '}
                 {goodDeal.user.firstname} {goodDeal.user.lastname}
@@ -259,14 +265,14 @@ const GoodDealDetails = () => {
             p: 3,
           }}
         >
-          <Typography variant="h6" sx={{mb: 2}}>
+          <Typography variant="h6" sx={{ mb: 2 }}>
             A propos de ce deal :
           </Typography>
           <Typography>{goodDeal.goodDealContent}</Typography>
         </Box>
       </Container>
-    );
+    )
   }
-};
+}
 
-export default GoodDealDetails;
+export default GoodDealDetails

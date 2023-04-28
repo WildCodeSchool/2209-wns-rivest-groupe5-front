@@ -1,9 +1,5 @@
 const totoPage = () => {
-    return (
-        <div>
-            toto Page
-        </div>
-    )
+  return <div>toto Page</div>
 }
 
-export default totoPage;
+export default totoPage

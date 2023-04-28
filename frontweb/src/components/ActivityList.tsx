@@ -1,20 +1,20 @@
-import { IActivity } from "../interfaces/IActivity";
-import { Box, Typography } from "@mui/material";
-import Button from "@mui/material/Button";
-import { theme } from "../assets/Styles/theme";
-import Activity from "./activities/Activity";
+import { IActivity } from '../interfaces/IActivity'
+import { Box, Typography } from '@mui/material'
+import Button from '@mui/material/Button'
+import { theme } from '../assets/Styles/theme'
+import Activity from './activities/Activity'
 
 const ActivityList = ({
   data,
   forCurrentUser,
   updateActivityList,
 }: {
-  data: any;
-  forCurrentUser: boolean;
-  updateActivityList: () => Promise<void>;
+  data: any
+  forCurrentUser: boolean
+  updateActivityList: () => Promise<void>
 }) => {
   if (!data) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   return (
@@ -27,7 +27,7 @@ const ActivityList = ({
             <Button
               style={{
                 backgroundColor: theme.palette.primary.main,
-                color: "#fff",
+                color: '#fff',
               }}
               href="#contained-buttons"
             >
@@ -45,11 +45,11 @@ const ActivityList = ({
               key={activity.activityId}
               updateActivityList={updateActivityList}
             />
-          );
+          )
         })
       )}
     </Box>
-  );
-};
+  )
+}
 
-export default ActivityList;
+export default ActivityList
