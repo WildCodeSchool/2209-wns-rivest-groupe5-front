@@ -1,17 +1,17 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import * as React from 'react'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Typography from '@mui/material/Typography'
+import { CardActionArea } from '@mui/material'
 
 export default function HomePageCard({
   title,
   content,
   image,
 }: {
-  title: string;
-  content: string;
+  title: string
+  content: string
   image?: any
 }) {
   return (
@@ -23,7 +23,7 @@ export default function HomePageCard({
           width="200"
           image={image}
           alt="wild-activities"
-          style={{objectFit:"contain"}}
+          style={{ objectFit: 'contain' }}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -35,5 +35,5 @@ export default function HomePageCard({
         </CardContent>
       </CardActionArea>
     </Card>
-  );
+  )
 }

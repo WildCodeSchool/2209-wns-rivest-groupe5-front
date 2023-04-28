@@ -9,4 +9,4 @@ export const pieChartOptions = {
       borderWidth: 0,
     },
   },
-};
+}

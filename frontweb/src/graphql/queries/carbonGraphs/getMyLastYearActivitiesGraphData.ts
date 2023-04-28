@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const GET_MY_LAST_YEAR_ACTIVITIES_GRAPH_DATA = gql`
   query GetMyLastYearActivities {
@@ -14,4 +14,4 @@ export const GET_MY_LAST_YEAR_ACTIVITIES_GRAPH_DATA = gql`
       labels
     }
   }
-`;
+`

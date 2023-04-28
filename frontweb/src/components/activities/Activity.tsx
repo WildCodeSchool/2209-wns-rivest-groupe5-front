@@ -1,37 +1,37 @@
-import { Box, Card, CardContent, Typography } from "@mui/material";
-import BasicModal from "../common/Modal";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { DELETE_ACTIVITY } from "../../graphql/mutations/activities/deleteActivityMutation";
-import { IActivity } from "../../interfaces/IActivity";
-import { format } from "date-fns";
-import { theme } from "../../assets/Styles/theme";
+import { Box, Card, CardContent, Typography } from '@mui/material'
+import BasicModal from '../common/Modal'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { useState } from 'react'
+import { useMutation } from '@apollo/client'
+import { DELETE_ACTIVITY } from '../../graphql/mutations/activities/deleteActivityMutation'
+import { IActivity } from '../../interfaces/IActivity'
+import { format } from 'date-fns'
+import { theme } from '../../assets/Styles/theme'
 
 const Activity = ({
   activity,
   updateActivityList,
 }: {
-  activity: IActivity;
-  updateActivityList: () => Promise<void>;
+  activity: IActivity
+  updateActivityList: () => Promise<void>
 }) => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false)
   const [deleteActivity, { loading, error }] = useMutation(DELETE_ACTIVITY, {
     variables: { activityId: activity.activityId },
-  });
+  })
 
   const handleDeleteActivity = async () => {
-    await deleteActivity().catch((error) => console.log(error));
-    await updateActivityList();
-    setIsOpenModal(false);
-  };
+    await deleteActivity().catch((error) => console.log(error))
+    await updateActivityList()
+    setIsOpenModal(false)
+  }
 
   if (loading) {
-    return <div>En cours de chargement...</div>;
+    return <div>En cours de chargement...</div>
   }
 
   if (error) {
-    return <div>Une erreur est survenue : {error.message}</div>;
+    return <div>Une erreur est survenue : {error.message}</div>
   }
 
   return (
@@ -40,7 +40,7 @@ const Activity = ({
         marginTop: 15,
         marginBottom: 15,
         boxShadow:
-          "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+          '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
         borderRadius: 10,
       }}
       key={activity.activityId}
@@ -58,13 +58,13 @@ const Activity = ({
             }}
           >
             {activity.activityType.label}
-          </span>{" "}
-          {activity.activityType.emoji}{" "}
+          </span>{' '}
+          {activity.activityType.emoji}{' '}
           <span style={{ fontSize: 12 }}>
-            {format(new Date(activity.activityDate), "dd/MM/yyyy")}{" "}
+            {format(new Date(activity.activityDate), 'dd/MM/yyyy')}{' '}
           </span>
         </p>
-        <p style={{ fontWeight: "bolder" }}>
+        <p style={{ fontWeight: 'bolder' }}>
           {parseFloat((activity.carbonQuantity / 1000).toFixed(2))} kg de CO2
         </p>
         <p>{activity.description}</p>
@@ -74,10 +74,10 @@ const Activity = ({
           fontSize={12}
           title="Supprimer l'activité"
           sx={{
-            display: "flex",
-            justifyContent: "end",
-            cursor: "pointer",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'end',
+            cursor: 'pointer',
+            alignItems: 'center',
           }}
         >
           Supprimer
@@ -94,7 +94,7 @@ const Activity = ({
         ></BasicModal>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default Activity;
+export default Activity

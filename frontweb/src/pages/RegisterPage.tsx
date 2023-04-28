@@ -1,10 +1,10 @@
-import { gql, useMutation } from "@apollo/client";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserInterface } from "../interfaces/user";
-import LoadingButton from "@mui/lab/LoadingButton";
-import CloseIcon from "@mui/icons-material/Close";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { gql, useMutation } from '@apollo/client'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { UserInterface } from '../interfaces/user'
+import LoadingButton from '@mui/lab/LoadingButton'
+import CloseIcon from '@mui/icons-material/Close'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Link,
   Card,
@@ -18,8 +18,8 @@ import {
   Collapse,
   Alert,
   Stack,
-} from "@mui/material";
-import BasicModal from "../components/common/Modal";
+} from '@mui/material'
+import BasicModal from '../components/common/Modal'
 
 const CREATE_USER = gql`
   mutation CreateUser(
@@ -40,57 +40,56 @@ const CREATE_USER = gql`
       email
     }
   }
-`;
+`
 
 const RegisterPage = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [openError, setOpenError] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] =
-    useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string>("");
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [openError, setOpenError] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false)
+  const [errorMsg, setErrorMsg] = useState<string>('')
+  const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleClickShowPasswordConfirm = () =>
-    setShowPasswordConfirm(!showPasswordConfirm);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+    setShowPasswordConfirm(!showPasswordConfirm)
+  const handleMouseDownPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPasswordConfirm = () =>
-    setShowPasswordConfirm(!showPasswordConfirm);
-  const [passwordsMatching, setPasswordsMatching] = useState<boolean>(true);
+    setShowPasswordConfirm(!showPasswordConfirm)
+  const [passwordsMatching, setPasswordsMatching] = useState<boolean>(true)
   const [userData, setUserData] = useState<UserInterface>({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    passwordconfirm: "",
-    visibility: "private",
-  });
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    passwordconfirm: '',
+    visibility: 'private',
+  })
 
-  const navigate = useNavigate();
-  const [createUser, { loading, error }] = useMutation(CREATE_USER);
+  const navigate = useNavigate()
+  const [createUser, { loading, error }] = useMutation(CREATE_USER)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setOpenError(false);
-    setPasswordsMatching(true);
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    setOpenError(false)
+    setPasswordsMatching(true)
+    setUserData({ ...userData, [e.target.name]: e.target.value })
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const { password, passwordconfirm } = userData;
-    console.log(userData);
+    e.preventDefault()
+    const { password, passwordconfirm } = userData
+    console.log(userData)
     if (
-      userData.email === "" ||
-      userData.firstname === "" ||
-      userData.lastname === "" ||
-      userData.password === "" ||
-      userData.passwordconfirm === ""
+      userData.email === '' ||
+      userData.firstname === '' ||
+      userData.lastname === '' ||
+      userData.password === '' ||
+      userData.passwordconfirm === ''
     ) {
-      setPasswordsMatching(false);
-      setErrorMsg("Please fill in all required fields !");
-      setOpenError(true);
+      setPasswordsMatching(false)
+      setErrorMsg('Please fill in all required fields !')
+      setOpenError(true)
     } else if (password !== passwordconfirm) {
-      setErrorMsg("Passwords do not match !");
-      setOpenError(true);
+      setErrorMsg('Passwords do not match !')
+      setOpenError(true)
     } else {
       createUser({
         variables: {
@@ -100,18 +99,18 @@ const RegisterPage = () => {
           password: userData.password,
         },
         onCompleted(data) {
-          setOpenModal(true);
+          setOpenModal(true)
         },
         onError(error) {
-          setErrorMsg(error.message);
-          setOpenError(true);
+          setErrorMsg(error.message)
+          setOpenError(true)
         },
-      });
+      })
     }
   }
 
   if (error) {
-    setErrorMsg("Error when trying to register");
+    setErrorMsg('Error when trying to register')
   }
 
   return (
@@ -121,10 +120,10 @@ const RegisterPage = () => {
         buttonText="Se connecter"
         openModal={openModal}
         handleClose={() => {
-          setOpenModal(false);
+          setOpenModal(false)
         }}
         action={() => {
-          navigate("/login");
+          navigate('/login')
         }}
         iconType="success"
       />
@@ -136,16 +135,16 @@ const RegisterPage = () => {
             pr: 5,
             pl: 5,
             borderRadius: 4,
-            border: "1px solid",
-            borderColor: "#90CAF9",
+            border: '1px solid',
+            borderColor: '#90CAF9',
           }}
         >
           <CssBaseline />
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
             <Typography component="h1" variant="h5" sx={{ mb: 1 }}>
@@ -160,7 +159,7 @@ const RegisterPage = () => {
                     color="inherit"
                     size="small"
                     onClick={() => {
-                      setOpenError(false);
+                      setOpenError(false)
                     }}
                   >
                     <CloseIcon fontSize="inherit" />
@@ -219,7 +218,7 @@ const RegisterPage = () => {
                 id="password"
                 label="Password"
                 variant="outlined"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 value={userData.password}
                 onChange={handleChange}
                 InputProps={{
@@ -244,7 +243,7 @@ const RegisterPage = () => {
                 id="passwordconfirm"
                 label="Password Confirm"
                 variant="outlined"
-                type={showPasswordConfirm ? "text" : "password"}
+                type={showPasswordConfirm ? 'text' : 'password'}
                 value={userData.passwordconfirm}
                 onChange={handleChange}
                 InputProps={{
@@ -276,8 +275,8 @@ const RegisterPage = () => {
                 Create account
               </LoadingButton>
               <Link
-                onClick={() => navigate("/login")}
-                style={{ cursor: "pointer" }}
+                onClick={() => navigate('/login')}
+                style={{ cursor: 'pointer' }}
               >
                 Se connecter?
               </Link>
@@ -286,7 +285,7 @@ const RegisterPage = () => {
         </Card>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default RegisterPage;
+export default RegisterPage

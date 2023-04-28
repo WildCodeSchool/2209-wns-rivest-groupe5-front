@@ -1,10 +1,5 @@
-
 const Contribution = () => {
-    return (
-      <div>
-        Contribution Page
-      </div>
-    );
+  return <div>Contribution Page</div>
 }
 
-export default Contribution;
+export default Contribution

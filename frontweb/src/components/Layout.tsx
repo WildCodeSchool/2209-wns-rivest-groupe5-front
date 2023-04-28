@@ -1,10 +1,10 @@
-import * as React from 'react';
-import {Theme, styled} from '@mui/material/styles';
-import {SxProps} from '@mui/system';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+import * as React from 'react'
+import { Theme, styled } from '@mui/material/styles'
+import { SxProps } from '@mui/system'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 
-const ProductHeroLayoutRoot = styled('section')(({theme}) => ({
+const ProductHeroLayoutRoot = styled('section')(({ theme }) => ({
   color: theme.palette.common.white,
   position: 'relative',
   display: 'flex',
@@ -14,7 +14,7 @@ const ProductHeroLayoutRoot = styled('section')(({theme}) => ({
     minHeight: 500,
     maxHeight: 1300,
   },
-}));
+}))
 
 const Background = styled(Box)({
   position: 'absolute',
@@ -25,22 +25,22 @@ const Background = styled(Box)({
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
   zIndex: -2,
-});
+})
 
 interface ProductHeroLayoutProps {
-  sxBackground: SxProps<Theme>;
+  sxBackground: SxProps<Theme>
 }
 
 export default function Layout(
-  props: React.HTMLAttributes<HTMLDivElement> & ProductHeroLayoutProps,
+  props: React.HTMLAttributes<HTMLDivElement> & ProductHeroLayoutProps
 ) {
-  const {sxBackground, children} = props;
+  const { sxBackground, children } = props
 
   return (
     <ProductHeroLayoutRoot>
       <Container
-              sx={{
-            height: 850,
+        sx={{
+          height: 850,
           mt: 3,
           mb: 14,
           display: 'flex',
@@ -64,5 +64,5 @@ export default function Layout(
         <Background sx={sxBackground} />
       </Container>
     </ProductHeroLayoutRoot>
-  );
+  )
 }
