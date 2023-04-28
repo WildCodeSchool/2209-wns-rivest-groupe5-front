@@ -2,9 +2,9 @@ name: front-tests-workflow
 
 on:
   push:
-    branches: ["main", "dev"]
+    branches: ['main', 'dev']
   pull_request:
-    branches: ["main", "dev"]
+    branches: ['main', 'dev']
 
 jobs:
   test-client:
@@ -37,5 +37,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: "{{defaultContext}}:frontweb"
+          context: '{{defaultContext}}:frontweb'
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonfront:latest
