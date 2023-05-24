@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import PrivateRoutes from './components/PrivateRoute'
 import AdminPage from './pages/AdminPage'
-import Contribution from './pages/Contribution'
 import GoodDealsFeed from './pages/GoodDealsFeed'
 import GoodDealsForm from './pages/GoodDealsForm'
 import HomePage from './pages/HomePage'
@@ -45,7 +44,6 @@ function App() {
 
             <Route element={<PublicLayout />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/contribution" element={<Contribution />} />
               <Route
                 path="/resetPassword/stepOne"
                 element={<ResetPasswordStepOnePage />}
