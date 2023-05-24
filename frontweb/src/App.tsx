@@ -4,7 +4,6 @@ import './App.css'
 import PrivateRoutes from './components/PrivateRoute'
 import AdminPage from './pages/AdminPage'
 import GoodDealsFeed from './pages/GoodDealsFeed'
-import GoodDealsForm from './pages/GoodDealsForm'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import MyAccount from './pages/MyAccount'
@@ -22,6 +21,7 @@ import PublicLayout from './layout/PublicLayout'
 import { theme } from './assets/Styles/theme'
 import AllActivityListPage from './pages/AllActivityListPage'
 import GoodDealDetails from './pages/GoodDealDetails'
+import GoodDealsForm from './pages/GoodDealsForm'
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState)
@@ -76,7 +76,7 @@ function App() {
                   path="/followed-activities-feed"
                   element={<FollowedUsersActivitiesList />}
                 />
-                <Route path="/good-deals-form" element={<GoodDealsForm />} />
+                <Route path="/good-deals-form" element={ <GoodDealsForm/>} />
                 <Route path="/my-account" element={<MyAccount />} />
                 <Route path="/profile/:userId" element={<ProfilePage />} />
                 <Route
