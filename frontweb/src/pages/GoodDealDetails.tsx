@@ -310,9 +310,9 @@ const GoodDealDetails = () => {
               }}
             >
               <Avatar alt="user" src={avatar} sx={{ mr: 2 }} />
-              Partagé par{' '}
+              Partagé par&nbsp;
               <strong>
-              {' '}{goodDeal.user.firstname} {goodDeal.user.lastname}
+              {goodDeal.user.firstname} {goodDeal.user.lastname}
               </strong>
             </Box>
           </Box>
