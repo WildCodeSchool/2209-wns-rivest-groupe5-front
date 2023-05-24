@@ -16,7 +16,7 @@ import CarbonGraphEmissions from '../../components/carbonGraph/stackedGraph/Carb
 import CarbonGraphSums from '../../components/carbonGraph/pieGraph/CarbonGraphSums'
 import { GET_MY_ACTIVITIES } from '../../graphql/queries/activities/getMyActivitiesQuery'
 import { GET_TOTAL_SUMS_ACTIVITIES_GRAPH_DATA } from '../../graphql/queries/carbonGraphs/getTotalSumsActivitiesGraphData'
-import AllActivityListPage from '../AllActivityListPage'
+import ActivityListPage from '../ActivityListPage'
 
 const Dashboard = () => {
   type barChartTimeUnitType = 'week' | 'month' | 'year'
@@ -164,7 +164,7 @@ const Dashboard = () => {
         </Grid>
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-            <AllActivityListPage />
+            <ActivityListPage isAllList={false} />
           </Paper>
         </Grid>
       </Grid>
