@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import { GET_GOOD_DEAL } from '../graphql/queries/goodDeals/getGoodDeal'
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import Skeleton from '@mui/material/Skeleton'
 import { differenceInDays, differenceInHours } from 'date-fns'
 import Checkbox from '@mui/material/Checkbox'
@@ -14,21 +14,50 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import Avatar from '@mui/material/Avatar'
+import { useEffect, useState } from 'react'
+import { TOGGLE_VOTE } from '../graphql/mutations/goodDealVote/toggleVote'
+import {GET_GOOD_DEAL_VOTE_BY_USER} from '../graphql/queries/goodDealVote/getGoodDealVoteByUser'
 
 const GoodDealDetails = () => {
   const { goodDealId } = useParams()
   const navigate = useNavigate()
-
-  const { data, error, loading } = useQuery(GET_GOOD_DEAL, {
+  const [disliked, setDisliked] = useState(false)
+  const [liked, setLiked] = useState(false)
+  const { data, error, loading, refetch } = useQuery(GET_GOOD_DEAL, {
     fetchPolicy: 'no-cache',
     variables: {
       id: parseInt(goodDealId!),
     },
   })
 
-  if (error) {
+  const { data: dataGetVote, error : errorGetVote, loading :loadingGetVote } = useQuery(GET_GOOD_DEAL_VOTE_BY_USER, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      id: parseInt(goodDealId!),
+    }
+  })
+
+  const vote = dataGetVote?.getGoodDealVoteByUser;
+  console.log(vote)
+  useEffect(() => {
+    if(vote && vote.length !== 0){
+      if(vote[0].value === 1){
+        setLiked(true);
+      } else {
+        setDisliked(true);
+      }
+    }
+  }, [dataGetVote]);
+
+
+  const [toggleGoodDealVote, { loading: voteLoading, error: voteError }] = useMutation(TOGGLE_VOTE)
+  
+
+  if (error || voteError || errorGetVote) {
     return <div>Error</div>
-  } else if (loading) {
+  }
+  
+  if (loading || voteLoading || loadingGetVote) {
     return (
       <Container>
         <Box
@@ -101,9 +130,11 @@ const GoodDealDetails = () => {
         </Box>
       </Container>
     )
-  } else {
-    const goodDeal = data.getGoodDeal
+  } 
 
+  const goodDeal = data.getGoodDeal
+  
+  
     const src =
       goodDeal.image !== ''
         ? goodDeal.image
@@ -119,6 +150,34 @@ const GoodDealDetails = () => {
       new Date(),
       new Date(goodDeal.createdAt)
     )
+
+    
+
+    const handleDislike = async () => {
+      setDisliked(true)
+      setLiked(false)
+      await toggleGoodDealVote({
+        variables: { 
+          goodDealId: parseInt(goodDealId!),
+          value: -1 
+        },
+      }).then(() => {
+        refetch()
+      })
+    }
+
+    const handleLike = async () => {
+      setDisliked(false)
+      setLiked(true)
+      await toggleGoodDealVote({
+        variables: { 
+          goodDealId: parseInt(goodDealId!),
+          value: 1
+        },
+      }).then(() => {
+        refetch()
+      })
+    }
 
     return (
       <Container>
@@ -228,11 +287,16 @@ const GoodDealDetails = () => {
                   <Checkbox
                     icon={<ThumbDownOffAltIcon />}
                     checkedIcon={<ThumbDownAltIcon />}
+                    color='error'
+                    onClick={handleDislike}
+                    checked={disliked}
                   />
-                  Nombre de like
+                  {goodDeal.total}
                   <Checkbox
                     icon={<ThumbUpOffAltIcon />}
                     checkedIcon={<ThumbUpAltIcon />}
+                    onClick={handleLike}
+                    checked={liked}
                   />
                 </Stack>
               </Box>
@@ -246,10 +310,9 @@ const GoodDealDetails = () => {
               }}
             >
               <Avatar alt="user" src={avatar} sx={{ mr: 2 }} />
-              Partagé par
+              Partagé par{' '}
               <strong>
-                {' '}
-                {goodDeal.user.firstname} {goodDeal.user.lastname}
+              {' '}{goodDeal.user.firstname} {goodDeal.user.lastname}
               </strong>
             </Box>
           </Box>
@@ -272,7 +335,7 @@ const GoodDealDetails = () => {
         </Box>
       </Container>
     )
-  }
+  
 }
 
 export default GoodDealDetails

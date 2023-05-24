@@ -16,6 +16,7 @@ export const GET_GOOD_DEAL = gql`
         lastname
         avatar
       }
+      total
     }
   }
 `
