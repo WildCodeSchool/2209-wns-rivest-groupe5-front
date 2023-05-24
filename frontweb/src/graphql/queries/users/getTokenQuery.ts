@@ -10,6 +10,7 @@ export const GET_TOKEN_LOGIN = gql`
         firstname
         lastname
         visibility
+        avatar
       }
     }
   }
