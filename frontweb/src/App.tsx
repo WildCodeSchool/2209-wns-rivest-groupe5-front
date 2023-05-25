@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import PrivateRoutes from './components/PrivateRoute'
@@ -23,16 +22,22 @@ import GoodDealDetails from './pages/GoodDealDetails'
 import ActivityListPage from './pages/ActivityListPage'
 import CreateActivityPage from './pages/CreateActivityPage'
 import GoodDealsForm from './pages/GoodDealsForm'
+import { useQuery } from '@apollo/client'
+import { GET_MY_USER_DATA } from './graphql/queries/users/getMyUserData'
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState)
-  console.log('>>>>Current user >>>', user)
-  useEffect(() => {
-    const currentUserInLocalStorage = JSON.parse(
-      localStorage.getItem('user') || '{}'
-    )
-    setUser(currentUserInLocalStorage)
-  }, [])
+
+  // will try to use a token from localstorage to make connexion
+  useQuery(GET_MY_USER_DATA, {
+    onCompleted(data) {
+      setUser(data.getMyUserData)
+    },
+    onError() {
+      setUser(null)
+      localStorage.removeItem('token')
+    },
+  })
 
   return (
     <div>
@@ -77,7 +82,7 @@ function App() {
                   path="/followed-activities-feed"
                   element={<FollowedUsersActivitiesList />}
                 />
-                <Route path="/good-deals-form" element={ <GoodDealsForm/>} />
+                <Route path="/good-deals-form" element={<GoodDealsForm />} />
                 <Route path="/my-account" element={<MyAccount />} />
                 <Route path="/profile/:userId" element={<ProfilePage />} />
                 <Route
