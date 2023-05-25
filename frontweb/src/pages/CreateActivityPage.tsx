@@ -156,7 +156,7 @@ const CreateActivityPage = () => {
       <Typography
         component="h1"
         variant="h5"
-        sx={{ mb: 1, textAlign: 'center' }}
+        sx={{ mt:10,mb: 1, textAlign: 'center' }}
       >
         PARTAGEZ VOS ACTIVITES!
       </Typography>
