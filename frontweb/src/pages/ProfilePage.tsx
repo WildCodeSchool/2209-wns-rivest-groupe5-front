@@ -232,6 +232,7 @@ const ProfilePage = () => {
                 data={allActivities}
                 forCurrentUser={false}
                 updateActivityList={updateActivityList}
+                isAllList={false}
               />
             </Paper>
           </Grid>
