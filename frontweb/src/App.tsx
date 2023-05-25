@@ -19,8 +19,9 @@ import Dashboard from './pages/dashboard/Dashboard'
 import FollowedUsersActivitiesList from './pages/FollowedUsersAcitivities'
 import PublicLayout from './layout/PublicLayout'
 import { theme } from './assets/Styles/theme'
-import AllActivityListPage from './pages/AllActivityListPage'
 import GoodDealDetails from './pages/GoodDealDetails'
+import ActivityListPage from './pages/ActivityListPage'
+import CreateActivityPage from './pages/CreateActivityPage'
 import GoodDealsForm from './pages/GoodDealsForm'
 
 function App() {
@@ -85,7 +86,11 @@ function App() {
                 />
                 <Route
                   path="/my-activities"
-                  element={<AllActivityListPage />}
+                  element={<ActivityListPage isAllList={true} />}
+                />
+                <Route
+                  path="/create-activity"
+                  element={<CreateActivityPage />}
                 />
               </Route>
             </Route>

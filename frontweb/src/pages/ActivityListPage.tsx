@@ -4,7 +4,7 @@ import { useLazyQuery } from '@apollo/client'
 import { GET_MY_ACTIVITIES } from '../graphql/queries/activities/getMyActivitiesQuery'
 import ActivityList from '../components/ActivityList'
 
-const AllActivityListPage = () => {
+const ActivityListPage = ({ isAllList }: { isAllList: boolean }) => {
   const [allActivities, setAllActivities] = useState<IActivity[]>()
 
   const [getMyActivities, { loading, error }] = useLazyQuery(
@@ -39,8 +39,9 @@ const AllActivityListPage = () => {
       data={allActivities}
       forCurrentUser={true}
       updateActivityList={updateActivityList}
+      isAllList={isAllList}
     />
   )
 }
 
-export default AllActivityListPage
+export default ActivityListPage
