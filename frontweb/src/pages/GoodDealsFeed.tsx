@@ -1,36 +1,41 @@
-import { useRecoilValue } from 'recoil'
-import { currentUserState } from '../atom/currentUserAtom'
-import { useQuery } from '@apollo/client'
+import { DocumentNode, useQuery } from '@apollo/client'
 import Card from '@mui/material/Card'
-import { CardContent, Container, Typography } from '@mui/material'
-import { GET_ALL_GOOD_DEALS } from '../graphql/queries/goodDeals/getAllGoodDeals'
+import { Box, Button, CardContent, Container, Typography } from '@mui/material'
 import { format } from 'date-fns'
-import Button from '@mui/material/Button'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 
-const GoodDealsFeed = () => {
-  const navigate = useNavigate()
-
-  const currentUser = useRecoilValue(currentUserState)
-
+const GoodDealsFeed = ({
+  isCurrentUser,
+  getGoodDealsQuery,
+}: {
+  isCurrentUser: boolean
+  getGoodDealsQuery: DocumentNode
+}) => {
   const url = require('../assets/default-placeholder.png')
 
-  const { data, error, loading } = useQuery(GET_ALL_GOOD_DEALS, {
+  const { data, error, loading } = useQuery(getGoodDealsQuery, {
     fetchPolicy: 'no-cache',
   })
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>En cours de chargement...</div>
   }
 
   if (error) {
-    return <div>Error ...</div>
+    return <div>Une erreur est survenue : {error.message}</div>
   }
+
+  const goodDeals = isCurrentUser
+    ? data?.getAllMyGoodDeals
+    : data?.getAllGoodDeals
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h3">Feed Good Deals</Typography>
-      {data.getAllGoodDeals
+      <Typography variant="h3">
+        {isCurrentUser ? 'Mes bons plans' : 'Tous les bons plans'}
+      </Typography>
+      {goodDeals
         .sort(
           (a: any, b: any) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -47,12 +52,18 @@ const GoodDealsFeed = () => {
               }}
               key={e.goodDealId}
             >
-              <CardContent className="wc-flex">
+              <CardContent
+                className="wc-flex"
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 {e.image && (
                   <div>
                     <img
                       src={e.image}
-                      alt=""
+                      alt={e.goodDealTitle}
                       className="wc-image-gooddeals"
                     ></img>
                   </div>
@@ -63,32 +74,33 @@ const GoodDealsFeed = () => {
                   </div>
                 )}
                 <div className="ml-15 w-75">
-                  <h3>
-                    {e.goodDealId}. {e.goodDealTitle}
-                  </h3>
+                  <Typography variant="h3">{e.goodDealTitle}</Typography>
                   <p>
                     <span style={{ fontSize: 12 }}>
                       {format(new Date(e.createdAt), 'dd/MM/yyyy')}{' '}
                     </span>
                   </p>
-                  <p style={{ fontWeight: 'bolder' }}>
-                    {e.user.firstname} {e.user.lastname}
-                  </p>
-                  <p>{e.goodDealContent}</p>
+                  {!isCurrentUser && (
+                    <p style={{ fontWeight: 'bolder' }}>
+                      {e.user.firstname} {e.user.lastname}
+                    </p>
+                  )}
+
+                  <p>{e.goodDealContent.substr(0, 80) + '...'}</p>
                 </div>
-                {currentUser?.firstname !== undefined && (
-                  <div className="btn-container">
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        navigate('/good-deal/' + e.goodDealId)
-                      }}
-                    >
-                      Voir le deal
-                    </Button>
-                  </div>
-                )}
               </CardContent>
+              <Box display="flex" justifyContent="end" margin={2}>
+                <Button
+                  variant="contained"
+                  sx={{ bgcolor: 'primary', ml: 2, fontSize: 'small' }}
+                  startIcon={<AddCircleIcon />}
+                  size="small"
+                  component={Link}
+                  to={'/good-deal/' + e.goodDealId}
+                >
+                  Voir les détails
+                </Button>
+              </Box>
             </Card>
           )
         })}

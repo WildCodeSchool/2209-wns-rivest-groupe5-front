@@ -16,7 +16,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import Avatar from '@mui/material/Avatar'
 import { useEffect, useState } from 'react'
 import { TOGGLE_VOTE } from '../graphql/mutations/goodDealVote/toggleVote'
-import {GET_GOOD_DEAL_VOTE_BY_USER} from '../graphql/queries/goodDealVote/getGoodDealVoteByUser'
+import { GET_GOOD_DEAL_VOTE_BY_USER } from '../graphql/queries/goodDealVote/getGoodDealVoteByUser'
 
 const GoodDealDetails = () => {
   const { goodDealId } = useParams()
@@ -30,33 +30,36 @@ const GoodDealDetails = () => {
     },
   })
 
-  const { data: dataGetVote, error : errorGetVote, loading :loadingGetVote } = useQuery(GET_GOOD_DEAL_VOTE_BY_USER, {
+  const {
+    data: dataGetVote,
+    error: errorGetVote,
+    loading: loadingGetVote,
+  } = useQuery(GET_GOOD_DEAL_VOTE_BY_USER, {
     fetchPolicy: 'no-cache',
     variables: {
       id: parseInt(goodDealId!),
-    }
+    },
   })
 
-  const vote = dataGetVote?.getGoodDealVoteByUser;
+  const vote = dataGetVote?.getGoodDealVoteByUser
   console.log(vote)
   useEffect(() => {
-    if(vote && vote.length !== 0){
-      if(vote[0].value === 1){
-        setLiked(true);
+    if (vote && vote.length !== 0) {
+      if (vote[0].value === 1) {
+        setLiked(true)
       } else {
-        setDisliked(true);
+        setDisliked(true)
       }
     }
-  }, [dataGetVote]);
+  }, [dataGetVote])
 
-
-  const [toggleGoodDealVote, { loading: voteLoading, error: voteError }] = useMutation(TOGGLE_VOTE)
-  
+  const [toggleGoodDealVote, { loading: voteLoading, error: voteError }] =
+    useMutation(TOGGLE_VOTE)
 
   if (error || voteError || errorGetVote) {
     return <div>Error</div>
   }
-  
+
   if (loading || voteLoading || loadingGetVote) {
     return (
       <Container>
@@ -99,9 +102,9 @@ const GoodDealDetails = () => {
                 navigate('/good-deals-feed')
               }}
             >
-              Feed good deals
+              Tous les bons plans
             </Typography>
-            <Typography color="text.primary">Good deal {goodDealId}</Typography>
+            <Typography color="text.primary">Bon plan {goodDealId}</Typography>
           </Breadcrumbs>
         </Box>
 
@@ -130,212 +133,205 @@ const GoodDealDetails = () => {
         </Box>
       </Container>
     )
-  } 
+  }
 
   const goodDeal = data.getGoodDeal
-  
-  
-    const src =
-      goodDeal.image !== ''
-        ? goodDeal.image
-        : require('../assets/default-placeholder.png')
 
-    const avatar =
-      goodDeal.user.avatar !== ''
-        ? goodDeal.user.avatar
-        : require('../assets/default-user.png')
+  const src =
+    goodDeal.image !== ''
+      ? goodDeal.image
+      : require('../assets/default-placeholder.png')
 
-    const diff = differenceInDays(new Date(), new Date(goodDeal.createdAt))
-    const diffHours = differenceInHours(
-      new Date(),
-      new Date(goodDeal.createdAt)
-    )
+  const avatar =
+    goodDeal.user.avatar !== ''
+      ? goodDeal.user.avatar
+      : require('../assets/default-user.png')
 
-    
+  const diff = differenceInDays(new Date(), new Date(goodDeal.createdAt))
+  const diffHours = differenceInHours(new Date(), new Date(goodDeal.createdAt))
 
-    const handleDislike = async () => {
-      setDisliked(true)
-      setLiked(false)
-      await toggleGoodDealVote({
-        variables: { 
-          goodDealId: parseInt(goodDealId!),
-          value: -1 
-        },
-      }).then(() => {
-        refetch()
-      })
-    }
+  const handleDislike = async () => {
+    setDisliked(true)
+    setLiked(false)
+    await toggleGoodDealVote({
+      variables: {
+        goodDealId: parseInt(goodDealId!),
+        value: -1,
+      },
+    }).then(() => {
+      refetch()
+    })
+  }
 
-    const handleLike = async () => {
-      setDisliked(false)
-      setLiked(true)
-      await toggleGoodDealVote({
-        variables: { 
-          goodDealId: parseInt(goodDealId!),
-          value: 1
-        },
-      }).then(() => {
-        refetch()
-      })
-    }
+  const handleLike = async () => {
+    setDisliked(false)
+    setLiked(true)
+    await toggleGoodDealVote({
+      variables: {
+        goodDealId: parseInt(goodDealId!),
+        value: 1,
+      },
+    }).then(() => {
+      refetch()
+    })
+  }
 
-    return (
-      <Container>
-        <Box
+  return (
+    <Container>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          mb: 3,
+          background: 'white',
+          borderRadius: 3,
+          p: 3,
+        }}
+      >
+        <Stack
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
-            mb: 3,
-            background: 'white',
-            borderRadius: 3,
-            p: 3,
+            '&:hover': {
+              cursor: 'pointer',
+            },
+          }}
+          onClick={() => {
+            navigate('/good-deals-feed')
           }}
         >
-          <Stack
+          <ArrowBackIcon sx={{ mr: 2 }} />
+          Retour
+        </Stack>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Typography
+            color="text.secondary"
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
               '&:hover': {
                 cursor: 'pointer',
+                textDecoration: 'underline',
               },
             }}
             onClick={() => {
               navigate('/good-deals-feed')
             }}
           >
-            <ArrowBackIcon sx={{ mr: 2 }} />
-            Retour
-          </Stack>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Typography
-              color="text.secondary"
-              sx={{
-                '&:hover': {
-                  cursor: 'pointer',
-                  textDecoration: 'underline',
-                },
-              }}
-              onClick={() => {
-                navigate('/good-deals-feed')
-              }}
-            >
-              Feed good deals
-            </Typography>
-            <Typography color="text.primary">Good deal {goodDealId}</Typography>
-          </Breadcrumbs>
-        </Box>
+            Tous les bons plans
+          </Typography>
+          <Typography color="text.primary">Good deal {goodDealId}</Typography>
+        </Breadcrumbs>
+      </Box>
 
+      <Box
+        sx={{
+          background: 'white',
+          borderRadius: 3,
+          display: 'flex',
+          flexDirection: 'row',
+          height: '200px',
+          mb: 3,
+        }}
+      >
         <Box
           sx={{
-            background: 'white',
-            borderRadius: 3,
             display: 'flex',
-            flexDirection: 'row',
-            height: '200px',
-            mb: 3,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
+          width="25%"
+          height="100%"
         >
+          <img src={src} alt="" className="image-good-deal"></img>
+        </Box>
+        <Box
+          sx={{ p: 3, display: 'flex', flexDirection: 'column' }}
+          width="75%"
+        >
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: 700, textAlign: 'center', mb: 3 }}
+          >
+            {goodDeal.goodDealTitle}
+          </Typography>
           <Box
             sx={{
               display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              justifyContent: 'center',
+              mb: 3,
             }}
-            width="25%"
-            height="100%"
           >
-            <img src={src} alt="" className="image-good-deal"></img>
+            <Typography color="text.secondary" fontSize="12px">
+              Publié il y a{' '}
+              {diff > 0
+                ? diff > 1
+                  ? diff + ' jours'
+                  : diff + ' jour'
+                : diffHours > 1
+                ? diffHours + ' heures'
+                : diffHours + ' heure'}
+            </Typography>
+            <Box>
+              <Stack
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <Checkbox
+                  icon={<ThumbDownOffAltIcon />}
+                  checkedIcon={<ThumbDownAltIcon />}
+                  color="error"
+                  onClick={handleDislike}
+                  checked={disliked}
+                />
+                {goodDeal.total}
+                <Checkbox
+                  icon={<ThumbUpOffAltIcon />}
+                  checkedIcon={<ThumbUpAltIcon />}
+                  onClick={handleLike}
+                  checked={liked}
+                />
+              </Stack>
+            </Box>
           </Box>
           <Box
-            sx={{ p: 3, display: 'flex', flexDirection: 'column' }}
-            width="75%"
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: 700, textAlign: 'center', mb: 3 }}
-            >
-              {goodDeal.goodDealTitle}
-            </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                mb: 3,
-              }}
-            >
-              <Typography color="text.secondary" fontSize="12px">
-                Publié il y a{' '}
-                {diff > 0
-                  ? diff > 1
-                    ? diff + ' jours'
-                    : diff + ' jour'
-                  : diffHours > 1
-                  ? diffHours + ' heures'
-                  : diffHours + ' heure'}
-              </Typography>
-              <Box>
-                <Stack
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Checkbox
-                    icon={<ThumbDownOffAltIcon />}
-                    checkedIcon={<ThumbDownAltIcon />}
-                    color='error'
-                    onClick={handleDislike}
-                    checked={disliked}
-                  />
-                  {goodDeal.total}
-                  <Checkbox
-                    icon={<ThumbUpOffAltIcon />}
-                    checkedIcon={<ThumbUpAltIcon />}
-                    onClick={handleLike}
-                    checked={liked}
-                  />
-                </Stack>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Avatar alt="user" src={avatar} sx={{ mr: 2 }} />
-              Partagé par&nbsp;
-              <strong>
+            <Avatar alt="user" src={avatar} sx={{ mr: 2 }} />
+            Partagé par&nbsp;
+            <strong>
               {goodDeal.user.firstname} {goodDeal.user.lastname}
-              </strong>
-            </Box>
+            </strong>
           </Box>
         </Box>
+      </Box>
 
-        <Box
-          sx={{
-            background: 'white',
-            borderRadius: 3,
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '200px',
-            p: 3,
-          }}
-        >
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            A propos de ce deal :
-          </Typography>
-          <Typography>{goodDeal.goodDealContent}</Typography>
-        </Box>
-      </Container>
-    )
-  
+      <Box
+        sx={{
+          background: 'white',
+          borderRadius: 3,
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '200px',
+          p: 3,
+        }}
+      >
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          A propos de ce deal :
+        </Typography>
+        <Typography>{goodDeal.goodDealContent}</Typography>
+      </Box>
+    </Container>
+  )
 }
 
 export default GoodDealDetails

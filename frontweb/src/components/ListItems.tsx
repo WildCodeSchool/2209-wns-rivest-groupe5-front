@@ -8,6 +8,7 @@ import DynamicFeedIcon from '@mui/icons-material/DynamicFeed'
 import AddIcon from '@mui/icons-material/Add'
 import Co2Icon from '@mui/icons-material/Co2'
 import PeopleIcon from '@mui/icons-material/People'
+import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 
 const linkStyle = {
   textDecoration: 'none',
@@ -32,6 +33,16 @@ export const mainListItems = (
         <ListItemText primary="Mes activités" />
       </ListItemButton>
     </Link>
+
+    <Link to="/create-activity" style={linkStyle}>
+      <ListItemButton>
+        <ListItemIcon>
+          <AddIcon />
+        </ListItemIcon>
+        <ListItemText primary="Créer une activité" />
+      </ListItemButton>
+    </Link>
+
     <Link to="/followed-activities-feed" style={linkStyle}>
       <ListItemButton>
         <ListItemIcon>
@@ -45,7 +56,15 @@ export const mainListItems = (
         <ListItemIcon>
           <DynamicFeedIcon />
         </ListItemIcon>
-        <ListItemText primary="Feed Good Deals" />
+        <ListItemText primary="Tous les bons plans" />
+      </ListItemButton>
+    </Link>
+    <Link to="/my-good-deals" style={linkStyle}>
+      <ListItemButton>
+        <ListItemIcon>
+          <LocalOfferIcon />
+        </ListItemIcon>
+        <ListItemText primary="Mes bons plans" />
       </ListItemButton>
     </Link>
     <Link to="/good-deals-form" style={linkStyle}>
@@ -53,7 +72,7 @@ export const mainListItems = (
         <ListItemIcon>
           <AddIcon />
         </ListItemIcon>
-        <ListItemText primary="New Good Deal" />
+        <ListItemText primary="Créer un bon plan" />
       </ListItemButton>
     </Link>
   </React.Fragment>

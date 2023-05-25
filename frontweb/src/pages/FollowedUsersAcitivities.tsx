@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { IActivity } from '../interfaces/IActivity'
-import { Box, Card, CardContent } from '@mui/material'
+import { Box, Card, CardContent, Container } from '@mui/material'
 import { format } from 'date-fns'
 import { GET_FOLLOWED_USERS_ACTIVITIES } from '../graphql/queries/activities/getFollowedUsersActivitiesQuery'
 import { Link } from 'react-router-dom'
@@ -19,7 +19,7 @@ const FollowedUsersActivitiesList = () => {
   }
 
   return (
-    <Box>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <h2>Activités de ma communauté</h2>
       {data.getAllUsersFollowedLastSevenDaysActivities &&
       data.getAllUsersFollowedLastSevenDaysActivities.length === 0 ? (
@@ -68,7 +68,7 @@ const FollowedUsersActivitiesList = () => {
           }
         )
       )}
-    </Box>
+    </Container>
   )
 }
 

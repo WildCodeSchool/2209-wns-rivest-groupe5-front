@@ -1,5 +1,5 @@
 import { IActivity } from '../interfaces/IActivity'
-import { Box, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import { theme } from '../assets/Styles/theme'
 import Activity from './activities/Activity'
@@ -35,7 +35,7 @@ const ActivityList = ({
   })
 
   return (
-    <Box>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h2">
         {isAllList ? 'Mes activités' : 'Mes dernières activités'}
       </Typography>
@@ -81,7 +81,7 @@ const ActivityList = ({
           </Box>
         </>
       )}
-    </Box>
+    </Container>
   )
 }
 
