@@ -1,6 +1,6 @@
 import { DocumentNode, useQuery } from '@apollo/client'
 import Card from '@mui/material/Card'
-import { Box, CardContent, Container, Typography } from '@mui/material'
+import { Box, Button, CardContent, Container, Typography } from '@mui/material'
 import { format } from 'date-fns'
 import { Link } from 'react-router-dom'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
@@ -88,15 +88,19 @@ const GoodDealsFeed = ({
 
                   <p>{e.goodDealContent.substr(0, 80) + '...'}</p>
                 </div>
-                <Box style={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <Link
-                    to={'/good-deal/' + e.goodDealId}
-                    title="Voir les détails"
-                  >
-                    <AddCircleIcon color="primary" />
-                  </Link>
-                </Box>
               </CardContent>
+              <Box display="flex" justifyContent="end" margin={2}>
+                <Button
+                  variant="contained"
+                  sx={{ bgcolor: 'primary', ml: 2, fontSize: 'small' }}
+                  startIcon={<AddCircleIcon />}
+                  size="small"
+                  component={Link}
+                  to={'/good-deal/' + e.goodDealId}
+                >
+                  Voir les détails
+                </Button>
+              </Box>
             </Card>
           )
         })}
