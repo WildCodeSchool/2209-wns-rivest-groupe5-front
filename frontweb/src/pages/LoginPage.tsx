@@ -47,7 +47,6 @@ const LoginPage = () => {
       variables: { email, password },
       onCompleted(data) {
         localStorage.setItem('token', data.getToken.token)
-        localStorage.setItem('user', JSON.stringify(data.getToken.userFromDB))
         setUser(data.getToken.userFromDB)
         navigate('/dashboard')
       },
