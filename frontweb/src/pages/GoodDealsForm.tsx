@@ -1,211 +1,218 @@
-import { gql, useMutation } from '@apollo/client'
-import axios from 'axios'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import Box from '@mui/material/Box'
-import Stack from '@mui/material/Stack'
-import TextField from '@mui/material/TextField'
-import LoadingButton from '@mui/lab/LoadingButton'
-import CircularProgress from '@mui/material/CircularProgress'
-import { Controller, useForm } from 'react-hook-form'
+import { useMutation } from '@apollo/client'
+import CloseIcon from '@mui/icons-material/Close'
+import * as React from 'react'
 import { useState } from 'react'
-import { Typography } from '@mui/material'
+import {
+  Alert,
+  Box,
+  Button,
+  Collapse,
+  IconButton,
+  Snackbar,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { uploadPictureToCloudinary } from '../utils/upLoadPictureToCloudinary'
+import { LoadingButton } from '@mui/lab'
+import { useNavigate } from 'react-router-dom'
+import CREATE_GOOD_DEAL from '../graphql/queries/goodDeals/createGoodDeal'
 
-async function uploadPictureToCloudinary(fileToUpload: File) {
-  try {
-    const formData = new FormData()
-    formData.append('file', fileToUpload)
-    // const endpoint = manifest?.debuggerHost && `http://${manifest.debuggerHost.split(":").shift()}:4040/upload`;
-    const endpoint = 'http://localhost:4040/upload'
-    const response = await axios({
-      method: 'post',
-      url: endpoint,
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-    // console.log(">>>>URL FROM CLOUDINARY", response.data.secure_url);
-    return response.data.secure_url
-  } catch (error) {
-    console.log('>>>error uploading file>>>', error)
-    alert('Picture upload failed')
-  }
-}
-
-const CREATE_GOOD_DEAL = gql`
-  mutation CreateGoodDeal($data: CreateGoodDealInput!) {
-    createGoodDeal(data: $data) {
-      goodDealTitle
-      goodDealContent
-      goodDealLink
-      image
-    }
-  }
-`
-
-const errorStyle = { color: 'red', fontSize: '10px' }
 
 const GoodDealsForm = () => {
-  const [fileCloudinaryUrl, setFileCloudinaryUrl] = useState('')
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [link, setLink] = useState('')
+  const [imageToUpload, setImageToUpload] = useState<File>()
+  const [isSendingImage, setIsSendingImage] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
+  const [openError, setOpenError] = useState(false)
+  const [isSnackBarOpen, setIsSnackBarOpen] = useState(false)
+
+  const navigate = useNavigate()
   const [createGoodDeal, { loading: loadingGoodDealCreation, error }] =
     useMutation(CREATE_GOOD_DEAL)
 
-  const schema = z.object({
-    goodDealTitle: z
-      .string()
-      .min(3, { message: '3 caractères minimum' })
-      .max(50, { message: '50 caractères max' }),
-    goodDealContent: z
-      .string()
-      .min(3, { message: '3 caractères minimum' })
-      .max(50, { message: '50 caractères max' }),
-    goodDealLink: z.string().max(500, { message: '500 caractères max' }),
-    image: z.string().max(500, { message: '500 caractères max' }),
-  })
-
-  const {
-    control,
-    handleSubmit,
-    resetField,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      goodDealTitle: '',
-      goodDealContent: '',
-      goodDealLink: '',
-      image: '',
-    },
-    resolver: zodResolver(schema),
-  })
-
-  const onSubmit = (data: any) => {
-    // console.log(">>>>data submitted >>>>", data);
-    createGoodDeal({
+  function triggerCreateGoodDeal(cloudinaryLink?: string) {
+    return createGoodDeal({
       variables: {
         data: {
-          goodDealTitle: data.goodDealTitle,
-          goodDealContent: data.goodDealContent,
-          goodDealLink: data.goodDealLink,
-          image: fileCloudinaryUrl,
+          goodDealTitle: title,
+          goodDealContent: content,
+          goodDealLink: link,
+          image: cloudinaryLink ? cloudinaryLink : null,
         },
       },
-      onCompleted() {
-        resetField('goodDealTitle')
-        resetField('goodDealContent')
-        resetField('goodDealLink')
-        resetField('image')
-        alert('Good deal published with success')
-        //navigate to the new good deal details or to good deals list
+      onCompleted(data) {
+        setIsSendingImage(false)
+        setIsSnackBarOpen(true)
+        setTimeout(() => navigate('/good-deals-feed'), 2000)
       },
       onError(error) {
-        console.log('>>>>ERROR GOOD DEAL CREATION FAILED >>>>', error.message)
-        alert('Good deal creation failed')
+        setIsSendingImage(false)
+        setErrorMsg('La publication a échoué')
+        setOpenError(true)
       },
     })
   }
 
-  if (loadingGoodDealCreation) {
-    return (
-      <Box sx={{ display: 'flex', width: '100%', height: '100%' }}>
-        <CircularProgress />
-      </Box>
-    )
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    // check if all required fields are provided
+    if (title === '' || content === '') {
+      setErrorMsg('Merci de fournir un titre et une description!')
+      setOpenError(true)
+      return
+    }
+    // if no image uploaded by user=> create good deal without image
+    if (!imageToUpload) {
+      triggerCreateGoodDeal()
+    } else {
+      // if an image was uploaded in the form => send this image to cloudinary to get url
+      setIsSendingImage(true)
+      const imageUrlFromCloudinary = await uploadPictureToCloudinary(
+        imageToUpload
+      )
+      // if image upload to cloudinary failed => create good deal without image
+      if (imageUrlFromCloudinary.includes('Failed to upload picture')) {
+        triggerCreateGoodDeal()
+      } else {
+        // if image upload to cloudinary is successful create good deal with image
+        triggerCreateGoodDeal(imageUrlFromCloudinary)
+      }
+    }
   }
 
-  if (error) {
-    return <h1>Error: good deal creation failed</h1>
+  function handleCloseSnackBar(event: React.SyntheticEvent | Event) {
+    setIsSnackBarOpen(false)
   }
 
   return (
-    <Box
-      sx={{
-        background: '#FFFFFF',
-        width: '30%',
-        // margin: "auto",
-        margin: '10px auto 10px auto',
-        padding: '0px 20px 0px 20px',
-        // border: "2px solid red",
-        borderRadius: '30px',
-        display: 'flex',
-        flexDirection: 'column',
-        paddingBottom: '40px',
-      }}
-    >
-      <Typography
-        sx={{
-          fontWeight: 'bold',
-          alignContent: 'center',
-          textAlign: 'center',
-          fontSize: '40px',
-          marginTop: 5,
-          marginBottom: 5,
-        }}
+    <>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        noValidate
+        sx={{ mt: 2, width: '50%', margin: '0 auto' }}
       >
-        {' '}
-        Partages tes bons plans!
-      </Typography>
-      <Stack spacing={4}>
-        <Controller
-          name="goodDealTitle"
-          control={control}
-          render={({ field }) => (
-            <TextField {...field} label="Titre" variant="outlined" />
-          )}
-        />
-        {errors.goodDealTitle?.message && <p>{errors.goodDealTitle.message}</p>}
-
-        <Controller
-          name="goodDealContent"
-          control={control}
-          render={({ field }) => (
-            <TextField {...field} label="Description" variant="outlined" />
-          )}
-        />
-        {errors.goodDealContent?.message && (
-          <p style={errorStyle}>{errors.goodDealContent.message}</p>
-        )}
-
-        <Controller
-          name="goodDealLink"
-          control={control}
-          render={({ field }) => (
-            <TextField {...field} label="Lien" variant="outlined" />
-          )}
-        />
-        {errors.goodDealLink?.message && (
-          <p style={errorStyle}>{errors.goodDealLink.message}</p>
-        )}
-
-        <input
-          type="file"
-          onChange={(event) => {
-            if (event.target.files) {
-              console.log('>>>>>file uploaded>>>', event.target.files[0])
-              uploadPictureToCloudinary(event.target.files[0]).then((url) =>
-                setFileCloudinaryUrl(url)
-              )
-            }
-          }}
-        />
-        {fileCloudinaryUrl !== '' && (
-          <img
-            style={{ width: '100px', height: '100px' }}
-            alt="uploaded file"
-            src={fileCloudinaryUrl}
-          />
-        )}
-
-        <LoadingButton
-          onClick={handleSubmit(onSubmit)}
-          fullWidth
-          loading={loadingGoodDealCreation}
-          variant="contained"
-          sx={{ marginBottom: '20px' }}
-          disabled={loadingGoodDealCreation}
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{ mb: 1, textAlign: 'center' }}
         >
-          Partager
+          PARTAGER VOS BONS PLANS!
+        </Typography>
+        <Collapse in={openError} sx={{ mb: 5 }}>
+          <Alert
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setOpenError(false)
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            {errorMsg}
+          </Alert>
+        </Collapse>
+        <Stack direction={'column'} spacing={2} sx={{ mb: 1 }}>
+          <TextField
+            required
+            fullWidth
+            id="title"
+            label="Titre"
+            name="title"
+            inputProps={{ inputProps: { min: 3, max: 20 } }}
+            onChange={(e) => {
+              setOpenError(false)
+              setTitle(e.target.value)
+            }}
+            value={title}
+          />
+          <TextField
+            required
+            fullWidth
+            id="content"
+            label="Description"
+            name="content"
+            multiline={true}
+            minRows={4}
+            maxRows={4}
+            inputProps={{ inputProps: { min: 3, max: 200 } }}
+            onChange={(e) => {
+              setOpenError(false)
+              setContent(e.target.value)
+            }}
+            value={content}
+          />
+          <TextField
+            fullWidth
+            id="link"
+            label="Lien"
+            name="link"
+            inputProps={{ inputProps: { min: 3, max: 200 } }}
+            onChange={(e) => setLink(e.target.value)}
+            value={link}
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              alignContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Button
+              variant="outlined"
+              component="label"
+              startIcon={<AccountCircleIcon />}
+              sx={{ mt: '10px' }}
+            >
+              Choisir une photo
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/jpg"
+                hidden
+                onChange={(event) => {
+                  if (event.target.files) {
+                    setImageToUpload(event.target.files[0])
+                  }
+                }}
+              />
+            </Button>
+            <Typography ml={2}>
+              {imageToUpload?.name && imageToUpload.name}
+            </Typography>
+          </Box>
+        </Stack>
+        <LoadingButton
+          type="submit"
+          fullWidth
+          loading={loadingGoodDealCreation || isSendingImage}
+          variant="contained"
+          sx={{ mt: 2, mb: 2 }}
+          id="submit-button"
+        >
+          Publier
         </LoadingButton>
-      </Stack>
-    </Box>
+      </Box>
+      <Snackbar
+        open={isSnackBarOpen}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackBar}
+      >
+        <Alert sx={{ width: '500px' }} severity={error ? 'error' : 'success'}>
+          {error ? 'La publication a échoué' : 'Bon plan publié!'}
+        </Alert>
+      </Snackbar>
+    </>
   )
 }
 
