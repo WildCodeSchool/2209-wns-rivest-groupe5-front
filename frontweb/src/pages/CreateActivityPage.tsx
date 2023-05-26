@@ -24,7 +24,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { LoadingButton } from '@mui/lab'
 import CloseIcon from '@mui/icons-material/Close'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import BasicModal from '../components/common/Modal'
 import CircularProgress from '@mui/material/CircularProgress'
 import GET_ACTIVITY_TYPE from '../graphql/queries/activities/getActivityTypes'
@@ -32,7 +32,6 @@ import { IactivityType } from '../interfaces/IActivityType'
 import CREATE_ACTIVITY from '../graphql/mutations/activities/createActivity'
 
 type TUnit = 'gr' | 'kg'
-
 
 const CreateActivityPage = () => {
   const [title, setTitle] = useState('')
@@ -54,10 +53,8 @@ const CreateActivityPage = () => {
     data: activityTypes,
   } = useQuery(GET_ACTIVITY_TYPE)
 
-  const [
-    createActivity,
-    { loading: isLoadingCreateActivity },
-  ] = useMutation(CREATE_ACTIVITY)
+  const [createActivity, { loading: isLoadingCreateActivity }] =
+    useMutation(CREATE_ACTIVITY)
 
   function resetForm() {
     setTitle('')
@@ -131,7 +128,7 @@ const CreateActivityPage = () => {
       <Typography
         component="h1"
         variant="h5"
-        sx={{ mt:10,mb: 1, textAlign: 'center' }}
+        sx={{ mt: 10, mb: 1, textAlign: 'center' }}
       >
         PARTAGEZ VOS ACTIVITES!
       </Typography>
@@ -239,6 +236,12 @@ const CreateActivityPage = () => {
             }}
             value={carbonQtity}
           />
+
+          <a href="https://impactco2.fr/" target="_blank" rel="noreferrer">
+            <Typography style={{ marginTop: 4 }} fontSize={12}>
+              Besoin d'aide pour estimer ?
+            </Typography>
+          </a>
         </FormGroup>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
