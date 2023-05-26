@@ -28,8 +28,8 @@ import { useNavigate } from 'react-router-dom'
 import BasicModal from '../components/common/Modal'
 import CircularProgress from '@mui/material/CircularProgress'
 import GET_ACTIVITY_TYPE from '../graphql/queries/activities/getActivityTypes'
-import CREATE_ACTIVITY from '../graphql/queries/activities/createActivity'
 import { IactivityType } from '../interfaces/IActivityType'
+import CREATE_ACTIVITY from '../graphql/mutations/activities/createActivity'
 
 type TUnit = 'gr' | 'kg'
 
