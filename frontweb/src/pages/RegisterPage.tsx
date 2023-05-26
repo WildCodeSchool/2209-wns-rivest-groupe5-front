@@ -1,10 +1,10 @@
-import { gql, useMutation } from "@apollo/client";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserInterface } from "../interfaces/user";
-import LoadingButton from "@mui/lab/LoadingButton";
-import CloseIcon from "@mui/icons-material/Close";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useMutation } from '@apollo/client'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { UserInterface } from '../interfaces/user'
+import LoadingButton from '@mui/lab/LoadingButton'
+import CloseIcon from '@mui/icons-material/Close'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Link,
   Card,
@@ -19,49 +19,47 @@ import {
   Alert,
   Stack,
   Button,
-} from "@mui/material";
-import BasicModal from "../components/common/Modal";
-import { uploadPictureToCloudinary } from "../utils/upLoadPictureToCloudinary";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { CREATE_USER } from "../graphql/queries/users/createUser";
-
+} from '@mui/material'
+import BasicModal from '../components/common/Modal'
+import { uploadPictureToCloudinary } from '../utils/upLoadPictureToCloudinary'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { CREATE_USER } from '../graphql/mutations/users/createUser'
 
 const RegisterPage = () => {
-  const [isSendingImage, setIsSendingImage] = useState(false);
-  const [imageToUpload, setImageToUpload] = useState<File>();
-  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
-  const [openFailureModal, setOpenFailureModal] = useState<boolean>(false);
+  const [isSendingImage, setIsSendingImage] = useState(false)
+  const [imageToUpload, setImageToUpload] = useState<File>()
+  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false)
+  const [openFailureModal, setOpenFailureModal] = useState<boolean>(false)
   const [openExistingUserModal, setOpenExistingUserModal] =
-    useState<boolean>(false);
-  const [openError, setOpenError] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] =
-    useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string>("");
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
+    useState<boolean>(false)
+  const [openError, setOpenError] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false)
+  const [errorMsg, setErrorMsg] = useState<string>('')
+  const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleClickShowPasswordConfirm = () =>
-    setShowPasswordConfirm(!showPasswordConfirm);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+    setShowPasswordConfirm(!showPasswordConfirm)
+  const handleMouseDownPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPasswordConfirm = () =>
-    setShowPasswordConfirm(!showPasswordConfirm);
-  const [passwordsMatching, setPasswordsMatching] = useState<boolean>(true);
+    setShowPasswordConfirm(!showPasswordConfirm)
+  const [passwordsMatching, setPasswordsMatching] = useState<boolean>(true)
   const [userData, setUserData] = useState<Partial<UserInterface>>({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    passwordconfirm: "",
-  });
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    passwordconfirm: '',
+  })
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [createUser, { loading: isLoadingUserCreation, error }] =
-    useMutation(CREATE_USER);
+    useMutation(CREATE_USER)
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setOpenError(false);
-        setPasswordsMatching(true);
-        setUserData({ ...userData, [e.target.name]: e.target.value });
-    }
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setOpenError(false)
+    setPasswordsMatching(true)
+    setUserData({ ...userData, [e.target.name]: e.target.value })
+  }
 
   function triggerCreateUser(cloudinaryLink?: string) {
     return createUser({
@@ -70,65 +68,65 @@ const RegisterPage = () => {
         lastname: userData.lastname,
         email: userData.email,
         password: userData.password,
-        avatar: cloudinaryLink ? cloudinaryLink : "",
+        avatar: cloudinaryLink ? cloudinaryLink : '',
       },
       onCompleted(data) {
-        setIsSendingImage(false);
-        setOpenSuccessModal(true);
+        setIsSendingImage(false)
+        setOpenSuccessModal(true)
       },
       onError(error) {
-        setIsSendingImage(false);
-        if (error.message.includes("duplicate key value")) {
+        setIsSendingImage(false)
+        if (error.message.includes('duplicate key value')) {
           // alert("Already existing account");
-          setOpenExistingUserModal(true);
+          setOpenExistingUserModal(true)
         } else {
           // alert("Register failed");
-          setOpenFailureModal(true);
+          setOpenFailureModal(true)
         }
       },
-    });
+    })
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const { password, passwordconfirm } = userData;
+    e.preventDefault()
+    const { password, passwordconfirm } = userData
     // check if all required fields are provided
     if (
-      userData.email === "" ||
-      userData.firstname === "" ||
-      userData.lastname === "" ||
-      userData.password === "" ||
-      userData.passwordconfirm === ""
+      userData.email === '' ||
+      userData.firstname === '' ||
+      userData.lastname === '' ||
+      userData.password === '' ||
+      userData.passwordconfirm === ''
     ) {
-      setPasswordsMatching(false);
-      setErrorMsg("Please fill in all required fields !");
-      setOpenError(true);
-      return;
+      setPasswordsMatching(false)
+      setErrorMsg('Please fill in all required fields !')
+      setOpenError(true)
+      return
     }
     // check if password and passwordconfirm match
     if (password !== passwordconfirm) {
-      setErrorMsg("Passwords do not match !");
-      setOpenError(true);
-      return;
+      setErrorMsg('Passwords do not match !')
+      setOpenError(true)
+      return
     }
     // check if user uploaded an image/avatar
     if (imageToUpload) {
       // if user uploaded an image/avatar send it to cloudinary
-      setIsSendingImage(true);
-      const respFromImageService : string = await uploadPictureToCloudinary(
+      setIsSendingImage(true)
+      const respFromImageService: string = await uploadPictureToCloudinary(
         imageToUpload
-      );
+      )
       // if image upload to cloudinary is successful
-      if (!respFromImageService.includes("Failed to upload picture")) {
+      if (!respFromImageService.includes('Failed to upload picture')) {
         // create user with avatar
-        triggerCreateUser(respFromImageService);
+        triggerCreateUser(respFromImageService)
       } else {
         // if image upload to cloudinary failed => create new user without avatar
-        triggerCreateUser();
+        triggerCreateUser()
       }
       // if user did not upload an image/avatar => create new user without avatar
     } else {
-      triggerCreateUser();
+      triggerCreateUser()
     }
   }
 
@@ -139,10 +137,10 @@ const RegisterPage = () => {
         buttonText="Se connecter"
         openModal={openSuccessModal}
         handleClose={() => {
-          setOpenSuccessModal(false);
+          setOpenSuccessModal(false)
         }}
         action={() => {
-          navigate("/login");
+          navigate('/login')
         }}
         iconType="success"
       />
@@ -151,10 +149,10 @@ const RegisterPage = () => {
         buttonText="Se Connecter"
         openModal={openExistingUserModal}
         handleClose={() => {
-          setOpenExistingUserModal(false);
+          setOpenExistingUserModal(false)
         }}
         action={() => {
-          navigate("/login");
+          navigate('/login')
         }}
         iconType="error"
       />
@@ -163,10 +161,10 @@ const RegisterPage = () => {
         buttonText="S'inscrire"
         openModal={openFailureModal}
         handleClose={() => {
-          setOpenFailureModal(false);
+          setOpenFailureModal(false)
         }}
         action={() => {
-          setOpenFailureModal(false);
+          setOpenFailureModal(false)
         }}
         iconType="error"
       />
@@ -178,16 +176,16 @@ const RegisterPage = () => {
             pr: 5,
             pl: 5,
             borderRadius: 4,
-            border: "1px solid",
-            borderColor: "#90CAF9",
+            border: '1px solid',
+            borderColor: '#90CAF9',
           }}
         >
           <CssBaseline />
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
             <Typography component="h1" variant="h5" sx={{ mb: 1 }}>
@@ -202,7 +200,7 @@ const RegisterPage = () => {
                     color="inherit"
                     size="small"
                     onClick={() => {
-                      setOpenError(false);
+                      setOpenError(false)
                     }}
                   >
                     <CloseIcon fontSize="inherit" />
@@ -261,7 +259,7 @@ const RegisterPage = () => {
                 id="password"
                 label="Password"
                 variant="outlined"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 value={userData.password}
                 onChange={handleChange}
                 InputProps={{
@@ -286,7 +284,7 @@ const RegisterPage = () => {
                 id="passwordconfirm"
                 label="Password Confirm"
                 variant="outlined"
-                type={showPasswordConfirm ? "text" : "password"}
+                type={showPasswordConfirm ? 'text' : 'password'}
                 value={userData.passwordconfirm}
                 onChange={handleChange}
                 InputProps={{
@@ -310,16 +308,16 @@ const RegisterPage = () => {
 
               <Box
                 sx={{
-                  display: "flex",
-                  alignContent: "center",
-                  alignItems: "center",
+                  display: 'flex',
+                  alignContent: 'center',
+                  alignItems: 'center',
                 }}
               >
                 <Button
                   variant="outlined"
                   component="label"
                   startIcon={<AccountCircleIcon />}
-                  sx={{ mt: "10px" }}
+                  sx={{ mt: '10px' }}
                 >
                   Choisir une photo
                   <input
@@ -327,7 +325,7 @@ const RegisterPage = () => {
                     hidden
                     onChange={(event) => {
                       if (event.target.files) {
-                        setImageToUpload(event.target.files[0]);
+                        setImageToUpload(event.target.files[0])
                       }
                     }}
                   />
@@ -348,8 +346,8 @@ const RegisterPage = () => {
                 Create account
               </LoadingButton>
               <Link
-                onClick={() => navigate("/login")}
-                style={{ cursor: "pointer" }}
+                onClick={() => navigate('/login')}
+                style={{ cursor: 'pointer' }}
               >
                 Se connecter?
               </Link>
@@ -358,7 +356,7 @@ const RegisterPage = () => {
         </Card>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default RegisterPage;
+export default RegisterPage
