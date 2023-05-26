@@ -3,22 +3,22 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import { CardActionArea, Box, Button } from '@mui/material'
-import { theme } from '../assets/Styles/theme'
 
 export default function HomePageGoodDealCard({
   title,
   content,
   image,
   author,
+  id
 }: {
   title: string
   content: string
   image?: any
   author: any
+  id: string
 }) {
   return (
-    <Card sx={{ maxWidth: 345, mr: 5, mb: 1 }}>
+    <Card sx={{ maxWidth: 345, mr: 5, mb: 1 }} key={id}>
       <CardMedia
         component="img"
         height="200"

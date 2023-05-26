@@ -86,7 +86,7 @@ const GoodDealsFeed = ({
                     </p>
                   )}
 
-                  <p>{e.goodDealContent.substr(0, 80) + '...'}</p>
+                  <p dangerouslySetInnerHTML={{ __html: e.goodDealContent.substr(0, 80) + '...' }}></p>
                 </div>
               </CardContent>
               <Box display="flex" justifyContent="end" margin={2}>

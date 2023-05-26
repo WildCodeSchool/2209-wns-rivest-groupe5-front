@@ -315,23 +315,24 @@ const GoodDealDetails = () => {
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          background: 'white',
-          borderRadius: 3,
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '200px',
-          p: 3,
-        }}
-      >
-        <Typography variant="h6" sx={{ mb: 2 }}>
-          A propos de ce deal :
-        </Typography>
-        <Typography>{goodDeal.goodDealContent}</Typography>
-      </Box>
-    </Container>
-  )
+        <Box
+          sx={{
+            background: 'white',
+            borderRadius: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '200px',
+            p: 3,
+          }}
+        >
+          <Typography variant="h6" sx={{ mb: 2 }}>
+            A propos de ce deal :
+          </Typography>
+          <div dangerouslySetInnerHTML={{ __html: goodDeal.goodDealContent }} />
+        </Box>
+      </Container>
+    )
+  
 }
 
 export default GoodDealDetails
