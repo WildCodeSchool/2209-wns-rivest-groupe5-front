@@ -3,6 +3,7 @@ import 'react-multi-carousel/lib/styles.css'
 import HomePageGoodDealCard from './HomePageGoodDealCard'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_GOOD_DEALS } from '../graphql/queries/goodDeals/getAllGoodDeals'
+import { Key } from 'react'
 
 const responsive = {
   desktop: {
@@ -73,7 +74,7 @@ export default function CarouselContent() {
           (a: any, b: any) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         )
-        .map((e: any) => {
+        .map((e: any, index: Key | null | undefined) => {
           const src =
             e.image !== ''
               ? e.image
@@ -83,7 +84,8 @@ export default function CarouselContent() {
               title={e.goodDealTitle}
               content={e.goodDealContent}
               author={e.user.firstname + ' ' + e.user.lastname}
-              image={src}
+              key={index}
+              id={e.id}
             />
           )
         })}
