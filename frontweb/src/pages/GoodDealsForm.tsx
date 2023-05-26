@@ -19,7 +19,6 @@ import { LoadingButton } from '@mui/lab'
 import { useNavigate } from 'react-router-dom'
 import CREATE_GOOD_DEAL from '../graphql/queries/goodDeals/createGoodDeal'
 
-
 const GoodDealsForm = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -47,7 +46,7 @@ const GoodDealsForm = () => {
       onCompleted(data) {
         setIsSendingImage(false)
         setIsSnackBarOpen(true)
-        setTimeout(() => navigate('/good-deals-feed'), 2000)
+        navigate('/good-deals-feed')
       },
       onError(error) {
         setIsSendingImage(false)
