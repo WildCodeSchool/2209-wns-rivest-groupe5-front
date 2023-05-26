@@ -85,6 +85,7 @@ export default function CarouselContent() {
               content={e.goodDealContent}
               author={e.user.firstname + ' ' + e.user.lastname}
               key={index}
+              id={e.id}
             />
           )
         })}

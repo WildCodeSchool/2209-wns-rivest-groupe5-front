@@ -9,14 +9,16 @@ export default function HomePageGoodDealCard({
   content,
   image,
   author,
+  id
 }: {
   title: string
   content: string
   image?: any
   author: any
+  id: string
 }) {
   return (
-    <Card sx={{ maxWidth: 345, mr: 5, mb: 1 }} key={title}>
+    <Card sx={{ maxWidth: 345, mr: 5, mb: 1 }} key={id}>
       <CardMedia
         component="img"
         height="200"
