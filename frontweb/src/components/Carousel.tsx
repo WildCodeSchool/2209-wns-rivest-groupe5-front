@@ -40,8 +40,6 @@ export default function CarouselContent() {
     return <div>Error ...</div>
   }
 
-  console.log(data)
-
   return (
     <Carousel
       additionalTransfrom={0}
@@ -81,7 +79,6 @@ export default function CarouselContent() {
             e.image !== ''
               ? e.image
               : require('../assets/default-placeholder.png')
-          console.log(e)
           return (
             <HomePageGoodDealCard
               title={e.goodDealTitle}

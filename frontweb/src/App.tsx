@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import PrivateRoutes from './components/PrivateRoute'
@@ -23,17 +22,36 @@ import GoodDealDetails from './pages/GoodDealDetails'
 import ActivityListPage from './pages/ActivityListPage'
 import CreateActivityPage from './pages/CreateActivityPage'
 import GoodDealsForm from './pages/GoodDealsForm'
+import { useQuery } from '@apollo/client'
+import { GET_MY_USER_DATA } from './graphql/queries/users/getMyUserData'
+import { GET_ALL_GOOD_DEALS } from './graphql/queries/goodDeals/getAllGoodDeals'
+import { GET_ALL_MY_GOOD_DEALS } from './graphql/queries/goodDeals/getAllMyGoodDeals'
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState)
-  console.log('>>>>Current user >>>', user)
-  useEffect(() => {
-    const currentUserInLocalStorage = JSON.parse(
-      localStorage.getItem('user') || '{}'
-    )
-    setUser(currentUserInLocalStorage)
-  }, [])
 
+  // will try to use a token from localstorage to make connexion
+  useQuery(GET_MY_USER_DATA, {
+    onCompleted(data) {
+      setUser(data.getMyUserData)
+    },
+    onError() {
+      setUser(null)
+      localStorage.removeItem('token')
+    },
+  })
+
+  const goodDealsFeedRoute = (
+    <Route
+      path="/good-deals-feed"
+      element={
+        <GoodDealsFeed
+          isCurrentUser={false}
+          getGoodDealsQuery={GET_ALL_GOOD_DEALS}
+        />
+      }
+    />
+  )
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -59,12 +77,12 @@ function App() {
             {user && Object.keys(user).length !== 0 ? (
               <Route element={<LayoutRoot />}>
                 <Route path="/profile/:userId" element={<ProfilePage />} />
-                <Route path="/good-deals-feed" element={<GoodDealsFeed />} />
+                {goodDealsFeedRoute}
               </Route>
             ) : (
               <Route element={<PublicLayout />}>
                 <Route path="/profile/:userId" element={<ProfilePage />} />
-                <Route path="/good-deals-feed" element={<GoodDealsFeed />} />
+                {goodDealsFeedRoute}
               </Route>
             )}
 
@@ -77,7 +95,19 @@ function App() {
                   path="/followed-activities-feed"
                   element={<FollowedUsersActivitiesList />}
                 />
-                <Route path="/good-deals-form" element={ <GoodDealsForm/>} />
+                <Route path="/good-deals-form" element={<GoodDealsForm />} />
+                <Route path="/good-deals-form" element={<GoodDealsForm />} />
+
+                <Route
+                  path="/my-good-deals"
+                  element={
+                    <GoodDealsFeed
+                      isCurrentUser={true}
+                      getGoodDealsQuery={GET_ALL_MY_GOOD_DEALS}
+                    />
+                  }
+                />
+
                 <Route path="/my-account" element={<MyAccount />} />
                 <Route path="/profile/:userId" element={<ProfilePage />} />
                 <Route
