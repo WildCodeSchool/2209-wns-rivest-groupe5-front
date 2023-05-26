@@ -20,18 +20,23 @@ import BasicModal from '../components/common/Modal'
 import Divider from '@mui/material/Divider'
 import { DELETE_MY_ACCOUNT } from '../graphql/mutations/users/deleteMyAccount'
 import { useNavigate } from 'react-router-dom'
+import { INVITE_FRIEND } from '../graphql/mutations/users/inviteFriend'
 
 const MyAccount = () => {
   const [user, setUser] = useRecoilState(currentUserState)
   const [newFirstname, setNewFirstname] = useState(user?.firstname)
   const [newLastname, setNewLastname] = useState(user?.lastname)
+  const [emailToInvite, setEmailToInvite] = useState('')
   const [openDeleteAccountConfirmModal, setOpenDeleteAccountConfirmModal] =
     useState<boolean>(false)
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false)
+  const [isSnackBarUpdateOpen, setIsSnackBarUpdateOpen] = useState(false)
+  const [isSnackBarInvitationOpen, setIsSnackBarInvitationOpen] =
+    useState(false)
 
   const navigate = useNavigate()
 
-  const [toggleUserVisibility, { loading, error }] = useMutation(
+  const [toggleUserVisibility, { error: visibilityError }] = useMutation(
     TOGGLE_USER_VISIBILITY
   )
 
@@ -44,17 +49,15 @@ const MyAccount = () => {
       },
     })
 
-  const [getMyUserData, { loading: userLoading }] = useLazyQuery(
-    GET_MY_USER_DATA,
-    {
-      fetchPolicy: 'no-cache',
-    }
-  )
+  const [getMyUserData] = useLazyQuery(GET_MY_USER_DATA, {
+    fetchPolicy: 'no-cache',
+  })
 
   const [deleteMyAccount, { loading: deleteLoading, error: deleteError }] =
     useMutation(DELETE_MY_ACCOUNT)
 
-  // TODO : gestion loading et error notif
+  const [inviteFriend, { loading: inviteLoading, error: inviteError }] =
+    useMutation(INVITE_FRIEND)
 
   const handleTogglePublicProfile = async () => {
     await toggleUserVisibility()
@@ -63,8 +66,10 @@ const MyAccount = () => {
       onCompleted(data) {
         localStorage.setItem('user', JSON.stringify(data.getMyUserData))
         setUser(data.getMyUserData)
+        setIsSnackBarUpdateOpen(true)
       },
       onError(error) {
+        setIsSnackBarUpdateOpen(true)
         console.log(error)
       },
     })
@@ -84,10 +89,33 @@ const MyAccount = () => {
     })
   }
 
+  const handleInviteFriend = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    await inviteFriend({
+      variables: {
+        email: emailToInvite,
+      },
+      onCompleted(data) {
+        setIsSnackBarInvitationOpen(true)
+      },
+      onError(error) {
+        setIsSnackBarInvitationOpen(true)
+        console.log(error)
+      },
+    })
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const res = await updateUserInfos()
-    setUser(res?.data?.updateMyUserInformations)
+    await updateUserInfos({
+      onCompleted(data) {
+        setUser(data.updateMyUserInformations)
+        setIsSnackBarUpdateOpen(true)
+      },
+      onError() {
+        setIsSnackBarUpdateOpen(true)
+      },
+    })
   }
 
   function handleCloseSnackBar(event: React.SyntheticEvent | Event) {
@@ -106,6 +134,36 @@ const MyAccount = () => {
         action={async () => await handleDeleteMyAccount()}
         iconType="info"
       />
+      <Snackbar
+        open={isSnackBarUpdateOpen}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackBar}
+      >
+        <Alert
+          sx={{ width: '500px' }}
+          severity={updateError || visibilityError ? 'error' : 'success'}
+        >
+          {updateError || visibilityError
+            ? 'Erreur durant la mise à jour de vos informations'
+            : 'Vos informations ont été mises à jour avec succès'}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={isSnackBarInvitationOpen}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackBar}
+      >
+        <Alert
+          sx={{ width: '500px' }}
+          severity={inviteError ? 'error' : 'success'}
+        >
+          {inviteError
+            ? "L'envoi d'invitation a échouée"
+            : "L'invitation a été envoyée avec succès"}
+        </Alert>
+      </Snackbar>
       <Snackbar
         open={isSnackBarOpen}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -192,7 +250,48 @@ const MyAccount = () => {
                 color: '#fff',
               }}
             >
-              Mettre à jour
+              {updateLoading ? 'Mise à jour...' : 'Mettre à jour'}
+            </Button>
+          </div>
+        </form>
+      </Box>
+      <Divider />
+      <Box
+        sx={{
+          width: 500,
+          maxWidth: '100%',
+          mb: 4,
+          mt: 4,
+        }}
+      >
+        <Typography variant="h3">Inviter un ami</Typography>
+        <Typography>
+          Vous trouvez cette application géniale ? Envoyer une invitation à nous
+          rejoindre à vos amis ! Vous pouvez rentrer ici l'adresse email de la
+          personne que vous souhaitez inviter.
+        </Typography>
+
+        <form onSubmit={handleInviteFriend}>
+          <TextField
+            fullWidth
+            margin="dense"
+            label="Email de la personne à inviter"
+            value={emailToInvite}
+            onChange={(e) => setEmailToInvite(e.target.value)}
+            sx={{ mb: 4 }}
+            inputProps={{ minLength: 1 }}
+            type="email"
+            required
+          />
+          <div>
+            <Button
+              type="submit"
+              style={{
+                backgroundColor: theme.palette.primary.main,
+                color: '#fff',
+              }}
+            >
+              {inviteLoading ? 'Envoi en cours...' : 'Envoyer invitation'}
             </Button>
           </div>
         </form>
@@ -228,7 +327,7 @@ const MyAccount = () => {
           size="small"
           onClick={() => setOpenDeleteAccountConfirmModal(true)}
         >
-          Supprimer le compte
+          {deleteLoading ? 'Suppression...' : 'Supprimer le compte'}
         </Button>
       </Box>
     </>
