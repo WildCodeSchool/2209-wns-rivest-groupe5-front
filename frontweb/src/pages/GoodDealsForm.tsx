@@ -135,7 +135,7 @@ const GoodDealsForm = () => {
             id="title"
             label="Titre"
             name="title"
-            inputProps={{ inputProps: { min: 3, max: 20 } }}
+            InputProps={{ inputProps: { min: 3, max: 20 } }}
             onChange={(e) => {
               setOpenError(false)
               setTitle(e.target.value)
@@ -168,7 +168,7 @@ const GoodDealsForm = () => {
             id="link"
             label="Lien"
             name="link"
-            inputProps={{ inputProps: { min: 3, max: 200 } }}
+            InputProps={{ inputProps: { min: 3, max: 200 } }}
             onChange={(e) => setLink(e.target.value)}
             value={link}
           />

@@ -4,7 +4,8 @@ export interface IGoodDeal {
   goodDealContent: string
   goodDealLink: string
   image: string
-  created_at: Date
+  createdAt: Date
+  total?: number
   user: {
     userId: number
     email: string

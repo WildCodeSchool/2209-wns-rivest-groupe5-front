@@ -23,10 +23,10 @@ import { useNavigate } from 'react-router-dom'
 
 const MyAccount = () => {
   const [user, setUser] = useRecoilState(currentUserState)
-  const [openDeleteAccountConfirmModal, setOpenDeleteAccountConfirmModal] =
-    useState<boolean>(false)
   const [newFirstname, setNewFirstname] = useState(user?.firstname)
   const [newLastname, setNewLastname] = useState(user?.lastname)
+  const [openDeleteAccountConfirmModal, setOpenDeleteAccountConfirmModal] =
+    useState<boolean>(false)
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false)
 
   const navigate = useNavigate()
