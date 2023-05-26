@@ -1,4 +1,4 @@
-import { gql, useMutation, useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import {
   Alert,
   Box,
@@ -33,7 +33,6 @@ import CREATE_ACTIVITY from '../graphql/mutations/activities/createActivity'
 
 type TUnit = 'gr' | 'kg'
 
-
 const CreateActivityPage = () => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -54,10 +53,8 @@ const CreateActivityPage = () => {
     data: activityTypes,
   } = useQuery(GET_ACTIVITY_TYPE)
 
-  const [
-    createActivity,
-    { loading: isLoadingCreateActivity },
-  ] = useMutation(CREATE_ACTIVITY)
+  const [createActivity, { loading: isLoadingCreateActivity }] =
+    useMutation(CREATE_ACTIVITY)
 
   function resetForm() {
     setTitle('')
@@ -131,7 +128,7 @@ const CreateActivityPage = () => {
       <Typography
         component="h1"
         variant="h5"
-        sx={{ mt:10,mb: 1, textAlign: 'center' }}
+        sx={{ mt: 10, mb: 1, textAlign: 'center' }}
       >
         PARTAGEZ VOS ACTIVITES!
       </Typography>
@@ -239,6 +236,12 @@ const CreateActivityPage = () => {
             }}
             value={carbonQtity}
           />
+
+          <a href="https://impactco2.fr/" target="_blank" rel="noreferrer">
+            <Typography style={{ marginTop: 4 }} fontSize={12}>
+              Besoin d'aide pour estimer ?
+            </Typography>
+          </a>
         </FormGroup>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
