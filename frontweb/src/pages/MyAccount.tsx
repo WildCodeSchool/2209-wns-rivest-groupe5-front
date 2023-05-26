@@ -89,7 +89,8 @@ const MyAccount = () => {
     })
   }
 
-  const handleInviteFriend = async () => {
+  const handleInviteFriend = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     await inviteFriend({
       variables: {
         email: emailToInvite,
