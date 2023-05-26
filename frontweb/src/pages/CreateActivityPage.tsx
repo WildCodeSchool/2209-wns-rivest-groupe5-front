@@ -1,4 +1,4 @@
-import { gql, useMutation, useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import {
   Alert,
   Box,
@@ -24,7 +24,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { LoadingButton } from '@mui/lab'
 import CloseIcon from '@mui/icons-material/Close'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import BasicModal from '../components/common/Modal'
 import CircularProgress from '@mui/material/CircularProgress'
 import GET_ACTIVITY_TYPE from '../graphql/queries/activities/getActivityTypes'
