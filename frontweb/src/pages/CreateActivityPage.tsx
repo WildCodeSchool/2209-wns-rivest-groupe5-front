@@ -27,37 +27,12 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useNavigate } from 'react-router-dom'
 import BasicModal from '../components/common/Modal'
 import CircularProgress from '@mui/material/CircularProgress'
+import GET_ACTIVITY_TYPE from '../graphql/queries/activities/getActivityTypes'
+import CREATE_ACTIVITY from '../graphql/queries/activities/createActivity'
+import { IactivityType } from '../interfaces/IActivityType'
 
 type TUnit = 'gr' | 'kg'
 
-interface IactivityType {
-  activityTypeId: number
-  label: string
-  name: string
-  emoji: string
-}
-
-const GET_ACTIVITY_TYPE = gql`
-  query GetAllActivityTypes {
-    getAllActivityTypes {
-      emoji
-      activityTypeId
-      label
-      name
-    }
-  }
-`
-
-const CREATE_ACTIVITY = gql`
-  mutation Mutation($data: CreateActivityInput!) {
-    createActivity(data: $data) {
-      title
-      description
-      carbonQuantity
-      activityDate
-    }
-  }
-`
 
 const CreateActivityPage = () => {
   const [title, setTitle] = useState('')
