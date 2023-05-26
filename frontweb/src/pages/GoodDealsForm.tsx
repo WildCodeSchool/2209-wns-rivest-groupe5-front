@@ -46,7 +46,7 @@ const GoodDealsForm = () => {
       onCompleted(data) {
         setIsSendingImage(false)
         setIsSnackBarOpen(true)
-        setTimeout(() => navigate('/good-deals-feed'), 2000)
+        navigate('/good-deals-feed')
       },
       onError(error) {
         setIsSendingImage(false)
