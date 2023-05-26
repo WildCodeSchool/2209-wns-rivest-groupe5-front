@@ -18,7 +18,7 @@ import { uploadPictureToCloudinary } from '../utils/upLoadPictureToCloudinary'
 import { LoadingButton } from '@mui/lab'
 import { useNavigate } from 'react-router-dom'
 import CREATE_GOOD_DEAL from '../graphql/queries/goodDeals/createGoodDeal'
-
+import Wysiwyg from '../components/Wysiwyg'
 
 const GoodDealsForm = () => {
   const [title, setTitle] = useState('')
@@ -56,6 +56,12 @@ const GoodDealsForm = () => {
       },
     })
   }
+
+  const handleWysiwygChange = (content: string | undefined) => {
+    if (content !== undefined) {
+      setContent(content);
+    }
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -136,7 +142,7 @@ const GoodDealsForm = () => {
             }}
             value={title}
           />
-          <TextField
+          {/* <TextField
             required
             fullWidth
             id="content"
@@ -151,7 +157,8 @@ const GoodDealsForm = () => {
               setContent(e.target.value)
             }}
             value={content}
-          />
+          /> */}
+          <Wysiwyg content='' placeholder='Rédigez le contenu du good deal' handler={handleWysiwygChange}/>
           <TextField
             fullWidth
             id="link"

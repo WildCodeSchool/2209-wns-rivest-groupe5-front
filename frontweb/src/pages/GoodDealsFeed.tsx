@@ -74,7 +74,7 @@ const GoodDealsFeed = () => {
                   <p style={{ fontWeight: 'bolder' }}>
                     {e.user.firstname} {e.user.lastname}
                   </p>
-                  <p>{e.goodDealContent}</p>
+                  <p dangerouslySetInnerHTML={{ __html: e.goodDealContent }}></p>
                 </div>
                 {currentUser?.firstname !== undefined && (
                   <div className="btn-container">

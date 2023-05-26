@@ -331,7 +331,7 @@ const GoodDealDetails = () => {
           <Typography variant="h6" sx={{ mb: 2 }}>
             A propos de ce deal :
           </Typography>
-          <Typography>{goodDeal.goodDealContent}</Typography>
+          <div dangerouslySetInnerHTML={{ __html: goodDeal.goodDealContent }} />
         </Box>
       </Container>
     )
