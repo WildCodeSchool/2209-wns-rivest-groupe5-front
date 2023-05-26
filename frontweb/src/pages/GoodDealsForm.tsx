@@ -17,8 +17,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { uploadPictureToCloudinary } from '../utils/upLoadPictureToCloudinary'
 import { LoadingButton } from '@mui/lab'
 import { useNavigate } from 'react-router-dom'
-import CREATE_GOOD_DEAL from '../graphql/queries/goodDeals/createGoodDeal'
-
+import CREATE_GOOD_DEAL from '../graphql/mutations/goodDeals/createGoodDeal'
 
 const GoodDealsForm = () => {
   const [title, setTitle] = useState('')
