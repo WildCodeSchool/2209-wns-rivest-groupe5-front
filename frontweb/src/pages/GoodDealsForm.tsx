@@ -23,6 +23,7 @@ import Wysiwyg from '../components/Wysiwyg'
 const GoodDealsForm = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [description, setDescription] = useState('')
   const [link, setLink] = useState('')
   const [imageToUpload, setImageToUpload] = useState<File>()
   const [isSendingImage, setIsSendingImage] = useState(false)
@@ -40,6 +41,7 @@ const GoodDealsForm = () => {
         data: {
           goodDealTitle: title,
           goodDealContent: content,
+          goodDealDescription: description,
           goodDealLink: link,
           image: cloudinaryLink ? cloudinaryLink : null,
         },
@@ -142,25 +144,24 @@ const GoodDealsForm = () => {
             }}
             value={title}
           />
-          {/* <TextField
-            required
+          <TextField
             fullWidth
-            id="content"
+            id="description"
             label="Description"
-            name="content"
+            name="description"
             multiline={true}
             minRows={4}
             maxRows={4}
             inputProps={{ inputProps: { min: 3, max: 200 } }}
             onChange={(e) => {
               setOpenError(false)
-              setContent(e.target.value)
+              setDescription(e.target.value)
             }}
-            value={content}
-          /> */}
+            value={description}
+          />
           <Wysiwyg
             content=""
-            placeholder="Rédigez le contenu du good deal"
+            placeholder="Contenu du bon plan *"
             handler={handleWysiwygChange}
           />
           <TextField

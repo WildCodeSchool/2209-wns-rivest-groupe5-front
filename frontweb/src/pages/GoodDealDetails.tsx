@@ -407,7 +407,13 @@ const GoodDealDetails = () => {
           }}
         >
           <Typography variant="h6" sx={{ mb: 2 }}>
-            A propos de ce deal :
+            Description :
+          </Typography>
+          <Typography sx={{ mb: 6 }}>
+            {goodDeal.goodDealDescription ?? 'Aucune description disponible.'}
+          </Typography>
+          <Typography variant="h6" sx={{ mb: 2 }}>
+            Le bon plan :
           </Typography>
           <div dangerouslySetInnerHTML={{ __html: goodDeal.goodDealContent }} />
         </Box>

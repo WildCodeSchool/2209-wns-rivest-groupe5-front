@@ -82,7 +82,7 @@ export default function CarouselContent() {
           return (
             <HomePageGoodDealCard
               title={e.goodDealTitle}
-              content={e.goodDealContent}
+              content={e.goodDealDescription ?? "Cliquez pour en savoir plus"}
               author={e.user.firstname + ' ' + e.user.lastname}
               key={index}
               id={e.id}

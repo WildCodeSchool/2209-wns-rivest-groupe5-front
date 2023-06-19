@@ -94,11 +94,11 @@ const GoodDealsFeed = ({
                       </p>
                     )}
 
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: e.goodDealContent.substr(0, 80) + '...',
-                      }}
-                    ></p>
+                    <p>
+                      {e.goodDealDescription
+                        ? e.goodDealDescription.substr(0, 80) + '...'
+                        : 'Cliquez sur le bouton ci-dessous pour en savoir plus'}
+                    </p>
                   </div>
                 </CardContent>
                 <Box display="flex" justifyContent="end" margin={2}>
