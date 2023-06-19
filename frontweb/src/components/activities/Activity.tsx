@@ -7,6 +7,8 @@ import { DELETE_ACTIVITY } from '../../graphql/mutations/activities/deleteActivi
 import { IActivity } from '../../interfaces/IActivity'
 import { format } from 'date-fns'
 import { theme } from '../../assets/Styles/theme'
+import { currentUserState } from '../../atom/currentUserAtom'
+import { useRecoilValue } from 'recoil'
 
 const Activity = ({
   activity,
@@ -15,6 +17,7 @@ const Activity = ({
   activity: IActivity
   updateActivityList: () => Promise<void>
 }) => {
+  const currentUser = useRecoilValue(currentUserState)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [deleteActivity, { loading, error }] = useMutation(DELETE_ACTIVITY, {
     variables: { activityId: activity.activityId },
@@ -68,21 +71,23 @@ const Activity = ({
           {parseFloat((activity.carbonQuantity / 1000).toFixed(2))} kg de CO2
         </p>
         <p>{activity.description}</p>
-        <Box
-          onClick={() => setIsOpenModal(true)}
-          color={theme.palette.error.main}
-          fontSize={12}
-          title="Supprimer l'activité"
-          sx={{
-            display: 'flex',
-            justifyContent: 'end',
-            cursor: 'pointer',
-            alignItems: 'center',
-          }}
-        >
-          Supprimer
-          <DeleteIcon color="error" fontSize="medium" />
-        </Box>
+        {activity.user && currentUser?.userId === activity.user.userId && (
+          <Box
+            onClick={() => setIsOpenModal(true)}
+            color={theme.palette.error.main}
+            fontSize={12}
+            title="Supprimer l'activité"
+            sx={{
+              display: 'flex',
+              justifyContent: 'end',
+              cursor: 'pointer',
+              alignItems: 'center',
+            }}
+          >
+            Supprimer
+            <DeleteIcon color="error" fontSize="medium" />
+          </Box>
+        )}
         <BasicModal
           openModal={isOpenModal}
           title="Etes-vous sûr de vouloir supprimer définitivement l'activité suivante ?"

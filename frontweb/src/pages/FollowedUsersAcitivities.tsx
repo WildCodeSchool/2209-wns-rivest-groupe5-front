@@ -1,14 +1,46 @@
 import { useQuery } from '@apollo/client'
 import { IActivity } from '../interfaces/IActivity'
-import { Box, Card, CardContent, Container } from '@mui/material'
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Typography,
+} from '@mui/material'
 import { format } from 'date-fns'
 import { GET_FOLLOWED_USERS_ACTIVITIES } from '../graphql/queries/activities/getFollowedUsersActivitiesQuery'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { IPaginatedResult } from '../interfaces/paginatedResult'
+import PaginationButtons from '../components/PaginationButtons'
 
 const FollowedUsersActivitiesList = () => {
-  const { loading, error, data } = useQuery(GET_FOLLOWED_USERS_ACTIVITIES, {
-    fetchPolicy: 'no-cache', // Used for first execution
+  const [activities, setActivities] = useState<IPaginatedResult<IActivity>>({
+    data: [],
+    currentPage: 1,
+    pageSize: 10,
+    total: 0,
+    totalPages: 0,
   })
+
+  const { loading, error, fetchMore } = useQuery(
+    GET_FOLLOWED_USERS_ACTIVITIES,
+    {
+      variables: { page: activities.currentPage },
+      fetchPolicy: 'no-cache', // Used for first execution
+    }
+  )
+
+  useEffect(() => {
+    ;(async () => {
+      const data = await fetchMore({
+        variables: { page: activities.currentPage },
+      })
+
+      setActivities(data.data.getAllUsersFollowedLastSevenDaysActivities)
+    })()
+  }, [])
 
   if (loading) {
     return <div>Is loading...</div>
@@ -18,18 +50,29 @@ const FollowedUsersActivitiesList = () => {
     return <div>Une erreur est survenue : {error.message}</div>
   }
 
+  const handleLoadNewResults = async (newPage: number) => {
+    const results = await fetchMore({
+      variables: { page: newPage },
+    })
+
+    setActivities(results.data.getAllUsersFollowedLastSevenDaysActivities)
+  }
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <h2>Activités de ma communauté</h2>
-      {data.getAllUsersFollowedLastSevenDaysActivities &&
-      data.getAllUsersFollowedLastSevenDaysActivities.length === 0 ? (
+      <h2>Activités de ma communauté (7 derniers jours)</h2>
+      {activities.data.length === 0 ? (
         <Box>
           <p>Aucune activité enregistrée</p>
           <p>Veuillez suivre des utilisateurs pour voir leurs activités ici</p>
         </Box>
       ) : (
-        data.getAllUsersFollowedLastSevenDaysActivities.map(
-          (activity: IActivity, index: number) => {
+        <>
+          <Typography>
+            {activities?.total} résultat{activities?.total > 1 && 's'} - page{' '}
+            {activities?.currentPage} / {activities?.totalPages}
+          </Typography>
+          {activities.data.map((activity: IActivity, index: number) => {
             return (
               <Card
                 style={{
@@ -65,8 +108,12 @@ const FollowedUsersActivitiesList = () => {
                 </CardContent>
               </Card>
             )
-          }
-        )
+          })}
+          <PaginationButtons
+            items={activities}
+            handleLoadNewResults={handleLoadNewResults}
+          />
+        </>
       )}
     </Container>
   )

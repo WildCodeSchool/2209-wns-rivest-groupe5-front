@@ -8,6 +8,7 @@ import { IGoodDeal } from '../interfaces/goodDeals/IGoodDeal'
 import { theme } from '../assets/Styles/theme'
 import { IPaginatedResult } from '../interfaces/paginatedResult'
 import { useEffect, useState } from 'react'
+import PaginationButtons from '../components/PaginationButtons'
 
 const GoodDealsFeed = ({
   isCurrentUser,
@@ -33,14 +34,9 @@ const GoodDealsFeed = ({
 
   useEffect(() => {
     ;(async () => {
-      console.log(
-        '🚀 ~ file: GoodDealsFeed.tsx:38 ~ ; ~ goodDeals.currentPage:',
-        goodDeals.currentPage
-      )
       const data = await fetchMore({
         variables: { page: goodDeals.currentPage },
       })
-      console.log('🚀 ~ file: GoodDealsFeed.tsx:43 ~ ; ~ data:', data)
 
       if (isCurrentUser) {
         setGoodDeals(data.data.getAllMyGoodDeals)
@@ -161,31 +157,10 @@ const GoodDealsFeed = ({
                 </Card>
               )
             })}
-
-          <div style={{ display: 'flex' }}>
-            {goodDeals?.currentPage > 1 && (
-              <Button
-                onClick={() => handleLoadNewResults(goodDeals.currentPage - 1)}
-                style={{
-                  marginRight: 'auto',
-                  color: theme.palette.primary.main,
-                }}
-              >
-                Page Précédente
-              </Button>
-            )}
-            {goodDeals?.currentPage < goodDeals?.totalPages && (
-              <Button
-                onClick={() => handleLoadNewResults(goodDeals.currentPage + 1)}
-                style={{
-                  marginLeft: 'auto',
-                  color: theme.palette.primary.main,
-                }}
-              >
-                Page Suivante
-              </Button>
-            )}
-          </div>
+          <PaginationButtons
+            items={goodDeals}
+            handleLoadNewResults={handleLoadNewResults}
+          />
         </>
       ) : (
         <div>

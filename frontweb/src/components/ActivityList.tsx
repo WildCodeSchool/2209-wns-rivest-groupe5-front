@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import { theme } from '../assets/Styles/theme'
 import Activity from './activities/Activity'
 import { Link } from 'react-router-dom'
+import { IPaginatedResult } from '../interfaces/paginatedResult'
 
 const ActivityList = ({
   data,
@@ -11,7 +12,7 @@ const ActivityList = ({
   updateActivityList,
   isAllList,
 }: {
-  data: any
+  data: IPaginatedResult<IActivity> | IActivity[]
   forCurrentUser: boolean
   updateActivityList: () => Promise<void>
   isAllList: boolean
@@ -20,11 +21,9 @@ const ActivityList = ({
     return <div>Loading...</div>
   }
 
-  if (!isAllList) {
-    data = data.slice(0, 5)
-  }
+  const activitiesData = Array.isArray(data) ? data : data.data
 
-  const displayActivities = data.map((activity: IActivity) => {
+  const displayActivities = activitiesData.map((activity: IActivity) => {
     return (
       <Activity
         activity={activity}
@@ -37,9 +36,13 @@ const ActivityList = ({
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h2">
-        {isAllList ? 'Mes activités' : 'Mes dernières activités'}
+        {!forCurrentUser
+          ? "Dernières activités de l'utilisateur"
+          : isAllList
+          ? 'Mes activités'
+          : 'Mes dernières activités'}
       </Typography>
-      {data && data.length === 0 ? (
+      {activitiesData && activitiesData.length === 0 ? (
         forCurrentUser === true ? (
           <Box>
             <p>Aucune activité enregistrée</p>
@@ -66,19 +69,21 @@ const ActivityList = ({
       ) : (
         <>
           {displayActivities}{' '}
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Link to="/my-activities" style={{ textDecoration: 'none' }}>
-              <Button
-                style={{
-                  backgroundColor: theme.palette.primary.main,
-                  color: '#fff',
-                }}
-                sx={{ marginLeft: 'auto' }}
-              >
-                Voir toutes mes activités
-              </Button>
-            </Link>
-          </Box>
+          {forCurrentUser && (
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Link to="/my-activities" style={{ textDecoration: 'none' }}>
+                <Button
+                  style={{
+                    backgroundColor: theme.palette.primary.main,
+                    color: '#fff',
+                  }}
+                  sx={{ marginLeft: 'auto' }}
+                >
+                  Voir toutes mes activités
+                </Button>
+              </Link>
+            </Box>
+          )}
         </>
       )}
     </Container>
