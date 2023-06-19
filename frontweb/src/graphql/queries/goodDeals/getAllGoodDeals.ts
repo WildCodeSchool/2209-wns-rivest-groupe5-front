@@ -6,7 +6,7 @@ export const GET_ALL_GOOD_DEALS = gql`
       goodDealId
       goodDealTitle
       goodDealLink
-      goodDealContent
+      goodDealDescription
       image
       createdAt
       user {

@@ -5,6 +5,7 @@ const CREATE_GOOD_DEAL = gql`
     createGoodDeal(data: $data) {
       goodDealTitle
       goodDealContent
+      goodDealDescription
       image
     }
   }

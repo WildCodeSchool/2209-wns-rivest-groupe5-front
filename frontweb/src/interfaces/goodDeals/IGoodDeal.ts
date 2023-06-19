@@ -2,6 +2,7 @@ export interface IGoodDeal {
   goodDealId: number
   goodDealTitle: string
   goodDealContent: string
+  goodDealDescription?: string
   goodDealLink: string
   image: string
   createdAt: Date
