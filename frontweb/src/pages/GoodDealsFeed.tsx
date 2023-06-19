@@ -7,7 +7,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { IGoodDeal } from '../interfaces/goodDeals/IGoodDeal'
 import { theme } from '../assets/Styles/theme'
 import { IPaginatedResult } from '../interfaces/paginatedResult'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const GoodDealsFeed = ({
   isCurrentUser,
@@ -33,10 +33,20 @@ const GoodDealsFeed = ({
 
   useEffect(() => {
     ;(async () => {
+      console.log(
+        '🚀 ~ file: GoodDealsFeed.tsx:38 ~ ; ~ goodDeals.currentPage:',
+        goodDeals.currentPage
+      )
       const data = await fetchMore({
         variables: { page: goodDeals.currentPage },
       })
-      setGoodDeals(data.data.getAllGoodDeals)
+      console.log('🚀 ~ file: GoodDealsFeed.tsx:43 ~ ; ~ data:', data)
+
+      if (isCurrentUser) {
+        setGoodDeals(data.data.getAllMyGoodDeals)
+      } else {
+        setGoodDeals(data.data.getAllGoodDeals)
+      }
     })()
   }, [])
 
@@ -54,11 +64,10 @@ const GoodDealsFeed = ({
     })
 
     setGoodDeals(() => {
-      const data = results.data.getAllGoodDeals.data
-
-      return {
-        ...results.data.getAllGoodDeals,
-        data,
+      if (isCurrentUser) {
+        return results.data.getAllMyGoodDeals
+      } else {
+        return results.data.getAllGoodDeals
       }
     })
   }
