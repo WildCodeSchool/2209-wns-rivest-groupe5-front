@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { IGoodDeal } from '../interfaces/goodDeals/IGoodDeal'
 import { theme } from '../assets/Styles/theme'
+import { IPaginatedResult } from '../interfaces/paginatedResult'
+import { useEffect, useRef, useState } from 'react'
 
 const GoodDealsFeed = ({
   isCurrentUser,
@@ -16,9 +18,27 @@ const GoodDealsFeed = ({
 }) => {
   const url = require('../assets/default-placeholder.png')
 
-  const { data, error, loading } = useQuery(getGoodDealsQuery, {
+  const [goodDeals, setGoodDeals] = useState<IPaginatedResult<IGoodDeal>>({
+    data: [],
+    currentPage: 1,
+    pageSize: 10,
+    total: 0,
+    totalPages: 0,
+  })
+
+  const { error, loading, fetchMore } = useQuery(getGoodDealsQuery, {
+    variables: { page: goodDeals.currentPage },
     fetchPolicy: 'no-cache',
   })
+
+  useEffect(() => {
+    ;(async () => {
+      const data = await fetchMore({
+        variables: { page: goodDeals.currentPage },
+      })
+      setGoodDeals(data.data.getAllGoodDeals)
+    })()
+  }, [])
 
   if (loading) {
     return <div>En cours de chargement...</div>
@@ -28,94 +48,136 @@ const GoodDealsFeed = ({
     return <div>Une erreur est survenue : {error.message}</div>
   }
 
-  const goodDeals: IGoodDeal[] = isCurrentUser
-    ? data?.getAllMyGoodDeals
-    : data?.getAllGoodDeals
+  const handleLoadNewResults = async (newPage: number) => {
+    const results = await fetchMore({
+      variables: { page: newPage },
+    })
 
-  console.log('🚀 ~ file: GoodDealsFeed.tsx:32 ~ goodDeals:', goodDeals)
+    setGoodDeals(() => {
+      const data = results.data.getAllGoodDeals.data
+
+      return {
+        ...results.data.getAllGoodDeals,
+        data,
+      }
+    })
+  }
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h3">
         {isCurrentUser ? 'Mes bons plans' : 'Tous les bons plans'}
+      </Typography>{' '}
+      <Typography>
+        {goodDeals?.total} résultat{goodDeals?.total > 1 && 's'} - page{' '}
+        {goodDeals?.currentPage} / {goodDeals?.totalPages}
       </Typography>
-      {goodDeals.length > 0 ? (
-        goodDeals
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          )
-          .map((e: any) => {
-            return (
-              <Card
-                style={{
-                  backgroundColor: '#e7e7e7',
-                  marginBottom: 25,
-                }}
-                sx={{
-                  mt: 5,
-                }}
-                key={e.goodDealId}
-              >
-                <CardContent
-                  className="wc-flex"
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  {e.image && (
-                    <div>
-                      <img
-                        src={e.image}
-                        alt={e.goodDealTitle}
-                        className="wc-image-gooddeals"
-                      ></img>
-                    </div>
-                  )}
-                  {!e.image && (
-                    <div>
-                      <img
-                        src={url}
-                        alt=""
-                        className="wc-image-gooddeals"
-                      ></img>
-                    </div>
-                  )}
-                  <div className="ml-15 w-75">
-                    <Typography variant="h3">{e.goodDealTitle}</Typography>
-                    <p>
-                      <span style={{ fontSize: 12 }}>
-                        {format(new Date(e.createdAt), 'dd/MM/yyyy')}{' '}
-                      </span>
-                    </p>
-                    {!isCurrentUser && (
-                      <p style={{ fontWeight: 'bolder' }}>
-                        {e.user.firstname} {e.user.lastname}
-                      </p>
-                    )}
-
-                    <p>
-                      {e.goodDealDescription
-                        ? e.goodDealDescription.substr(0, 80) + '...'
-                        : 'Cliquez sur le bouton ci-dessous pour en savoir plus'}
-                    </p>
-                  </div>
-                </CardContent>
-                <Box display="flex" justifyContent="end" margin={2}>
-                  <Button
-                    variant="contained"
-                    sx={{ bgcolor: 'primary', ml: 2, fontSize: 'small' }}
-                    startIcon={<AddCircleIcon />}
-                    size="small"
-                    component={Link}
-                    to={'/good-deal/' + e.goodDealId}
-                  >
-                    Voir les détails
-                  </Button>
-                </Box>
-              </Card>
+      {goodDeals?.data?.length > 0 ? (
+        <>
+          {goodDeals?.data
+            .sort(
+              (a: any, b: any) =>
+                new Date(a.createdAt).getTime() -
+                new Date(b.createdAt).getTime()
             )
-          })
+            .map((e: any) => {
+              return (
+                <Card
+                  style={{
+                    backgroundColor: '#e7e7e7',
+                    marginBottom: 25,
+                  }}
+                  sx={{
+                    mt: 5,
+                  }}
+                  key={e.goodDealId}
+                >
+                  <CardContent
+                    className="wc-flex"
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {e.image && (
+                      <div>
+                        <img
+                          src={e.image}
+                          alt={e.goodDealTitle}
+                          className="wc-image-gooddeals"
+                        ></img>
+                      </div>
+                    )}
+                    {!e.image && (
+                      <div>
+                        <img
+                          src={url}
+                          alt=""
+                          className="wc-image-gooddeals"
+                        ></img>
+                      </div>
+                    )}
+                    <div className="ml-15 w-75">
+                      <Typography variant="h3">{e.goodDealTitle}</Typography>
+                      <p>
+                        <span style={{ fontSize: 12 }}>
+                          {format(new Date(e.createdAt), 'dd/MM/yyyy')}{' '}
+                        </span>
+                      </p>
+                      {!isCurrentUser && (
+                        <p style={{ fontWeight: 'bolder' }}>
+                          {e.user.firstname} {e.user.lastname}
+                        </p>
+                      )}
+
+                      <p>
+                        {e.goodDealDescription
+                          ? e.goodDealDescription.substr(0, 80) + '...'
+                          : 'Cliquez sur le bouton ci-dessous pour en savoir plus'}
+                      </p>
+                    </div>
+                  </CardContent>
+                  <Box display="flex" justifyContent="end" margin={2}>
+                    <Button
+                      variant="contained"
+                      sx={{ bgcolor: 'primary', ml: 2, fontSize: 'small' }}
+                      startIcon={<AddCircleIcon />}
+                      size="small"
+                      component={Link}
+                      to={'/good-deal/' + e.goodDealId}
+                    >
+                      Voir les détails
+                    </Button>
+                  </Box>
+                </Card>
+              )
+            })}
+
+          <div style={{ display: 'flex' }}>
+            {goodDeals?.currentPage > 1 && (
+              <Button
+                onClick={() => handleLoadNewResults(goodDeals.currentPage - 1)}
+                style={{
+                  marginRight: 'auto',
+                  color: theme.palette.primary.main,
+                }}
+              >
+                Page Précédente
+              </Button>
+            )}
+            {goodDeals?.currentPage < goodDeals?.totalPages && (
+              <Button
+                onClick={() => handleLoadNewResults(goodDeals.currentPage + 1)}
+                style={{
+                  marginLeft: 'auto',
+                  color: theme.palette.primary.main,
+                }}
+              >
+                Page Suivante
+              </Button>
+            )}
+          </div>
+        </>
       ) : (
         <div>
           <Typography style={{ marginTop: 8, marginBottom: 16 }}>
