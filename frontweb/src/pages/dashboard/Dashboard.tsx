@@ -42,17 +42,6 @@ const Dashboard = () => {
     }
   )
 
-  const [
-    getMyActivities,
-    {
-      loading: activitiesLoading,
-      error: activitiesError,
-      data: activitiesData,
-    },
-  ] = useLazyQuery(GET_MY_ACTIVITIES, {
-    fetchPolicy: 'no-cache', // Used for first execution
-  })
-
   const {
     data: sumData,
     loading: sumLoading,
@@ -107,11 +96,11 @@ const Dashboard = () => {
     getYearBarChartData,
   ])
 
-  if (activitiesLoading || sumLoading) {
+  if (sumLoading) {
     return <div>Is loading...</div>
   }
 
-  if (activitiesError || sumError) {
+  if (sumError) {
     return <div>Une erreur est survenue</div>
   }
 

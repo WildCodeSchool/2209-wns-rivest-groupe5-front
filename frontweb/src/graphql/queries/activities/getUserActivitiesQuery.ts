@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const GET_USER_ACTIVITIES = gql`
-  query GetPublicOrFollowedUserLastSevenDaysActivities($userId: Float!) {
-    getPublicOrFollowedUserLastSevenDaysActivities(userId: $userId) {
+  query getPublicOrFollowedUserLastFiveActivities($userId: Float!) {
+    getPublicOrFollowedUserLastFiveActivities(userId: $userId) {
       activityDate
       activityId
       activityType {

@@ -27,7 +27,6 @@ export default function CarouselContent() {
   const { data, error, loading } = useQuery(GET_ALL_GOOD_DEALS, {
     fetchPolicy: 'no-cache',
     variables: {
-      limit: 10,
       order: 'DESC',
     },
   })
@@ -69,7 +68,7 @@ export default function CarouselContent() {
       slidesToSlide={1}
       swipeable
     >
-      {data.getAllGoodDeals
+      {data.getAllGoodDeals.data
         .sort(
           (a: any, b: any) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -82,10 +81,11 @@ export default function CarouselContent() {
           return (
             <HomePageGoodDealCard
               title={e.goodDealTitle}
-              content={e.goodDealDescription ?? "Cliquez pour en savoir plus"}
+              content={e.goodDealDescription ?? 'Cliquez pour en savoir plus'}
               author={e.user.firstname + ' ' + e.user.lastname}
               key={index}
               id={e.id}
+              image={src}
             />
           )
         })}

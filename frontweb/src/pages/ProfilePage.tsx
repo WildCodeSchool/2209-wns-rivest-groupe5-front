@@ -15,16 +15,17 @@ import { GET_IS_USER_FOLLOWING } from '../graphql/queries/users/getIsUserFollowi
 import { useRecoilValue } from 'recoil'
 import { currentUserState } from '../atom/currentUserAtom'
 import { TOGGLE_FOLLOW_USER } from '../graphql/mutations/follows/toggleFollow'
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import UserAvatar from '../components/users/UserAvatar'
 import ActivityList from '../components/ActivityList'
 import { IActivity } from '../interfaces/IActivity'
+import { formatFirstLetterUppercase } from '../utils/formatName'
 
 const ProfilePage = () => {
   const { userId } = useParams()
   const currentUser = useRecoilValue(currentUserState)
   const [userIsFollowing, setUserIsFollowing] = useState(false)
-  const [allActivities, setAllActivities] = useState<IActivity[]>()
+  const [allActivities, setAllActivities] = useState<IActivity[]>([])
 
   const intUserId = userId ? parseInt(userId) : -1
 
@@ -33,6 +34,7 @@ const ProfilePage = () => {
     variables: { userId: intUserId },
   })
 
+  // USER FOLLOWING
   const [
     getIsUserFollowing,
     { loading: isFollowingLoading, error: isFollowingError },
@@ -55,8 +57,15 @@ const ProfilePage = () => {
         setUserIsFollowing(res?.data?.getIsUserIsFollowing)
       }
     })()
-  }, [currentUser, getIsUserFollowing])
+  }, [currentUser, getIsUserFollowing, userId])
 
+  const handleToggleFollow = async () => {
+    await toggleUserFollow()
+    const res = await getIsUserFollowing()
+    setUserIsFollowing(res?.data?.getIsUserIsFollowing)
+  }
+
+  // USER STATS
   const {
     loading: periodicLoading,
     error: periodicError,
@@ -75,34 +84,33 @@ const ProfilePage = () => {
     variables: { userIdToGetStats: intUserId },
   })
 
+  // USER ACTIVITIES
   const [
     getUserActivities,
-    {
-      loading: activitiesLoading,
-      error: activitiesError,
-      data: activitiesData,
-    },
+    { loading: activitiesLoading, error: activitiesError },
   ] = useLazyQuery(GET_USER_ACTIVITIES, {
     fetchPolicy: 'no-cache', // Used for first execution
-    variables: { userId: intUserId },
+    variables: {
+      userId: intUserId,
+    },
   })
 
   useEffect(() => {
     ;(async () => {
-      const res = await getUserActivities()
-      setAllActivities(res.data.getPublicOrFollowedUserLastSevenDaysActivities)
+      const res = await getUserActivities({
+        variables: {
+          userId: intUserId,
+        },
+      })
+      console.log('🚀 ~ file: ProfilePage.tsx:115 ~ ; ~ res:', res)
+      setAllActivities(res.data.getPublicOrFollowedUserLastFiveActivities)
     })()
   }, [])
 
+  // UPDATE UI FOR ACTIVITIES
   const updateActivityList = async () => {
     const res = await getUserActivities()
-    setAllActivities(res.data.getPublicOrFollowedUserLastSevenDaysActivities)
-  }
-
-  const handleToggleFollow = async () => {
-    await toggleUserFollow()
-    const res = await getIsUserFollowing()
-    setUserIsFollowing(res?.data?.getIsUserIsFollowing)
+    setAllActivities(res.data.getPublicOrFollowedUserLastFiveActivities)
   }
 
   if (
@@ -228,6 +236,10 @@ const ProfilePage = () => {
                 flexDirection: 'column',
               }}
             >
+              <Typography>
+                5 dernières activités de{' '}
+                {formatFirstLetterUppercase(data?.getUserById?.firstname)}
+              </Typography>
               <ActivityList
                 data={allActivities}
                 forCurrentUser={false}
