@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
@@ -112,13 +112,29 @@ export default function PersistentDrawerLeft() {
         open={open}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}
+          >
+            <Link to="/" style={{ flex: '1' }}>
+              <img
+                src={require('../assets/wildcarbon_dark_logo.png')}
+                alt="accueil"
+                style={{ width: '100%' }}
+              />
+            </Link>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </div>
         </DrawerHeader>
         <Divider />
         <List>{mainListItems}</List>
