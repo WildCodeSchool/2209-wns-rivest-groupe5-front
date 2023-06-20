@@ -68,7 +68,7 @@ export default function CarouselContent() {
       slidesToSlide={1}
       swipeable
     >
-      {data.getAllGoodDeals
+      {data.getAllGoodDeals.data
         .sort(
           (a: any, b: any) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -85,6 +85,7 @@ export default function CarouselContent() {
               author={e.user.firstname + ' ' + e.user.lastname}
               key={index}
               id={e.id}
+              image={src}
             />
           )
         })}

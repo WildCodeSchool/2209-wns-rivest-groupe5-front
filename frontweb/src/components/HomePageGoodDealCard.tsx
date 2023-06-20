@@ -9,7 +9,7 @@ export default function HomePageGoodDealCard({
   content,
   image,
   author,
-  id
+  id,
 }: {
   title: string
   content: string
@@ -17,12 +17,14 @@ export default function HomePageGoodDealCard({
   author: any
   id: string
 }) {
+  console.log(image)
+  const defaultImage = require('../assets/carbon-neutral.jpg')
   return (
     <Card sx={{ maxWidth: 345, mr: 5, mb: 1 }} key={id}>
       <CardMedia
         component="img"
         height="200"
-        image={image}
+        image={image ?? defaultImage}
         alt="good-deal-card"
       />
       <CardContent>

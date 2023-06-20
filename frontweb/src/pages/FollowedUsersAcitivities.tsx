@@ -1,19 +1,13 @@
 import { useQuery } from '@apollo/client'
 import { IActivity } from '../interfaces/IActivity'
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Typography,
-} from '@mui/material'
+import { Box, Card, CardContent, Container, Typography } from '@mui/material'
 import { format } from 'date-fns'
 import { GET_FOLLOWED_USERS_ACTIVITIES } from '../graphql/queries/activities/getFollowedUsersActivitiesQuery'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { IPaginatedResult } from '../interfaces/paginatedResult'
 import PaginationButtons from '../components/PaginationButtons'
+import { theme } from '../assets/Styles/theme'
 
 const FollowedUsersActivitiesList = () => {
   const [activities, setActivities] = useState<IPaginatedResult<IActivity>>({
@@ -60,7 +54,17 @@ const FollowedUsersActivitiesList = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <h2>Activités de ma communauté (7 derniers jours)</h2>
+      <Typography variant="h2">
+        Activités de ma communauté{' '}
+        <span
+          style={{
+            fontSize: 14,
+            color: theme.palette.grey[500],
+          }}
+        >
+          (7 derniers jours)
+        </span>
+      </Typography>
       {activities.data.length === 0 ? (
         <Box>
           <p>Aucune activité enregistrée</p>

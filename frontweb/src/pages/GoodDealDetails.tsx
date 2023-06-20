@@ -99,7 +99,9 @@ const GoodDealDetails = () => {
               },
             }}
             onClick={() => {
-              navigate('/good-deals-feed')
+              console.log('goodDeal.user.userId', goodDeal.user.userId)
+              console.log('currentUser?.userId', currentUser?.userId)
+              navigate(redirectUrl)
             }}
           >
             <ArrowBackIcon sx={{ mr: 2 }} />
@@ -115,7 +117,7 @@ const GoodDealDetails = () => {
                 },
               }}
               onClick={() => {
-                navigate('/good-deals-feed')
+                navigate(redirectUrl)
               }}
             >
               Tous les bons plans
@@ -192,10 +194,16 @@ const GoodDealDetails = () => {
     })
   }
 
+  const redirectUrl = `${
+    goodDeal.user.userId === currentUser?.userId
+      ? '/my-good-deals'
+      : '/good-deals-feed'
+  }`
+
   const handleDeleteMyGoodDeal = async () => {
     await deleteMyGoodDeal({
       onCompleted(data) {
-        navigate('/my-good-deals')
+        navigate(redirectUrl)
       },
       onError(error) {
         setIsSnackBarOpen(true)
@@ -256,7 +264,9 @@ const GoodDealDetails = () => {
               },
             }}
             onClick={() => {
-              navigate('/good-deals-feed')
+              console.log('goodDeal.user.userId', goodDeal.user.userId)
+              console.log('currentUser?.userId', currentUser?.userId)
+              navigate(redirectUrl)
             }}
           >
             <ArrowBackIcon sx={{ mr: 2 }} />
@@ -272,7 +282,7 @@ const GoodDealDetails = () => {
                 },
               }}
               onClick={() => {
-                navigate('/good-deals-feed')
+                navigate(redirectUrl)
               }}
             >
               Tous les bons plans
