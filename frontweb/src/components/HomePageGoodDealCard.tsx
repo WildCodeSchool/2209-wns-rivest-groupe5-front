@@ -17,8 +17,8 @@ export default function HomePageGoodDealCard({
   author: any
   id: string
 }) {
-  console.log(image)
   const defaultImage = require('../assets/carbon-neutral.jpg')
+
   return (
     <Card sx={{ maxWidth: 345, mr: 5, mb: 1 }} key={id}>
       <CardMedia

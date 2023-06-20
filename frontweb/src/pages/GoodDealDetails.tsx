@@ -99,8 +99,6 @@ const GoodDealDetails = () => {
               },
             }}
             onClick={() => {
-              console.log('goodDeal.user.userId', goodDeal.user.userId)
-              console.log('currentUser?.userId', currentUser?.userId)
               navigate(redirectUrl)
             }}
           >
