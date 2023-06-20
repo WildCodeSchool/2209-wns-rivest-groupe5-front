@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
-import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -14,6 +13,7 @@ import { ListItemButton } from '@mui/material'
 import { useRecoilState } from 'recoil'
 import { currentUserState } from '../atom/currentUserAtom'
 import UserAvatar from './users/UserAvatar'
+import DashboardIcon from '@mui/icons-material/Dashboard'
 
 const linkStyle = {
   textDecoration: 'none',
@@ -97,6 +97,16 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <MenuItem>
+          <Link to="/dashboard" style={linkStyle}>
+            <ListItemButton sx={{ p: 0 }}>
+              <ListItemIcon>
+                <DashboardIcon fontSize="small" />
+              </ListItemIcon>
+              Dashboard
+            </ListItemButton>
+          </Link>
+        </MenuItem>
         <MenuItem>
           <Link to="/my-account" style={linkStyle}>
             <ListItemButton sx={{ p: 0 }}>
