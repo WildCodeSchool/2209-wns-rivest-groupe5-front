@@ -198,7 +198,7 @@ const HomePage = () => {
                   </Typography>
                 </AccordionDetails>
               </Accordion>
-              <img src={together}></img>
+              <img src={together} alt="ensemble" />
             </Paper>
           </Box>
 
@@ -211,18 +211,48 @@ const HomePage = () => {
               sx={{
                 minHeight: '700px',
                 p: 5,
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              <Typography variant="h6" sx={{ textAlign: 'center', mb: 3 }}>
-                Cagnotte
-              </Typography>
-              <CardMedia
-                component="iframe"
-                allowFullScreen
-                frameBorder="0"
-                src="https://www.leetchi.com/widget/fr/lyd9NOWJ"
-                height="500px"
-              />
+              <a
+                href="https://www.leetchi.com/fr/c/wildcarbon"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  flex: '1',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100%',
+                  }}
+                >
+                  <Typography variant="h6" sx={{ textAlign: 'center', mb: 3 }}>
+                    Cagnotte
+                  </Typography>
+                  <CardMedia
+                    component="img"
+                    src={require('../assets/money.jpg')}
+                  />
+                  <Typography sx={{ mt: 3 }}>
+                    Afin de soutenir le développement de l'application, nous
+                    avons mis en place une cagnotte en ligne. Si vous souhaitez
+                    nous soutenir, vous pouvez faire un don en cliquant cette
+                    cagnotte.
+                  </Typography>
+
+                  <Button variant="contained" color="secondary" sx={{ mt: 4 }}>
+                    Participer
+                  </Button>
+                </div>
+              </a>
             </Paper>
           </Box>
         </Box>
