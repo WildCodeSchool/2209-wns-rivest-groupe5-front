@@ -392,10 +392,21 @@ const GoodDealDetails = () => {
             <Button
               size="small"
               style={{
+                backgroundColor: theme.palette.secondary.main,
+                color: '#fff',
+                width: 'max-content',
+                marginRight: '20px',
+              }}
+              onClick={() => navigate(`/edit-good-deal/${goodDealId}`)}
+            >
+              Editer ce bon plan
+            </Button>
+            <Button
+              size="small"
+              style={{
                 backgroundColor: theme.palette.warning.main,
                 color: '#fff',
                 width: 'max-content',
-                margin: '20px auto',
               }}
               onClick={() => setOpenDeleteGoodDealConfirmModal(true)}
             >

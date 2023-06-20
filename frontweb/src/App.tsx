@@ -26,6 +26,7 @@ import { useQuery } from '@apollo/client'
 import { GET_MY_USER_DATA } from './graphql/queries/users/getMyUserData'
 import { GET_ALL_GOOD_DEALS } from './graphql/queries/goodDeals/getAllGoodDeals'
 import { GET_ALL_MY_GOOD_DEALS } from './graphql/queries/goodDeals/getAllMyGoodDeals'
+import GoodDealEdit from './pages/GoodDealEdit'
 
 function App() {
   const [user, setUser] = useRecoilState(currentUserState)
@@ -96,7 +97,10 @@ function App() {
                   element={<FollowedUsersActivitiesList />}
                 />
                 <Route path="/good-deals-form" element={<GoodDealsForm />} />
-                <Route path="/good-deals-form" element={<GoodDealsForm />} />
+                <Route
+                  path="/edit-good-deal/:goodDealId"
+                  element={<GoodDealEdit />}
+                />
 
                 <Route
                   path="/my-good-deals"
