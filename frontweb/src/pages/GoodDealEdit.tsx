@@ -20,9 +20,12 @@ import { GET_GOOD_DEAL } from '../graphql/queries/goodDeals/getGoodDeal'
 import UPDATE_GOOD_DEAL from '../graphql/mutations/goodDeals/updateGoodDeal'
 import { theme } from '../assets/Styles/theme'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { useRecoilValue } from 'recoil'
+import { currentUserState } from '../atom/currentUserAtom'
 
 const GoodDealEdit = () => {
   const { goodDealId } = useParams()
+  const currentUser = useRecoilValue(currentUserState)
 
   // récupérer le good deal à modifier
   const { data, error, loading } = useQuery(GET_GOOD_DEAL, {
@@ -39,6 +42,17 @@ const GoodDealEdit = () => {
   const [errorMsg, setErrorMsg] = useState('')
   const [openError, setOpenError] = useState(false)
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (
+      !data?.getGoodDeal ||
+      currentUser === null ||
+      data?.getGoodDeal?.user.userId !== currentUser.userId
+    ) {
+      navigate('/')
+    }
+  }, [currentUser, data?.getGoodDeal, navigate])
 
   useEffect(() => {
     if (data?.getGoodDeal) {
@@ -56,7 +70,6 @@ const GoodDealEdit = () => {
     }
   }, [data])
 
-  const navigate = useNavigate()
   const [updateGoodDeal, { loading: loadingGetGoodDeal }] =
     useMutation(UPDATE_GOOD_DEAL)
 
