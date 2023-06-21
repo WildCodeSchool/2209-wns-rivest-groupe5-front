@@ -45,24 +45,6 @@ const GoodDealEdit = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ file: GoodDealEdit.tsx:53 ~ useEffect ~ !data?.getGoodDeal:',
-      !data?.getGoodDeal
-    )
-    console.log(
-      '🚀 ~ file: GoodDealEdit.tsx:54 ~ useEffect ~ currentUser === null:',
-      currentUser === null
-    )
-    console.log(
-      '🚀 ~ file: GoodDealEdit.tsx:55 ~ useEffect ~ data?.getGoodDeal?.user.userId:',
-      data?.getGoodDeal?.user.userId
-    )
-
-    console.log(
-      '🚀 ~ file: GoodDealEdit.tsx:57 ~ useEffect ~ currentUser.userId:',
-      currentUser
-    )
-
     if (data) {
       if (
         !data?.getGoodDeal ||
