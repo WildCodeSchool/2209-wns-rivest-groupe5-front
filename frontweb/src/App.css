@@ -62,8 +62,9 @@ a:visited {
 }
 
 .wc-image-gooddeals {
-  width: 150px;
-  height: 150px;
+  min-width: 250px;
+  max-height: 150px;
+  object-fit: contain;
 }
 
 .ml-15 {
