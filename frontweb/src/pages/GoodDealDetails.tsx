@@ -1,5 +1,13 @@
-import { useParams } from 'react-router-dom'
-import { Container, Box, Stack, Button, Snackbar, Alert } from '@mui/material'
+import { Link, useParams } from 'react-router-dom'
+import {
+  Container,
+  Box,
+  Stack,
+  Button,
+  Snackbar,
+  Alert,
+  Divider,
+} from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
@@ -23,6 +31,7 @@ import { IGoodDeal } from '../interfaces/goodDeals/IGoodDeal'
 import { theme } from '../assets/Styles/theme'
 import DELETE_GOOD_DEAL from '../graphql/mutations/goodDeals/deleteGoodDeal'
 import BasicModal from '../components/common/Modal'
+import { formatFullname } from '../utils/formatName'
 
 const GoodDealDetails = () => {
   const currentUser = useRecoilValue(currentUserState)
@@ -245,12 +254,9 @@ const GoodDealDetails = () => {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'row',
             justifyContent: 'space-between',
             mb: 3,
             background: 'white',
-            borderRadius: 3,
-            p: 3,
           }}
         >
           <Stack
@@ -262,8 +268,6 @@ const GoodDealDetails = () => {
               },
             }}
             onClick={() => {
-              console.log('goodDeal.user.userId', goodDeal.user.userId)
-              console.log('currentUser?.userId', currentUser?.userId)
               navigate(redirectUrl)
             }}
           >
@@ -288,142 +292,175 @@ const GoodDealDetails = () => {
             <Typography color="text.primary">Good deal {goodDealId}</Typography>
           </Breadcrumbs>
         </Box>
-
-        <Box
-          sx={{
-            background: 'white',
-            borderRadius: 3,
-            display: 'flex',
-            flexDirection: 'row',
-            height: '200px',
-            mb: 3,
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            width="25%"
-            height="100%"
-          >
-            <img src={src} alt="" className="image-good-deal"></img>
-          </Box>
-          <Box
-            sx={{ p: 3, display: 'flex', flexDirection: 'column' }}
-            width="75%"
-          >
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: 700, textAlign: 'center', mb: 3 }}
-            >
-              {goodDeal.goodDealTitle}
-            </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                mb: 3,
-              }}
-            >
-              <Typography color="text.secondary" fontSize="12px">
-                Publié il y a{' '}
-                {diff > 0
-                  ? diff > 1
-                    ? diff + ' jours'
-                    : diff + ' jour'
-                  : diffHours > 1
-                  ? diffHours + ' heures'
-                  : diffHours + ' heure'}
-              </Typography>
-              <Box>
-                <Stack
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Checkbox
-                    icon={<ThumbDownOffAltIcon />}
-                    checkedIcon={<ThumbDownAltIcon />}
-                    color="error"
-                    onClick={handleDislike}
-                    checked={disliked}
-                  />
-                  {goodDeal.total}
-                  <Checkbox
-                    icon={<ThumbUpOffAltIcon />}
-                    checkedIcon={<ThumbUpAltIcon />}
-                    onClick={handleLike}
-                    checked={liked}
-                  />
-                </Stack>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Avatar alt="user" src={avatar} sx={{ mr: 2 }} />
-              Partagé par&nbsp;
-              <strong>
-                {goodDeal.user.firstname} {goodDeal.user.lastname}
-              </strong>
-            </Box>
-          </Box>
-        </Box>
-
         {goodDeal.user.userId === currentUser?.userId && (
-          <Box
-            sx={{
+          <div
+            style={{
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'flex-end',
+              marginBottom: 30,
             }}
           >
-            <Button
-              size="small"
-              style={{
-                backgroundColor: theme.palette.warning.main,
-                color: '#fff',
-                width: 'max-content',
-                margin: '20px auto',
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-              onClick={() => setOpenDeleteGoodDealConfirmModal(true)}
             >
-              Supprimer ce bon plan
-            </Button>
-          </Box>
+              <Button
+                size="small"
+                style={{
+                  backgroundColor: theme.palette.secondary.main,
+                  color: '#fff',
+                  width: 'max-content',
+                  marginRight: '20px',
+                }}
+                onClick={() => navigate(`/edit-good-deal/${goodDealId}`)}
+              >
+                Editer ce bon plan
+              </Button>
+              <Button
+                size="small"
+                style={{
+                  backgroundColor: theme.palette.warning.main,
+                  color: '#fff',
+                  width: 'max-content',
+                }}
+                onClick={() => setOpenDeleteGoodDealConfirmModal(true)}
+              >
+                Supprimer ce bon plan
+              </Button>
+            </Box>
+          </div>
         )}
-
         <Box
+          width="70%"
           sx={{
-            background: 'white',
-            borderRadius: 3,
             display: 'flex',
             flexDirection: 'column',
-            minHeight: '200px',
-            p: 3,
+            marginX: 'auto',
           }}
         >
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            Description :
-          </Typography>
-          <Typography sx={{ mb: 6 }}>
-            {goodDeal.goodDealDescription ?? 'Aucune description disponible.'}
-          </Typography>
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            Le bon plan :
-          </Typography>
-          <div dangerouslySetInnerHTML={{ __html: goodDeal.goodDealContent }} />
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              maxWidth: '800px',
+              maxHeight: '400px',
+              objectFit: 'contain',
+              marginX: 'auto',
+            }}
+          >
+            <img
+              src={src}
+              alt="illustration du bon plan"
+              className="image-good-deal"
+            />
+          </Box>
+          <Box sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+            <Stack
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                p: 3,
+              }}
+            >
+              <Checkbox
+                icon={<ThumbDownOffAltIcon />}
+                checkedIcon={<ThumbDownAltIcon />}
+                color="error"
+                onClick={handleDislike}
+                checked={disliked}
+              />
+              {goodDeal.total}
+              <Checkbox
+                icon={<ThumbUpOffAltIcon />}
+                checkedIcon={<ThumbUpAltIcon />}
+                onClick={handleLike}
+                checked={liked}
+              />
+            </Stack>
+            <Box>
+              <Typography
+                variant="h1"
+                sx={{ fontWeight: 700, textAlign: 'center', mb: 1 }}
+              >
+                {goodDeal.goodDealTitle}
+              </Typography>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  p: 1,
+                }}
+              >
+                <Avatar
+                  alt="user"
+                  src={avatar}
+                  sx={{ mr: 1, width: 20, height: 20 }}
+                />
+                <Typography fontSize="12px">
+                  <Link to={`/profile/${goodDeal.user.userId}`}>
+                    <strong>
+                      {formatFullname(
+                        goodDeal.user.firstname,
+                        goodDeal.user.lastname
+                      )}
+                    </strong>
+                  </Link>
+                </Typography>
+                &nbsp;-&nbsp;
+                <Typography
+                  color="text.secondary"
+                  fontSize="12px"
+                  textAlign={'center'}
+                >
+                  Publié il y a{' '}
+                  {diff > 0
+                    ? diff > 1
+                      ? diff + ' jours'
+                      : diff + ' jour'
+                    : diffHours > 1
+                    ? diffHours + ' heures'
+                    : diffHours + ' heure'}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              background: 'white',
+              minHeight: '200px',
+              p: 3,
+            }}
+          >
+            <Divider />
+            <Box sx={{ py: 3 }}>
+              <Typography variant="h6" sx={{ mb: 2 }}>
+                Description :
+              </Typography>
+              <Typography>
+                {goodDeal.goodDealDescription ??
+                  'Aucune description disponible.'}
+              </Typography>
+              {goodDeal.goodDealLink && goodDeal.goodDealLink !== '' && (
+                <Typography sx={{ mt: 3 }}>
+                  Lien utile proposé : {goodDeal.goodDealLink}
+                </Typography>
+              )}
+            </Box>
+            <Divider />
+            <div
+              dangerouslySetInnerHTML={{ __html: goodDeal.goodDealContent }}
+            />
+          </Box>
         </Box>
       </Container>
     </>

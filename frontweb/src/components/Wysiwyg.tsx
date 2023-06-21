@@ -1,12 +1,21 @@
-import { RichTextEditor, Link } from '@mantine/tiptap';
-import { useEditor } from '@tiptap/react';
-import Highlight from '@tiptap/extension-highlight';
-import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
-import TextAlign from '@tiptap/extension-text-align';
-import Placeholder from '@tiptap/extension-placeholder';
+import { RichTextEditor, Link } from '@mantine/tiptap'
+import { useEditor } from '@tiptap/react'
+import Highlight from '@tiptap/extension-highlight'
+import StarterKit from '@tiptap/starter-kit'
+import Underline from '@tiptap/extension-underline'
+import TextAlign from '@tiptap/extension-text-align'
+import Placeholder from '@tiptap/extension-placeholder'
+import { useEffect, useRef } from 'react'
 
-export default function Wysiwyg({content, placeholder, handler}: {content : string, placeholder : string, handler : (content : string | undefined) => void}) {
+export default function Wysiwyg({
+  content,
+  placeholder,
+  handler,
+}: {
+  content: string
+  placeholder: string
+  handler: (content: string | undefined) => void
+}) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -14,16 +23,25 @@ export default function Wysiwyg({content, placeholder, handler}: {content : stri
       Link,
       Highlight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      Placeholder.configure({ placeholder: placeholder })
+      Placeholder.configure({ placeholder: placeholder }),
     ],
     content,
     onUpdate: ({ editor }) => {
-      handler(editor.getHTML());
+      handler(editor.getHTML())
     },
-  });
+  })
+
+  // force rebuild when content changes
+  const editorRef = useRef(null)
+
+  useEffect(() => {
+    if (editor && editorRef.current && content !== editor.getHTML()) {
+      editor.commands.setContent(content)
+    }
+  }, [content, editor])
 
   return (
-    <RichTextEditor editor={editor} >
+    <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
@@ -62,7 +80,7 @@ export default function Wysiwyg({content, placeholder, handler}: {content : stri
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
 
-      <RichTextEditor.Content/>
+      <RichTextEditor.Content ref={editorRef} />
     </RichTextEditor>
-  );
+  )
 }
