@@ -14,7 +14,6 @@ import { GET_MY_LAST_MONTH_ACTIVITIES_GRAPH_DATA } from '../../graphql/queries/c
 import { GET_MY_LAST_YEAR_ACTIVITIES_GRAPH_DATA } from '../../graphql/queries/carbonGraphs/getMyLastYearActivitiesGraphData'
 import CarbonGraphEmissions from '../../components/carbonGraph/stackedGraph/CarbonGraphEmissions'
 import CarbonGraphSums from '../../components/carbonGraph/pieGraph/CarbonGraphSums'
-import { GET_MY_ACTIVITIES } from '../../graphql/queries/activities/getMyActivitiesQuery'
 import { GET_TOTAL_SUMS_ACTIVITIES_GRAPH_DATA } from '../../graphql/queries/carbonGraphs/getTotalSumsActivitiesGraphData'
 import ActivityListPage from '../ActivityListPage'
 
