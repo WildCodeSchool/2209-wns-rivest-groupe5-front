@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
 import { RecoilRoot } from 'recoil'
-import LoginPage from '../pages/LoginPage'
+import LoginPage from '../../pages/LoginPage'
 import { BrowserRouter } from 'react-router-dom'
 
 describe('login page', () => {
