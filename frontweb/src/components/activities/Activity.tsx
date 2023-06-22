@@ -37,6 +37,10 @@ const Activity = ({
     return <div>Une erreur est survenue : {error.message}</div>
   }
 
+  console.log(activity.user)
+  console.log(currentUser?.userId)
+  console.log(currentUser?.userId === activity?.user?.userId)
+
   return (
     <Card
       style={{
