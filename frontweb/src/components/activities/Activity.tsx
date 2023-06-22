@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Typography } from '@mui/material'
+import { Button, Card, CardContent, Typography } from '@mui/material'
 import BasicModal from '../common/Modal'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from 'react'
@@ -6,9 +6,10 @@ import { useMutation } from '@apollo/client'
 import { DELETE_ACTIVITY } from '../../graphql/mutations/activities/deleteActivityMutation'
 import { IActivity } from '../../interfaces/IActivity'
 import { format } from 'date-fns'
-import { theme } from '../../assets/Styles/theme'
 import { currentUserState } from '../../atom/currentUserAtom'
 import { useRecoilValue } from 'recoil'
+import { useNavigate } from 'react-router-dom'
+import EditIcon from '@mui/icons-material/Edit'
 
 const Activity = ({
   activity,
@@ -22,6 +23,8 @@ const Activity = ({
   const [deleteActivity, { loading, error }] = useMutation(DELETE_ACTIVITY, {
     variables: { activityId: activity.activityId },
   })
+
+  const navigate = useNavigate()
 
   const handleDeleteActivity = async () => {
     await deleteActivity().catch((error) => console.log(error))
@@ -71,22 +74,44 @@ const Activity = ({
           {parseFloat((activity.carbonQuantity / 1000).toFixed(2))} kg de CO2
         </p>
         <p>{activity.description}</p>
+
         {activity.user && currentUser?.userId === activity.user.userId && (
-          <Box
-            onClick={() => setIsOpenModal(true)}
-            color={theme.palette.error.main}
-            fontSize={12}
-            title="Supprimer l'activité"
-            sx={{
-              display: 'flex',
-              justifyContent: 'end',
-              cursor: 'pointer',
-              alignItems: 'center',
-            }}
-          >
-            Supprimer
-            <DeleteIcon color="error" fontSize="medium" />
-          </Box>
+          <div style={{ display: 'flex', gap: 20, justifyContent: 'flex-end' }}>
+            <Button
+              onClick={() => navigate(`/edit-activity/${activity.activityId}`)}
+              title="Editer"
+              sx={{
+                display: 'flex',
+                justifyContent: 'end',
+                cursor: 'pointer',
+                alignItems: 'center',
+                color: 'black',
+                backgroundColor: 'white',
+                fontSize: 12,
+                border: '1px solid #ddd',
+              }}
+              endIcon={<EditIcon color="secondary" fontSize="medium" />}
+            >
+              Editer
+            </Button>
+            <Button
+              onClick={() => setIsOpenModal(true)}
+              title="Supprimer"
+              sx={{
+                display: 'flex',
+                justifyContent: 'end',
+                cursor: 'pointer',
+                alignItems: 'center',
+                color: 'black',
+                backgroundColor: 'white',
+                fontSize: 12,
+                border: '1px solid #ddd',
+              }}
+            >
+              Supprimer
+              <DeleteIcon color="error" fontSize="medium" />
+            </Button>
+          </div>
         )}
         <BasicModal
           openModal={isOpenModal}
