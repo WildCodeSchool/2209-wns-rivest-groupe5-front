@@ -5,7 +5,7 @@ import { GET_MY_ACTIVITIES } from '../graphql/queries/activities/getMyActivities
 import ActivityList from '../components/ActivityList'
 import { IPaginatedResult } from '../interfaces/paginatedResult'
 import PaginationButtons from '../components/PaginationButtons'
-import { Typography } from '@mui/material'
+import { Container, Typography } from '@mui/material'
 
 const ActivityListPage = ({ isAllList }: { isAllList: boolean }) => {
   const [allActivities, setAllActivities] = useState<
@@ -59,7 +59,7 @@ const ActivityListPage = ({ isAllList }: { isAllList: boolean }) => {
   }
 
   return (
-    <>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       {isAllList ? (
         <Typography>
           {allActivities?.total} résultat{allActivities?.total > 1 && 's'} -
@@ -80,7 +80,7 @@ const ActivityListPage = ({ isAllList }: { isAllList: boolean }) => {
           handleLoadNewResults={handleLoadNewResults}
         />
       )}
-    </>
+    </Container>
   )
 }
 

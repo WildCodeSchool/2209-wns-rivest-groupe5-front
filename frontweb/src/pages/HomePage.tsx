@@ -51,8 +51,8 @@ const HomePage = () => {
           variant="h6"
           sx={{ textAlign: 'center', marginTop: '20px' }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br /> Donec
-          turpis massa, convallis ut sapien quis, eleifend dapibus ipsum
+          Wildcarbon est l'outil qui vous accompagne au quotidien pour réduire
+          votre empreinte carbone.
         </Typography>
         <Box
           sx={{
@@ -65,20 +65,17 @@ const HomePage = () => {
         >
           <HomePageCard
             title="Réaliser un bilan carbone"
-            content="Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica"
+            content="Vous pouvez renseigner vos activités quotidiennes pour suivre vos émissions d'équivalent CO2 dans le temps"
             image={carbonFootprint}
           />
           <HomePageCard
             title="Partager vos bons plans éco"
-            content="Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica"
+            content="La communeauté partage régulièrement des bons plans pour réduire ses émissions de gaz à effet de serre"
             image={carbonNeutral}
           />
           <HomePageCard
             title="Inviter vos amis"
-            content="Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica"
+            content="Vous pouvez inviter vos amis à rejoindre la plateforme pour les inciter à réduire leur empreinte carbone et suivre leur évolution !"
             image={joinUs}
           />
         </Box>
@@ -266,7 +263,7 @@ const HomePage = () => {
         >
           <Paper sx={{ width: '80%', minHeight: '300px', p: 5 }}>
             <Typography variant="h6" sx={{ textAlign: 'center', mb: 3 }}>
-              Nos derniers good deals
+              Nos derniers Bons Plans
             </Typography>
             <CarouselContent />
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>

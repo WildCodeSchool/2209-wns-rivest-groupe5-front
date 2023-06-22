@@ -22,7 +22,7 @@ export const mainListItems = (
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText primary="Tableau de bord" />
       </ListItemButton>
     </Link>
     <Link to="/my-activities" style={linkStyle}>

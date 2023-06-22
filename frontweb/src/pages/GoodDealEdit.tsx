@@ -22,6 +22,7 @@ import { theme } from '../assets/Styles/theme'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useRecoilValue } from 'recoil'
 import { currentUserState } from '../atom/currentUserAtom'
+import GoBackButton from '../components/GoBackButton'
 
 const GoodDealEdit = () => {
   const { goodDealId } = useParams()
@@ -174,21 +175,7 @@ const GoodDealEdit = () => {
         noValidate
         sx={{ mt: 2, width: '50%', margin: '0 auto' }}
       >
-        <Stack
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            '&:hover': {
-              cursor: 'pointer',
-            },
-          }}
-          onClick={() => {
-            navigate(`/good-deal/${goodDealId}`)
-          }}
-        >
-          <ArrowBackIcon sx={{ mr: 2 }} />
-          Retour
-        </Stack>
+        <GoBackButton redirectUrl={`/good-deal/${goodDealId}`} />
         <Typography
           component="h1"
           variant="h5"

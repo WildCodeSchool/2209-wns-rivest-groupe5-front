@@ -21,6 +21,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { GET_TOKEN_LOGIN } from '../graphql/queries/users/getTokenQuery'
+import GoBackButton from '../components/GoBackButton'
 
 const LoginPage = () => {
   const [user, setUser] = useRecoilState(currentUserState)
@@ -69,6 +70,7 @@ const LoginPage = () => {
           backgroundColor: 'white',
         }}
       >
+        <GoBackButton redirectUrl={'/'} customLabel="Retour Accueil" />
         <CssBaseline />
         <Box
           sx={{
