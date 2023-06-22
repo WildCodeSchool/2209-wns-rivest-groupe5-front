@@ -68,8 +68,8 @@ const GoodDealsForm = () => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     // check if all required fields are provided
-    if (title === '' || content === '') {
-      setErrorMsg('Merci de fournir un titre et une description!')
+    if (title === '' || content === '' || description === '') {
+      setErrorMsg('Merci de fournir un titre, une description et un contenu !')
       setOpenError(true)
       return
     }
