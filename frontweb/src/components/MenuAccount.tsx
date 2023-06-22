@@ -103,7 +103,7 @@ export default function AccountMenu() {
               <ListItemIcon>
                 <DashboardIcon fontSize="small" />
               </ListItemIcon>
-              Dashboard
+              Tableau de bord
             </ListItemButton>
           </Link>
         </MenuItem>
@@ -124,7 +124,7 @@ export default function AccountMenu() {
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
-              Logout
+              Déconnexion
             </ListItemButton>
           </Link>
         </MenuItem>

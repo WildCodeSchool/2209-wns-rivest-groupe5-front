@@ -32,6 +32,7 @@ import { theme } from '../assets/Styles/theme'
 import DELETE_GOOD_DEAL from '../graphql/mutations/goodDeals/deleteGoodDeal'
 import BasicModal from '../components/common/Modal'
 import { formatFullname } from '../utils/formatName'
+import GoBackButton from '../components/GoBackButton'
 
 const GoodDealDetails = () => {
   const currentUser = useRecoilValue(currentUserState)
@@ -78,6 +79,13 @@ const GoodDealDetails = () => {
     }
   }, [dataGetVote, vote])
 
+  const goodDeal: IGoodDeal = data?.getGoodDeal
+  const redirectUrl = `${
+    goodDeal?.user.userId === currentUser?.userId
+      ? '/my-good-deals'
+      : '/good-deals-feed'
+  }`
+
   const [toggleGoodDealVote, { loading: voteLoading, error: voteError }] =
     useMutation(TOGGLE_VOTE)
 
@@ -99,21 +107,7 @@ const GoodDealDetails = () => {
             p: 3,
           }}
         >
-          <Stack
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              '&:hover': {
-                cursor: 'pointer',
-              },
-            }}
-            onClick={() => {
-              navigate(redirectUrl)
-            }}
-          >
-            <ArrowBackIcon sx={{ mr: 2 }} />
-            Retour
-          </Stack>
+          <GoBackButton redirectUrl={redirectUrl} />
           <Breadcrumbs aria-label="breadcrumb">
             <Typography
               color="text.secondary"
@@ -160,8 +154,6 @@ const GoodDealDetails = () => {
     )
   }
 
-  const goodDeal: IGoodDeal = data.getGoodDeal
-
   const src =
     goodDeal.image !== ''
       ? goodDeal.image
@@ -200,12 +192,6 @@ const GoodDealDetails = () => {
       refetch()
     })
   }
-
-  const redirectUrl = `${
-    goodDeal.user.userId === currentUser?.userId
-      ? '/my-good-deals'
-      : '/good-deals-feed'
-  }`
 
   const handleDeleteMyGoodDeal = async () => {
     await deleteMyGoodDeal({
@@ -259,21 +245,7 @@ const GoodDealDetails = () => {
             background: 'white',
           }}
         >
-          <Stack
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              '&:hover': {
-                cursor: 'pointer',
-              },
-            }}
-            onClick={() => {
-              navigate(redirectUrl)
-            }}
-          >
-            <ArrowBackIcon sx={{ mr: 2 }} />
-            Retour
-          </Stack>
+          <GoBackButton redirectUrl={redirectUrl} />
           <Breadcrumbs aria-label="breadcrumb">
             <Typography
               color="text.secondary"
