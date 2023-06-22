@@ -31,6 +31,7 @@ import GET_ACTIVITY_TYPE from '../graphql/queries/activities/getActivityTypes'
 import { IactivityType } from '../interfaces/IActivityType'
 import GET_ACTIVITY from '../graphql/queries/activities/getActivity'
 import UPDATE_ACTIVITY from '../graphql/queries/activities/updateActivity'
+import GoBackButton from '../components/GoBackButton'
 
 type TUnit = 'gr' | 'kg'
 
@@ -143,6 +144,7 @@ const ActivityEdit = () => {
       noValidate
       sx={{ mt: 2, width: '50%', margin: '0 auto' }}
     >
+      <GoBackButton redirectUrl={`/my-activities`} />
       <Typography
         component="h1"
         variant="h5"
