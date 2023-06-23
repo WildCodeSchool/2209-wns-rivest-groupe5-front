@@ -12,19 +12,16 @@ const PublicLayout = () => {
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
-        paddingTop: '20px',
-        paddingX: '20px',
       }}
     >
       <Header />
       <Box
         sx={{
-          marginTop: '20px',
           width: '100%',
           borderRadius: 4,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
+          height: '100%',
         }}
       >
         <Outlet />
