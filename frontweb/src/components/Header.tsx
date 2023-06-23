@@ -6,7 +6,7 @@ import HowToRegIcon from '@mui/icons-material/HowToReg'
 import AccountMenu from './MenuAccount'
 import { useRecoilValue } from 'recoil'
 import { currentUserState } from '../atom/currentUserAtom'
-import wildCarbonLogo from '../assets/wildcarbon_logo.png'
+import wildCarbonLogo from '../assets/wildcarbon_dark_logo.png'
 import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
@@ -16,7 +16,7 @@ export default function Header() {
     <>
       <Button
         variant="contained"
-        sx={{ bgcolor: 'white' }}
+        sx={{ bgcolor: 'primary.main', color: 'white' }}
         startIcon={<LoginIcon />}
         size="medium"
         component={Link}
@@ -49,8 +49,7 @@ export default function Header() {
       sx={{
         backgroundColor: 'transparent',
         boxShadow: 'none',
-        borderRadius: '20px',
-        bgcolor: 'primary.main',
+        bgcolor: 'white',
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
