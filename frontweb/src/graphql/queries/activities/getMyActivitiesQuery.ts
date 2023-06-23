@@ -20,6 +20,9 @@ export const GET_MY_ACTIVITIES = gql`
           label
           name
         }
+        user {
+          userId
+        }
       }
     }
   }

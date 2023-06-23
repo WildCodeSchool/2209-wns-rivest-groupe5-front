@@ -17,13 +17,14 @@ import {
   IconButton,
   Collapse,
   Alert,
-  Stack,
   Button,
+  Stack,
 } from '@mui/material'
 import BasicModal from '../components/common/Modal'
 import { uploadPictureToCloudinary } from '../utils/upLoadPictureToCloudinary'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { CREATE_USER } from '../graphql/mutations/users/createUser'
+import GoBackButton from '../components/GoBackButton'
 
 const RegisterPage = () => {
   const [isSendingImage, setIsSendingImage] = useState(false)
@@ -145,7 +146,7 @@ const RegisterPage = () => {
         iconType="success"
       />
       <BasicModal
-        text="Compte existant merci de vous connecter"
+        text="Compte déjà existant avec cette email. Merci de vous connecter"
         buttonText="Se Connecter"
         openModal={openExistingUserModal}
         handleClose={() => {
@@ -157,7 +158,7 @@ const RegisterPage = () => {
         iconType="error"
       />
       <BasicModal
-        text="Echec de l'inscription, veuillez retenter"
+        text="Echec de l'inscription, veuillez réessayer"
         buttonText="S'inscrire"
         openModal={openFailureModal}
         handleClose={() => {
@@ -180,6 +181,7 @@ const RegisterPage = () => {
             borderColor: '#90CAF9',
           }}
         >
+          <GoBackButton redirectUrl={'/'} customLabel="Retour Accueil" />
           <CssBaseline />
           <Box
             sx={{
@@ -189,7 +191,7 @@ const RegisterPage = () => {
             }}
           >
             <Typography component="h1" variant="h5" sx={{ mb: 1 }}>
-              Register
+              Inscription
             </Typography>
             <Collapse in={openError}>
               <Alert
@@ -221,7 +223,7 @@ const RegisterPage = () => {
                   required
                   fullWidth
                   id="firstname"
-                  label="Firstname"
+                  label="Prénom"
                   name="firstname"
                   autoComplete="firstname"
                   onChange={handleChange}
@@ -232,7 +234,7 @@ const RegisterPage = () => {
                   required
                   fullWidth
                   id="lastname"
-                  label="Lastname"
+                  label="Nom"
                   name="lastname"
                   autoComplete="lastname"
                   onChange={handleChange}
@@ -245,7 +247,7 @@ const RegisterPage = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 onChange={handleChange}
@@ -257,7 +259,7 @@ const RegisterPage = () => {
                 fullWidth
                 name="password"
                 id="password"
-                label="Password"
+                label="Mot de passe"
                 variant="outlined"
                 type={showPassword ? 'text' : 'password'}
                 value={userData.password}
@@ -282,7 +284,7 @@ const RegisterPage = () => {
                 fullWidth
                 name="passwordconfirm"
                 id="passwordconfirm"
-                label="Password Confirm"
+                label="Confirmation du mot de passe"
                 variant="outlined"
                 type={showPasswordConfirm ? 'text' : 'password'}
                 value={userData.passwordconfirm}
@@ -343,7 +345,7 @@ const RegisterPage = () => {
                 sx={{ mt: 2, mb: 2 }}
                 id="submit-button"
               >
-                Create account
+                S'inscrire
               </LoadingButton>
               <Link
                 onClick={() => navigate('/login')}
