@@ -25,7 +25,7 @@ class RegisterPage {
     invalidEmail: Selector('div[class*="MuiAlert-message"]').withText(
       textList.invalidEmail
     ),
-    existingEmailAccount: Selector('div[class*="MuiAlert-message"]').withText(textList.existingEmailAccount),
+    existingEmailAccount: Selector('p').withText(textList.existingEmailAccount),
     invalidPassword: Selector('div[class*="MuiAlert-message"]').withText(textList.invalidPassword),
     passwordsMismatch: Selector('div[class*="MuiAlert-message"]').withText(
       textList.passwordMismatch

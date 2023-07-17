@@ -15,7 +15,7 @@ export const textList = {
   submitRegister: "S'inscrire",
   registrationFailure: "Echec de l'inscription, veuillez retenter",
   registrationSuccess: 'Compte crée avec succès!',
-  existingEmailAccount: 'Un compte existe déjà avec cet email',
+  existingEmailAccount: 'Compte déjà existant avec cet email. Merci de vous connecter',
 }
 
 

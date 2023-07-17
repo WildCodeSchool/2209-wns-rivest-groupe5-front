@@ -169,7 +169,7 @@ const RegisterPage = () => {
         iconType="success"
       />
       <BasicModal
-        text="Compte déjà existant avec cette email. Merci de vous connecter"
+        text={textList.existingEmailAccount}
         buttonText="Se Connecter"
         openModal={openExistingUserModal}
         handleClose={() => {
