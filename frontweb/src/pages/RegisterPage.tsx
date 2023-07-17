@@ -24,11 +24,8 @@ import BasicModal from '../components/common/Modal'
 import { uploadPictureToCloudinary } from '../utils/upLoadPictureToCloudinary'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { CREATE_USER } from '../graphql/mutations/users/createUser'
-<<<<<<< HEAD
-import GoBackButton from '../components/GoBackButton'
-=======
 import { textList } from '../textList'
->>>>>>> 07549a4 (testcafe ok)
+import GoBackButton from '../components/GoBackButton'
 
 const RegisterPage = () => {
   const [isSendingImage, setIsSendingImage] = useState(false)
@@ -184,11 +181,7 @@ const RegisterPage = () => {
         iconType="error"
       />
       <BasicModal
-<<<<<<< HEAD
-        text="Echec de l'inscription, veuillez réessayer"
-=======
         text={textList.registrationFailure}
->>>>>>> 07549a4 (testcafe ok)
         buttonText="S'inscrire"
         openModal={openFailureModal}
         handleClose={() => {
@@ -221,11 +214,7 @@ const RegisterPage = () => {
             }}
           >
             <Typography component="h1" variant="h5" sx={{ mb: 1 }}>
-<<<<<<< HEAD
-              Inscription
-=======
               {textList.register}
->>>>>>> 07549a4 (testcafe ok)
             </Typography>
             <Collapse in={openError}>
               <Alert
@@ -257,11 +246,7 @@ const RegisterPage = () => {
                   required
                   fullWidth
                   id="firstname"
-<<<<<<< HEAD
-                  label="Prénom"
-=======
                   label={textList.firstname}
->>>>>>> 07549a4 (testcafe ok)
                   name="firstname"
                   autoComplete="firstname"
                   onChange={handleChange}
@@ -272,11 +257,7 @@ const RegisterPage = () => {
                   required
                   fullWidth
                   id="lastname"
-<<<<<<< HEAD
-                  label="Nom"
-=======
                   label={textList.lastname}
->>>>>>> 07549a4 (testcafe ok)
                   name="lastname"
                   autoComplete="lastname"
                   onChange={handleChange}
@@ -289,11 +270,7 @@ const RegisterPage = () => {
                 required
                 fullWidth
                 id="email"
-<<<<<<< HEAD
-                label="Email"
-=======
                 label={textList.email}
->>>>>>> 07549a4 (testcafe ok)
                 name="email"
                 autoComplete="email"
                 onChange={handleChange}
@@ -305,11 +282,7 @@ const RegisterPage = () => {
                 fullWidth
                 name="password"
                 id="password"
-<<<<<<< HEAD
-                label="Mot de passe"
-=======
                 label={textList.password}
->>>>>>> 07549a4 (testcafe ok)
                 variant="outlined"
                 type={showPassword ? 'text' : 'password'}
                 value={userData.password}
@@ -334,11 +307,7 @@ const RegisterPage = () => {
                 fullWidth
                 name="passwordconfirm"
                 id="passwordconfirm"
-<<<<<<< HEAD
-                label="Confirmation du mot de passe"
-=======
                 label={textList.passwordConfirm}
->>>>>>> 07549a4 (testcafe ok)
                 variant="outlined"
                 type={showPasswordConfirm ? 'text' : 'password'}
                 value={userData.passwordconfirm}
@@ -399,11 +368,7 @@ const RegisterPage = () => {
                 sx={{ mt: 2, mb: 2 }}
                 id="submit-button"
               >
-<<<<<<< HEAD
-                S'inscrire
-=======
                 {textList.submitRegister}
->>>>>>> 07549a4 (testcafe ok)
               </LoadingButton>
               <Link
                 onClick={() => navigate('/login')}
