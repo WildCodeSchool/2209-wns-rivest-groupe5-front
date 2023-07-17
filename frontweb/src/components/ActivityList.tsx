@@ -1,5 +1,5 @@
 import { IActivity } from '../interfaces/IActivity'
-import { Box, Container, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import { theme } from '../assets/Styles/theme'
 import Activity from './activities/Activity'
@@ -18,7 +18,7 @@ const ActivityList = ({
   isAllList: boolean
 }) => {
   if (!data) {
-    return <div>Loading...</div>
+    return <div>En cours de chargement...</div>
   }
 
   const activitiesData = Array.isArray(data) ? data : data.data
@@ -34,13 +34,9 @@ const ActivityList = ({
   })
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <>
       <Typography variant="h2">
-        {!forCurrentUser
-          ? "Dernières activités de l'utilisateur"
-          : isAllList
-          ? 'Mes activités'
-          : 'Mes dernières activités'}
+        {forCurrentUser && isAllList ? 'Mes activités' : ''}
       </Typography>
       {activitiesData && activitiesData.length === 0 ? (
         forCurrentUser === true ? (
@@ -86,7 +82,7 @@ const ActivityList = ({
           )}
         </>
       )}
-    </Container>
+    </>
   )
 }
 

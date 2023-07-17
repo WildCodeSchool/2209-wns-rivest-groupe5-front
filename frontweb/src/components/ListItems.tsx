@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add'
 import Co2Icon from '@mui/icons-material/Co2'
 import PeopleIcon from '@mui/icons-material/People'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
+import { Divider } from '@mui/material'
 
 const linkStyle = {
   textDecoration: 'none',
@@ -25,6 +26,18 @@ export const mainListItems = (
         <ListItemText primary="Tableau de bord" />
       </ListItemButton>
     </Link>
+    <Divider />
+    <ListItemText
+      primaryTypographyProps={{
+        fontSize: 15,
+        fontWeight: 'medium',
+        lineHeight: '20px',
+        m: '20px',
+      }}
+      sx={{ my: 0 }}
+    >
+      Activités
+    </ListItemText>
     <Link to="/my-activities" style={linkStyle}>
       <ListItemButton>
         <ListItemIcon>
@@ -51,12 +64,24 @@ export const mainListItems = (
         <ListItemText primary="Activités Abonnements" />
       </ListItemButton>
     </Link>
+    <Divider />
+    <ListItemText
+      primaryTypographyProps={{
+        fontSize: 15,
+        fontWeight: 'medium',
+        lineHeight: '20px',
+        m: '20px',
+      }}
+      sx={{ my: 0 }}
+    >
+      Astuces
+    </ListItemText>
     <Link to="/good-deals-feed" style={linkStyle}>
       <ListItemButton>
         <ListItemIcon>
           <DynamicFeedIcon />
         </ListItemIcon>
-        <ListItemText primary="Tous les bons plans" />
+        <ListItemText primary="Toutes les astuces" />
       </ListItemButton>
     </Link>
     <Link to="/my-good-deals" style={linkStyle}>
@@ -64,7 +89,7 @@ export const mainListItems = (
         <ListItemIcon>
           <LocalOfferIcon />
         </ListItemIcon>
-        <ListItemText primary="Mes bons plans" />
+        <ListItemText primary="Mes astuces" />
       </ListItemButton>
     </Link>
     <Link to="/good-deals-form" style={linkStyle}>
@@ -72,7 +97,7 @@ export const mainListItems = (
         <ListItemIcon>
           <AddIcon />
         </ListItemIcon>
-        <ListItemText primary="Créer un bon plan" />
+        <ListItemText primary="Créer une astuce" />
       </ListItemButton>
     </Link>
   </React.Fragment>

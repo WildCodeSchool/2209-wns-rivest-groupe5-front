@@ -17,6 +17,7 @@ export const theme = createTheme({
     error: {
       main: '#d32f2f',
     },
+    background: { default: '#eef2f6' },
   },
   typography: {
     fontFamily: 'Roboto, sans-serif',

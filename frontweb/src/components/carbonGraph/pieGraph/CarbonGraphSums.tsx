@@ -24,7 +24,7 @@ ChartJS.register(
 
 const CarbonGraphSums = ({ data }: { data: any }) => {
   if (!data) {
-    return <div>Loading...</div>
+    return <div>En cours de chargement...</div>
   }
 
   return (

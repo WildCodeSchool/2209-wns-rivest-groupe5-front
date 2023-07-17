@@ -32,7 +32,7 @@ export default function CarouselContent() {
   })
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>En cours de chargement...</div>
   }
 
   if (error) {

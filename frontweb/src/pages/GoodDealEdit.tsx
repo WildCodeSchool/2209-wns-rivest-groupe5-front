@@ -159,28 +159,30 @@ const GoodDealEdit = () => {
   }
 
   if (loading) {
-    return <div>Récupération du bon plan...</div>
+    return <div>Récupération de l'astuce...</div>
   }
 
   if (!data?.getGoodDeal) {
-    return <div>Aucun bon plan n'a été trouvé.</div>
+    return <div>Aucune astuce n'a été trouvée.</div>
   }
 
   return (
     <>
+      <GoBackButton redirectUrl={`/good-deal/${goodDealId}`} />
       <Box
         component="form"
         onSubmit={handleSubmit}
         noValidate
         sx={{ mt: 2, width: '50%', margin: '0 auto' }}
+        style={{ backgroundColor: '#fff', borderRadius: 10 }}
+        padding="20px"
       >
-        <GoBackButton redirectUrl={`/good-deal/${goodDealId}`} />
         <Typography
           component="h1"
           variant="h5"
           sx={{ mb: 1, textAlign: 'center' }}
         >
-          Mettre à jour le bon plan
+          Mettre à jour l'astuce
         </Typography>
         <Collapse in={openError} sx={{ mb: 5 }}>
           <Alert
@@ -232,7 +234,7 @@ const GoodDealEdit = () => {
           />
           <Wysiwyg
             content={content}
-            placeholder="Contenu du bon plan *"
+            placeholder="Contenu de l'astuce *"
             handler={handleWysiwygChange}
           />
           <TextField
@@ -263,7 +265,7 @@ const GoodDealEdit = () => {
                 <Typography>Image actuelle</Typography>
                 <img
                   src={data?.getGoodDeal?.image}
-                  alt="Illustration du bon plan"
+                  alt="Illustration de l'astuce"
                   style={{ maxWidth: '250px', maxHeight: '250px' }}
                 />
                 <Button
@@ -291,7 +293,7 @@ const GoodDealEdit = () => {
                 <img
                   style={{ maxWidth: '250px', maxHeight: '250px' }}
                   src={URL.createObjectURL(imageToUpload)}
-                  alt="Illustration du bon plan"
+                  alt="Illustration de l'astuce"
                 />
                 <Typography fontSize={14}>
                   {imageToUpload?.name && imageToUpload.name}
@@ -340,7 +342,7 @@ const GoodDealEdit = () => {
         onClose={handleCloseSnackBar}
       >
         <Alert sx={{ width: '500px' }} severity={error ? 'error' : 'success'}>
-          {error ? 'La mise à jour a échoué' : 'Bon plan mis à jour!'}
+          {error ? 'La mise à jour a échoué' : 'Astuce mise à jour!'}
         </Alert>
       </Snackbar>
     </>

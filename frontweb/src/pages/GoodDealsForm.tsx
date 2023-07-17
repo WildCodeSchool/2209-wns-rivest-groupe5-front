@@ -102,14 +102,16 @@ const GoodDealsForm = () => {
         component="form"
         onSubmit={handleSubmit}
         noValidate
-        sx={{ mt: 2, width: '50%', margin: '0 auto' }}
+        sx={{ width: '50%', margin: '0 auto' }}
+        style={{ backgroundColor: '#fff', borderRadius: 10 }}
+        padding="20px"
       >
         <Typography
           component="h1"
           variant="h5"
           sx={{ mb: 1, textAlign: 'center' }}
         >
-          PARTAGER VOS BONS PLANS!
+          PARTAGER VOS ASTUCES!
         </Typography>
         <Collapse in={openError} sx={{ mb: 5 }}>
           <Alert
@@ -161,7 +163,7 @@ const GoodDealsForm = () => {
           />
           <Wysiwyg
             content=""
-            placeholder="Contenu du bon plan *"
+            placeholder="Contenu de l'astuce *"
             handler={handleWysiwygChange}
           />
           <TextField
@@ -221,7 +223,7 @@ const GoodDealsForm = () => {
         onClose={handleCloseSnackBar}
       >
         <Alert sx={{ width: '500px' }} severity={error ? 'error' : 'success'}>
-          {error ? 'La publication a échoué' : 'Bon plan publié!'}
+          {error ? 'La publication a échoué' : 'Astuce publiée!'}
         </Alert>
       </Snackbar>
     </>

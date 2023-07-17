@@ -37,7 +37,7 @@ const FollowedUsersActivitiesList = () => {
   }, [])
 
   if (loading) {
-    return <div>Is loading...</div>
+    return <div>En cours de chargement...</div>
   }
 
   if (error) {
@@ -53,7 +53,7 @@ const FollowedUsersActivitiesList = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <Container maxWidth={false}>
       <Typography variant="h2">
         Activités de ma communauté{' '}
         <span

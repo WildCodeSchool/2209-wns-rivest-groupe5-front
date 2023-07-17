@@ -69,14 +69,16 @@ const GoodDealsFeed = ({
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h3">
-        {isCurrentUser ? 'Mes bons plans' : 'Tous les bons plans'}
-      </Typography>{' '}
-      <Typography>
-        {goodDeals?.total} résultat{goodDeals?.total > 1 && 's'} - page{' '}
-        {goodDeals?.currentPage} / {goodDeals?.totalPages}
+    <Container maxWidth={false}>
+      <Typography variant="h2">
+        {isCurrentUser ? 'Mes astuces' : 'Toutes les astuces'}
       </Typography>
+      {goodDeals?.totalPages > 0 && (
+        <Typography>
+          {goodDeals?.total} résultat{goodDeals?.total > 1 && 's'} - page{' '}
+          {goodDeals?.currentPage} / {goodDeals?.totalPages}
+        </Typography>
+      )}
       {goodDeals?.data?.length > 0 ? (
         <>
           {goodDeals?.data
@@ -89,8 +91,12 @@ const GoodDealsFeed = ({
               return (
                 <Card
                   style={{
-                    backgroundColor: '#e7e7e7',
-                    marginBottom: 25,
+                    marginTop: 15,
+                    marginBottom: 40,
+                    boxShadow:
+                      '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
+                    borderRadius: 10,
+                    padding: 20,
                   }}
                   sx={{
                     mt: 5,
@@ -165,17 +171,17 @@ const GoodDealsFeed = ({
       ) : (
         <div>
           <Typography style={{ marginTop: 8, marginBottom: 16 }}>
-            Il semblerait qu'il n'existe aucun bon plan pour le moment !
-            Pourquoi ne commenceriez vous pas par en créer un ?
+            Il semblerait qu'il n'existe aucune astuce pour le moment ! Pourquoi
+            ne commenceriez vous pas par en créer une ?
           </Typography>
           <Link to="/good-deals-form">
             <Button
               style={{
-                backgroundColor: theme.palette.warning.main,
+                backgroundColor: theme.palette.primary.main,
                 color: '#fff',
               }}
             >
-              Créer un bon plan
+              Créer une astuce
             </Button>
           </Link>
         </div>

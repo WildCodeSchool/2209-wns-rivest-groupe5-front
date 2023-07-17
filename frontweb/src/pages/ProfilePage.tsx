@@ -121,7 +121,7 @@ const ProfilePage = () => {
     activitiesLoading ||
     isFollowingLoading
   ) {
-    return <div>Is loading...</div>
+    return <div>En cours de chargement...</div>
   }
 
   if (
@@ -161,13 +161,14 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth={false}>
         <Paper
           sx={{
             p: 2,
             display: 'flex',
             alignItems: 'center',
             gap: 2,
+            marginBottom: 4,
           }}
         >
           <UserAvatar user={data.getUserById} />
@@ -184,16 +185,16 @@ const ProfilePage = () => {
             </Button>
           )}
         </Paper>
-      </Container>
 
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8} lg={9}>
             <Paper
               sx={{
-                p: 2,
+                p: 6,
                 display: 'flex',
                 flexDirection: 'column',
+                height: '100%',
+                justifyContent: 'center',
               }}
             >
               <div>
@@ -236,7 +237,7 @@ const ProfilePage = () => {
                 flexDirection: 'column',
               }}
             >
-              <Typography>
+              <Typography variant="h3">
                 5 dernières activités de{' '}
                 {formatFirstLetterUppercase(data?.getUserById?.firstname)}
               </Typography>
