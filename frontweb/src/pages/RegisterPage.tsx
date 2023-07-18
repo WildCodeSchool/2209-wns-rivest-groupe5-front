@@ -24,6 +24,7 @@ import BasicModal from '../components/common/Modal'
 import { uploadPictureToCloudinary } from '../utils/upLoadPictureToCloudinary'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { CREATE_USER } from '../graphql/mutations/users/createUser'
+import { textList } from '../textList'
 import GoBackButton from '../components/GoBackButton'
 
 const RegisterPage = () => {
@@ -90,23 +91,45 @@ const RegisterPage = () => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const { password, passwordconfirm } = userData
+    const { firstname, lastname, email, password, passwordconfirm } = userData
     // check if all required fields are provided
     if (
-      userData.email === '' ||
-      userData.firstname === '' ||
-      userData.lastname === '' ||
-      userData.password === '' ||
-      userData.passwordconfirm === ''
+      email === '' ||
+      firstname === '' ||
+      lastname === '' ||
+      password === '' ||
+      passwordconfirm === ''
     ) {
       setPasswordsMatching(false)
-      setErrorMsg('Please fill in all required fields !')
+      setErrorMsg(textList.missingRequiredInputs)
       setOpenError(true)
       return
     }
+
+    // check if email is valid pattern
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (email) {
+      if (!emailRegex.test(email)) {
+        setErrorMsg(textList.invalidEmail)
+        setOpenError(true)
+        return
+      }
+    }
+
+    // check if password matches complexity requirement
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    if (password) {
+      if (!passwordRegex.test(password)) {
+        setErrorMsg(textList.invalidPassword)
+        setOpenError(true)
+        return
+      }
+    }
+
     // check if password and passwordconfirm match
     if (password !== passwordconfirm) {
-      setErrorMsg('Passwords do not match !')
+      setErrorMsg(textList.passwordMismatch)
       setOpenError(true)
       return
     }
@@ -118,7 +141,7 @@ const RegisterPage = () => {
         imageToUpload
       )
       // if image upload to cloudinary is successful
-      if (!respFromImageService.includes('Failed to upload picture')) {
+      if (!respFromImageService.includes(textList.imageUploadFailure)) {
         // create user with avatar
         triggerCreateUser(respFromImageService)
       } else {
@@ -146,7 +169,7 @@ const RegisterPage = () => {
         iconType="success"
       />
       <BasicModal
-        text="Compte déjà existant avec cette email. Merci de vous connecter"
+        text={textList.existingEmailAccount}
         buttonText="Se Connecter"
         openModal={openExistingUserModal}
         handleClose={() => {
@@ -158,7 +181,7 @@ const RegisterPage = () => {
         iconType="error"
       />
       <BasicModal
-        text="Echec de l'inscription, veuillez réessayer"
+        text={textList.registrationFailure}
         buttonText="S'inscrire"
         openModal={openFailureModal}
         handleClose={() => {
@@ -191,7 +214,7 @@ const RegisterPage = () => {
             }}
           >
             <Typography component="h1" variant="h5" sx={{ mb: 1 }}>
-              Inscription
+              {textList.register}
             </Typography>
             <Collapse in={openError}>
               <Alert
@@ -223,7 +246,7 @@ const RegisterPage = () => {
                   required
                   fullWidth
                   id="firstname"
-                  label="Prénom"
+                  label={textList.firstname}
                   name="firstname"
                   autoComplete="firstname"
                   onChange={handleChange}
@@ -234,7 +257,7 @@ const RegisterPage = () => {
                   required
                   fullWidth
                   id="lastname"
-                  label="Nom"
+                  label={textList.lastname}
                   name="lastname"
                   autoComplete="lastname"
                   onChange={handleChange}
@@ -247,7 +270,7 @@ const RegisterPage = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email"
+                label={textList.email}
                 name="email"
                 autoComplete="email"
                 onChange={handleChange}
@@ -259,7 +282,7 @@ const RegisterPage = () => {
                 fullWidth
                 name="password"
                 id="password"
-                label="Mot de passe"
+                label={textList.password}
                 variant="outlined"
                 type={showPassword ? 'text' : 'password'}
                 value={userData.password}
@@ -284,7 +307,7 @@ const RegisterPage = () => {
                 fullWidth
                 name="passwordconfirm"
                 id="passwordconfirm"
-                label="Confirmation du mot de passe"
+                label={textList.passwordConfirm}
                 variant="outlined"
                 type={showPasswordConfirm ? 'text' : 'password'}
                 value={userData.passwordconfirm}
@@ -321,7 +344,7 @@ const RegisterPage = () => {
                   startIcon={<AccountCircleIcon />}
                   sx={{ mt: '10px' }}
                 >
-                  Choisir une photo
+                  {textList.choosePicture}
                   <input
                     type="file"
                     hidden
@@ -345,7 +368,7 @@ const RegisterPage = () => {
                 sx={{ mt: 2, mb: 2 }}
                 id="submit-button"
               >
-                S'inscrire
+                {textList.submitRegister}
               </LoadingButton>
               <Link
                 onClick={() => navigate('/login')}
