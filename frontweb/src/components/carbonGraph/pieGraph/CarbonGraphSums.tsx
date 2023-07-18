@@ -11,6 +11,7 @@ import {
 import { Doughnut } from 'react-chartjs-2'
 import { pieChartOptions } from './pieChartOptions'
 import styles from './PieChart.module.css'
+import { CircularProgress } from '@mui/material'
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +25,7 @@ ChartJS.register(
 
 const CarbonGraphSums = ({ data }: { data: any }) => {
   if (!data) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   return (

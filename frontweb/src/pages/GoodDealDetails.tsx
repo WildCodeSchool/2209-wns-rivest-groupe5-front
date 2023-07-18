@@ -7,6 +7,7 @@ import {
   Snackbar,
   Alert,
   Divider,
+  CircularProgress,
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
@@ -93,7 +94,11 @@ const GoodDealDetails = () => {
     return <div>Error</div>
   }
 
-  if (loading || voteLoading || loadingGetVote) {
+  if (loading) {
+    return <CircularProgress />
+  }
+
+  if (voteLoading || loadingGetVote) {
     return (
       <Container>
         <Box

@@ -1,6 +1,13 @@
 import { DocumentNode, useQuery } from '@apollo/client'
 import Card from '@mui/material/Card'
-import { Box, Button, CardContent, Container, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  CardContent,
+  CircularProgress,
+  Container,
+  Typography,
+} from '@mui/material'
 import { format } from 'date-fns'
 import { Link } from 'react-router-dom'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
@@ -47,7 +54,7 @@ const GoodDealsFeed = ({
   }, [])
 
   if (loading) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   if (error) {

@@ -16,6 +16,7 @@ import CarbonGraphSums from '../../components/carbonGraph/pieGraph/CarbonGraphSu
 import { GET_TOTAL_SUMS_ACTIVITIES_GRAPH_DATA } from '../../graphql/queries/carbonGraphs/getTotalSumsActivitiesGraphData'
 import ActivityListPage from '../ActivityListPage'
 import { theme } from '../../assets/Styles/theme'
+import { CircularProgress } from '@mui/material'
 
 const Dashboard = () => {
   type barChartTimeUnitType = 'week' | 'month' | 'year'
@@ -96,7 +97,7 @@ const Dashboard = () => {
   ])
 
   if (sumLoading) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   if (sumError) {

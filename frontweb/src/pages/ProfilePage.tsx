@@ -15,7 +15,7 @@ import { GET_IS_USER_FOLLOWING } from '../graphql/queries/users/getIsUserFollowi
 import { useRecoilValue } from 'recoil'
 import { currentUserState } from '../atom/currentUserAtom'
 import { TOGGLE_FOLLOW_USER } from '../graphql/mutations/follows/toggleFollow'
-import { Button, Typography } from '@mui/material'
+import { Button, CircularProgress, Typography } from '@mui/material'
 import UserAvatar from '../components/users/UserAvatar'
 import ActivityList from '../components/ActivityList'
 import { IActivity } from '../interfaces/IActivity'
@@ -121,7 +121,7 @@ const ProfilePage = () => {
     activitiesLoading ||
     isFollowingLoading
   ) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   if (

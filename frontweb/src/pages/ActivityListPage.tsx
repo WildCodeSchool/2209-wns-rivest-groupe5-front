@@ -5,7 +5,7 @@ import { GET_MY_ACTIVITIES } from '../graphql/queries/activities/getMyActivities
 import ActivityList from '../components/ActivityList'
 import { IPaginatedResult } from '../interfaces/paginatedResult'
 import PaginationButtons from '../components/PaginationButtons'
-import { Container, Typography } from '@mui/material'
+import { CircularProgress, Container, Typography } from '@mui/material'
 import { theme } from '../assets/Styles/theme'
 
 const ActivityListPage = ({ isAllList }: { isAllList: boolean }) => {
@@ -52,7 +52,7 @@ const ActivityListPage = ({ isAllList }: { isAllList: boolean }) => {
   }
 
   if (loading) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   if (error) {

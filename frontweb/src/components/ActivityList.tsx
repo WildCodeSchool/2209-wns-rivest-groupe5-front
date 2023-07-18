@@ -1,5 +1,5 @@
 import { IActivity } from '../interfaces/IActivity'
-import { Box, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import { theme } from '../assets/Styles/theme'
 import Activity from './activities/Activity'
@@ -18,7 +18,7 @@ const ActivityList = ({
   isAllList: boolean
 }) => {
   if (!data) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   const activitiesData = Array.isArray(data) ? data : data.data

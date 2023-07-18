@@ -4,6 +4,7 @@ import HomePageGoodDealCard from './HomePageGoodDealCard'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_GOOD_DEALS } from '../graphql/queries/goodDeals/getAllGoodDeals'
 import { Key } from 'react'
+import { CircularProgress } from '@mui/material'
 
 const responsive = {
   desktop: {
@@ -32,7 +33,7 @@ export default function CarouselContent() {
   })
 
   if (loading) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   if (error) {
