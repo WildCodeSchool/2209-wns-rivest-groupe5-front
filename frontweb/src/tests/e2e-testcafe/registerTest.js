@@ -47,7 +47,7 @@ test('Submitting invalid password', async t => {
 test('Submitting existing email', async t => {
   const randomString = generateRandomString()
   const validEmail = generateRandomEmail()
-  const validPassword = "Azerty123!"
+  const validPassword = "Azerty123*"
   // register not existing email account 
   await registerPage.fillAllForm(randomString, randomString, validEmail, validPassword, validPassword)
   await registerPage.submitForm()
