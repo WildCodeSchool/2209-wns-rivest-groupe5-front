@@ -1,5 +1,7 @@
 FROM node:lts-alpine
 
+# copy all files
+
 RUN apk --no-cache add curl
 RUN mkdir /app
 WORKDIR /app
