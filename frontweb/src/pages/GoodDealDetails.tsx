@@ -160,7 +160,7 @@ const GoodDealDetails = () => {
   const src =
     goodDeal.image !== ''
       ? goodDeal.image
-      : require('../assets/default-placeholder.png')
+      : require('../assets/carbon-neutral.jpg')
 
   const avatar =
     goodDeal.user.avatar !== ''

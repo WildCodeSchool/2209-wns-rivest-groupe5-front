@@ -127,8 +127,8 @@ const CreateActivityPage = () => {
       style={{ backgroundColor: '#fff', borderRadius: 10 }}
       padding="20px"
     >
-      <Typography component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-        PARTAGEZ VOS ACTIVITES!
+      <Typography component="h1" variant="h2" sx={{ textAlign: 'center' }}>
+        Créer une activité
       </Typography>
       <Collapse in={openError} sx={{ mb: 5 }}>
         <Alert

@@ -76,9 +76,7 @@ export default function CarouselContent() {
         )
         .map((e: any, index: Key | null | undefined) => {
           const src =
-            e.image !== ''
-              ? e.image
-              : require('../assets/default-placeholder.png')
+            e.image !== '' ? e.image : require('../assets/carbon-neutral.jpg')
           return (
             <HomePageGoodDealCard
               title={e.goodDealTitle}

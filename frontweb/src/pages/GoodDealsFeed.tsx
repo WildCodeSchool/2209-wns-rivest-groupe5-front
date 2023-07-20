@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material'
 import { format } from 'date-fns'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { IGoodDeal } from '../interfaces/goodDeals/IGoodDeal'
 import { theme } from '../assets/Styles/theme'
@@ -24,7 +24,9 @@ const GoodDealsFeed = ({
   isCurrentUser: boolean
   getGoodDealsQuery: DocumentNode
 }) => {
-  const url = require('../assets/default-placeholder.png')
+  const url = require('../assets/carbon-neutral.jpg')
+
+  const navigate = useNavigate()
 
   const [goodDeals, setGoodDeals] = useState<IPaginatedResult<IGoodDeal>>({
     data: [],
@@ -104,11 +106,15 @@ const GoodDealsFeed = ({
                       '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
                     borderRadius: 10,
                     padding: 20,
+                    cursor: 'pointer',
                   }}
                   sx={{
                     mt: 5,
                   }}
                   key={e.goodDealId}
+                  onClick={() => {
+                    navigate(`/good-deal/${e.goodDealId}`)
+                  }}
                 >
                   <CardContent
                     className="wc-flex"
@@ -151,7 +157,7 @@ const GoodDealsFeed = ({
                       <p>
                         {e.goodDealDescription
                           ? e.goodDealDescription.substr(0, 80) + '...'
-                          : 'Cliquez sur le bouton ci-dessous pour en savoir plus'}
+                          : 'Cliquez sur la carte pour en savoir plus'}
                       </p>
                     </div>
                   </CardContent>

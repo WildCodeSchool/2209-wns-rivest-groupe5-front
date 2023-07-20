@@ -38,6 +38,14 @@ export const mainListItems = (
     >
       Activités
     </ListItemText>
+    <Link to="/followed-activities-feed" style={linkStyle}>
+      <ListItemButton>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Activités Abonnements" />
+      </ListItemButton>
+    </Link>
     <Link to="/my-activities" style={linkStyle}>
       <ListItemButton>
         <ListItemIcon>
@@ -56,14 +64,6 @@ export const mainListItems = (
       </ListItemButton>
     </Link>
 
-    <Link to="/followed-activities-feed" style={linkStyle}>
-      <ListItemButton>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Activités Abonnements" />
-      </ListItemButton>
-    </Link>
     <Divider />
     <ListItemText
       primaryTypographyProps={{

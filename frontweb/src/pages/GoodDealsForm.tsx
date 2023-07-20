@@ -108,10 +108,10 @@ const GoodDealsForm = () => {
       >
         <Typography
           component="h1"
-          variant="h5"
+          variant="h2"
           sx={{ mb: 1, textAlign: 'center' }}
         >
-          PARTAGER VOS ASTUCES!
+          Partager une astuce
         </Typography>
         <Collapse in={openError} sx={{ mb: 5 }}>
           <Alert
