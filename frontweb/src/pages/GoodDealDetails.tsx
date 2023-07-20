@@ -157,11 +157,6 @@ const GoodDealDetails = () => {
     )
   }
 
-  const src =
-    goodDeal.image !== ''
-      ? goodDeal.image
-      : require('../assets/carbon-neutral.jpg')
-
   const avatar =
     goodDeal.user.avatar !== ''
       ? goodDeal.user.avatar
@@ -286,11 +281,21 @@ const GoodDealDetails = () => {
               marginX: 'auto',
             }}
           >
-            <img
-              src={src}
-              alt="illustration de l'astuce"
-              className="image-good-deal"
-            />
+            <Box
+              sx={{
+                maxWidth: '300px',
+              }}
+            >
+              <img
+                src={
+                  goodDeal.image
+                    ? goodDeal.image
+                    : require('../assets/carbon-neutral.jpg')
+                }
+                alt="illustration de l'astuce"
+                className="image-good-deal"
+              />
+            </Box>
           </Box>
           <Box sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
             <Stack
