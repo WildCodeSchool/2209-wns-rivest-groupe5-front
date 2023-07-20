@@ -14,7 +14,7 @@ import { RecoilRoot } from 'recoil'
 const getServerUri = () => {
   if (process.env.REACT_APP_DB === 'dbdev') {
     return 'http://localhost:5050/'
-  } else if (process.env.REACT_APP_DB === 'dbprod' || process.env.NODE_ENV === 'dbstaging') {
+  } else if (process.env.REACT_APP_DB === 'dbprod' || process.env.REACT_APP_DB === 'dbstaging') {
     return '/graphql'
   } else {
     return 'http://back:5050/'
