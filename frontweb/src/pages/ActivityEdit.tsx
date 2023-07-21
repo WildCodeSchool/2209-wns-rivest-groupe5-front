@@ -142,12 +142,13 @@ const ActivityEdit = () => {
       component="form"
       onSubmit={handleSubmit}
       noValidate
-      sx={{ mt: 2, width: '50%', margin: '0 auto' }}
+      sx={{ mt: 2, width: '50%', margin: '0 auto', backgroundColor: '#fff' }}
+      padding="20px"
     >
       <GoBackButton redirectUrl={`/my-activities`} />
       <Typography
         component="h1"
-        variant="h5"
+        variant="h2"
         sx={{ mt: 10, mb: 1, textAlign: 'center' }}
       >
         Mettre à jour l'activité

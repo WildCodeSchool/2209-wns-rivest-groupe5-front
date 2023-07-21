@@ -179,7 +179,7 @@ const GoodDealEdit = () => {
       >
         <Typography
           component="h1"
-          variant="h5"
+          variant="h2"
           sx={{ mb: 1, textAlign: 'center' }}
         >
           Mettre à jour l'astuce
