@@ -1,6 +1,13 @@
 import { useQuery } from '@apollo/client'
 import { IActivity } from '../interfaces/IActivity'
-import { Box, Card, CardContent, Container, Typography } from '@mui/material'
+import {
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Typography,
+} from '@mui/material'
 import { format } from 'date-fns'
 import { GET_FOLLOWED_USERS_ACTIVITIES } from '../graphql/queries/activities/getFollowedUsersActivitiesQuery'
 import { Link } from 'react-router-dom'
@@ -37,7 +44,7 @@ const FollowedUsersActivitiesList = () => {
   }, [])
 
   if (loading) {
-    return <div>Is loading...</div>
+    return <CircularProgress />
   }
 
   if (error) {
@@ -53,7 +60,7 @@ const FollowedUsersActivitiesList = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <Container maxWidth={false}>
       <Typography variant="h2">
         Activités de ma communauté{' '}
         <span

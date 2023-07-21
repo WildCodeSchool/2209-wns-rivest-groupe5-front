@@ -7,8 +7,8 @@ import {
   Snackbar,
   Alert,
   Divider,
+  CircularProgress,
 } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
@@ -28,11 +28,12 @@ import { GET_GOOD_DEAL_VOTE_BY_USER } from '../graphql/queries/goodDealVote/getG
 import { useRecoilValue } from 'recoil'
 import { currentUserState } from '../atom/currentUserAtom'
 import { IGoodDeal } from '../interfaces/goodDeals/IGoodDeal'
-import { theme } from '../assets/Styles/theme'
 import DELETE_GOOD_DEAL from '../graphql/mutations/goodDeals/deleteGoodDeal'
 import BasicModal from '../components/common/Modal'
 import { formatFullname } from '../utils/formatName'
 import GoBackButton from '../components/GoBackButton'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 const GoodDealDetails = () => {
   const currentUser = useRecoilValue(currentUserState)
@@ -93,7 +94,11 @@ const GoodDealDetails = () => {
     return <div>Error</div>
   }
 
-  if (loading || voteLoading || loadingGetVote) {
+  if (loading) {
+    return <CircularProgress />
+  }
+
+  if (voteLoading || loadingGetVote) {
     return (
       <Container>
         <Box
@@ -102,7 +107,6 @@ const GoodDealDetails = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             mb: 3,
-            background: 'white',
             borderRadius: 3,
             p: 3,
           }}
@@ -121,15 +125,14 @@ const GoodDealDetails = () => {
                 navigate(redirectUrl)
               }}
             >
-              Tous les bons plans
+              Toutes les astuces
             </Typography>
-            <Typography color="text.primary">Bon plan {goodDealId}</Typography>
+            <Typography color="text.primary">Astuce {goodDealId}</Typography>
           </Breadcrumbs>
         </Box>
 
         <Box
           sx={{
-            background: 'white',
             borderRadius: 3,
             display: 'flex',
             flexDirection: 'row',
@@ -153,11 +156,6 @@ const GoodDealDetails = () => {
       </Container>
     )
   }
-
-  const src =
-    goodDeal.image !== ''
-      ? goodDeal.image
-      : require('../assets/default-placeholder.png')
 
   const avatar =
     goodDeal.user.avatar !== ''
@@ -212,14 +210,14 @@ const GoodDealDetails = () => {
   return (
     <>
       <BasicModal
-        text="Etes-vous sûr(e) de vouloir supprimer ce bon plan ? Il ne pourra plus être récupéré."
+        text="Etes-vous sûr(e) de vouloir supprimer cette astuce ? Elle ne pourra plus être récupérée."
         buttonText="Confirmer suppression"
         openModal={openDeleteGoodDealConfirmModal}
         handleClose={() => {
           setOpenDeleteGoodDealConfirmModal(false)
         }}
         action={async () => await handleDeleteMyGoodDeal()}
-        iconType="info"
+        iconType="error"
       />
       <Snackbar
         open={isSnackBarOpen}
@@ -232,17 +230,16 @@ const GoodDealDetails = () => {
           severity={deleteError ? 'error' : 'success'}
         >
           {deleteError
-            ? 'La suppression du bon plan a échouée'
-            : 'Votre bon plan a été supprimé'}
+            ? "La suppression de l'astuce a échouée"
+            : 'Votre astuce a été supprimée'}
         </Alert>
       </Snackbar>
-      <Container>
+      <Container maxWidth={false}>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             mb: 3,
-            background: 'white',
           }}
         >
           <GoBackButton redirectUrl={redirectUrl} />
@@ -259,52 +256,12 @@ const GoodDealDetails = () => {
                 navigate(redirectUrl)
               }}
             >
-              Tous les bons plans
+              Toutes les astuces
             </Typography>
             <Typography color="text.primary">Good deal {goodDealId}</Typography>
           </Breadcrumbs>
         </Box>
-        {goodDeal.user.userId === currentUser?.userId && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              marginBottom: 30,
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Button
-                size="small"
-                style={{
-                  backgroundColor: theme.palette.secondary.main,
-                  color: '#fff',
-                  width: 'max-content',
-                  marginRight: '20px',
-                }}
-                onClick={() => navigate(`/edit-good-deal/${goodDealId}`)}
-              >
-                Editer ce bon plan
-              </Button>
-              <Button
-                size="small"
-                style={{
-                  backgroundColor: theme.palette.warning.main,
-                  color: '#fff',
-                  width: 'max-content',
-                }}
-                onClick={() => setOpenDeleteGoodDealConfirmModal(true)}
-              >
-                Supprimer ce bon plan
-              </Button>
-            </Box>
-          </div>
-        )}
+
         <Box
           width="70%"
           sx={{
@@ -324,11 +281,21 @@ const GoodDealDetails = () => {
               marginX: 'auto',
             }}
           >
-            <img
-              src={src}
-              alt="illustration du bon plan"
-              className="image-good-deal"
-            />
+            <Box
+              sx={{
+                maxWidth: '300px',
+              }}
+            >
+              <img
+                src={
+                  goodDeal.image
+                    ? goodDeal.image
+                    : require('../assets/carbon-neutral.jpg')
+                }
+                alt="illustration de l'astuce"
+                className="image-good-deal"
+              />
+            </Box>
           </Box>
           <Box sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
             <Stack
@@ -404,6 +371,51 @@ const GoodDealDetails = () => {
                 </Typography>
               </Box>
             </Box>
+            {goodDeal.user.userId === currentUser?.userId && (
+              <div
+                style={{
+                  display: 'flex',
+                  gap: 20,
+                  justifyContent: 'center',
+                  padding: 20,
+                }}
+              >
+                <Button
+                  onClick={() => navigate(`/edit-good-deal/${goodDealId}`)}
+                  title="Editer"
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'end',
+                    cursor: 'pointer',
+                    alignItems: 'center',
+                    color: 'black',
+                    backgroundColor: 'white',
+                    fontSize: 12,
+                    border: '1px solid #ddd',
+                  }}
+                  endIcon={<EditIcon color="secondary" fontSize="medium" />}
+                >
+                  Editer
+                </Button>
+                <Button
+                  onClick={() => setOpenDeleteGoodDealConfirmModal(true)}
+                  title="Supprimer"
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'end',
+                    cursor: 'pointer',
+                    alignItems: 'center',
+                    color: 'black',
+                    backgroundColor: 'white',
+                    fontSize: 12,
+                    border: '1px solid #ddd',
+                  }}
+                >
+                  Supprimer
+                  <DeleteIcon color="error" fontSize="medium" />
+                </Button>
+              </div>
+            )}
           </Box>
 
           <Box
@@ -411,9 +423,9 @@ const GoodDealDetails = () => {
               background: 'white',
               minHeight: '200px',
               p: 3,
+              borderRadius: 10,
             }}
           >
-            <Divider />
             <Box sx={{ py: 3 }}>
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Description :

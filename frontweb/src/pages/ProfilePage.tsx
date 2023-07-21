@@ -15,7 +15,7 @@ import { GET_IS_USER_FOLLOWING } from '../graphql/queries/users/getIsUserFollowi
 import { useRecoilValue } from 'recoil'
 import { currentUserState } from '../atom/currentUserAtom'
 import { TOGGLE_FOLLOW_USER } from '../graphql/mutations/follows/toggleFollow'
-import { Button, Typography } from '@mui/material'
+import { Button, CircularProgress, Typography } from '@mui/material'
 import UserAvatar from '../components/users/UserAvatar'
 import ActivityList from '../components/ActivityList'
 import { IActivity } from '../interfaces/IActivity'
@@ -121,7 +121,7 @@ const ProfilePage = () => {
     activitiesLoading ||
     isFollowingLoading
   ) {
-    return <div>Is loading...</div>
+    return <CircularProgress />
   }
 
   if (
@@ -161,13 +161,14 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth={false}>
         <Paper
           sx={{
             p: 2,
             display: 'flex',
             alignItems: 'center',
             gap: 2,
+            marginBottom: 4,
           }}
         >
           <UserAvatar user={data.getUserById} />
@@ -184,16 +185,16 @@ const ProfilePage = () => {
             </Button>
           )}
         </Paper>
-      </Container>
 
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8} lg={9}>
             <Paper
               sx={{
-                p: 2,
+                p: 6,
                 display: 'flex',
                 flexDirection: 'column',
+                height: '100%',
+                justifyContent: 'center',
               }}
             >
               <div>
@@ -236,7 +237,7 @@ const ProfilePage = () => {
                 flexDirection: 'column',
               }}
             >
-              <Typography>
+              <Typography variant="h3">
                 5 dernières activités de{' '}
                 {formatFirstLetterUppercase(data?.getUserById?.firstname)}
               </Typography>

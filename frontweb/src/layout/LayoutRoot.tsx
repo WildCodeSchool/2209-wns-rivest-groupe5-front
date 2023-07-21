@@ -14,7 +14,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import AccountMenu from '../components/MenuAccount'
 import { mainListItems } from '../components/ListItems'
-import { theme } from '../assets/Styles/theme'
 import SearchUsersBar from '../components/users/SearchUsersBar'
 
 const drawerWidth = 240
@@ -83,7 +82,7 @@ export default function PersistentDrawerLeft() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} style={{ backgroundColor: 'white' }}>
         <Toolbar>
           <IconButton
             color="inherit"

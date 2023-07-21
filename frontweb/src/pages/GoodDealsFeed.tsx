@@ -1,8 +1,15 @@
 import { DocumentNode, useQuery } from '@apollo/client'
 import Card from '@mui/material/Card'
-import { Box, Button, CardContent, Container, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  CardContent,
+  CircularProgress,
+  Container,
+  Typography,
+} from '@mui/material'
 import { format } from 'date-fns'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { IGoodDeal } from '../interfaces/goodDeals/IGoodDeal'
 import { theme } from '../assets/Styles/theme'
@@ -17,7 +24,9 @@ const GoodDealsFeed = ({
   isCurrentUser: boolean
   getGoodDealsQuery: DocumentNode
 }) => {
-  const url = require('../assets/default-placeholder.png')
+  const url = require('../assets/carbon-neutral.jpg')
+
+  const navigate = useNavigate()
 
   const [goodDeals, setGoodDeals] = useState<IPaginatedResult<IGoodDeal>>({
     data: [],
@@ -47,7 +56,7 @@ const GoodDealsFeed = ({
   }, [])
 
   if (loading) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   if (error) {
@@ -69,14 +78,16 @@ const GoodDealsFeed = ({
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h3">
-        {isCurrentUser ? 'Mes bons plans' : 'Tous les bons plans'}
-      </Typography>{' '}
-      <Typography>
-        {goodDeals?.total} résultat{goodDeals?.total > 1 && 's'} - page{' '}
-        {goodDeals?.currentPage} / {goodDeals?.totalPages}
+    <Container maxWidth={false}>
+      <Typography variant="h2">
+        {isCurrentUser ? 'Mes astuces' : 'Toutes les astuces'}
       </Typography>
+      {goodDeals?.totalPages > 0 && (
+        <Typography>
+          {goodDeals?.total} résultat{goodDeals?.total > 1 && 's'} - page{' '}
+          {goodDeals?.currentPage} / {goodDeals?.totalPages}
+        </Typography>
+      )}
       {goodDeals?.data?.length > 0 ? (
         <>
           {goodDeals?.data
@@ -89,13 +100,21 @@ const GoodDealsFeed = ({
               return (
                 <Card
                   style={{
-                    backgroundColor: '#e7e7e7',
-                    marginBottom: 25,
+                    marginTop: 15,
+                    marginBottom: 40,
+                    boxShadow:
+                      '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
+                    borderRadius: 10,
+                    padding: 20,
+                    cursor: 'pointer',
                   }}
                   sx={{
                     mt: 5,
                   }}
                   key={e.goodDealId}
+                  onClick={() => {
+                    navigate(`/good-deal/${e.goodDealId}`)
+                  }}
                 >
                   <CardContent
                     className="wc-flex"
@@ -138,7 +157,7 @@ const GoodDealsFeed = ({
                       <p>
                         {e.goodDealDescription
                           ? e.goodDealDescription.substr(0, 80) + '...'
-                          : 'Cliquez sur le bouton ci-dessous pour en savoir plus'}
+                          : 'Cliquez sur la carte pour en savoir plus'}
                       </p>
                     </div>
                   </CardContent>
@@ -165,17 +184,17 @@ const GoodDealsFeed = ({
       ) : (
         <div>
           <Typography style={{ marginTop: 8, marginBottom: 16 }}>
-            Il semblerait qu'il n'existe aucun bon plan pour le moment !
-            Pourquoi ne commenceriez vous pas par en créer un ?
+            Il semblerait qu'il n'existe aucune astuce pour le moment ! Pourquoi
+            ne commenceriez vous pas par en créer une ?
           </Typography>
           <Link to="/good-deals-form">
             <Button
               style={{
-                backgroundColor: theme.palette.warning.main,
+                backgroundColor: theme.palette.primary.main,
                 color: '#fff',
               }}
             >
-              Créer un bon plan
+              Créer une astuce
             </Button>
           </Link>
         </div>

@@ -123,14 +123,12 @@ const CreateActivityPage = () => {
       component="form"
       onSubmit={handleSubmit}
       noValidate
-      sx={{ mt: 2, width: '50%', margin: '0 auto' }}
+      sx={{ width: '50%', margin: '0 auto' }}
+      style={{ backgroundColor: '#fff', borderRadius: 10 }}
+      padding="20px"
     >
-      <Typography
-        component="h1"
-        variant="h5"
-        sx={{ mt: 10, mb: 1, textAlign: 'center' }}
-      >
-        PARTAGEZ VOS ACTIVITES!
+      <Typography component="h1" variant="h2" sx={{ textAlign: 'center' }}>
+        Créer une activité
       </Typography>
       <Collapse in={openError} sx={{ mb: 5 }}>
         <Alert

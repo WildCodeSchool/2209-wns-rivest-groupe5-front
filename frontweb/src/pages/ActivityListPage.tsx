@@ -5,7 +5,8 @@ import { GET_MY_ACTIVITIES } from '../graphql/queries/activities/getMyActivities
 import ActivityList from '../components/ActivityList'
 import { IPaginatedResult } from '../interfaces/paginatedResult'
 import PaginationButtons from '../components/PaginationButtons'
-import { Container, Typography } from '@mui/material'
+import { CircularProgress, Container, Typography } from '@mui/material'
+import { theme } from '../assets/Styles/theme'
 
 const ActivityListPage = ({ isAllList }: { isAllList: boolean }) => {
   const [allActivities, setAllActivities] = useState<
@@ -51,7 +52,7 @@ const ActivityListPage = ({ isAllList }: { isAllList: boolean }) => {
   }
 
   if (loading) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   if (error) {
@@ -59,14 +60,21 @@ const ActivityListPage = ({ isAllList }: { isAllList: boolean }) => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      {isAllList ? (
+    <Container
+      maxWidth={false}
+      style={{
+        backgroundColor: theme.palette.background.default,
+      }}
+    >
+      {isAllList && allActivities.totalPages > 0 ? (
         <Typography>
           {allActivities?.total} résultat{allActivities?.total > 1 && 's'} -
           page {allActivities?.currentPage} / {allActivities?.totalPages}
         </Typography>
       ) : (
-        <Typography>Vos {pageSize} dernières activités</Typography>
+        <Typography marginTop={5} variant="h3">
+          Mes {pageSize} dernières activités
+        </Typography>
       )}
       <ActivityList
         data={allActivities}

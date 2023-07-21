@@ -10,6 +10,7 @@ import {
 import { Bar } from 'react-chartjs-2'
 import { IChartDataState } from '../../../interfaces/graphs/IChartDataState'
 import { stackedBarsChartOptions } from './stackedBarsChartOptions'
+import { CircularProgress } from '@mui/material'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -18,7 +19,7 @@ const CarbonGraphEmissions = ({
 }: {
   barChartData: IChartDataState
 }) => {
-  if (barChartData.loading) return <div>Chargement...</div>
+  if (barChartData.loading) return <CircularProgress />
 
   if (barChartData.error)
     return <div>Une erreur est survenue :{barChartData.error.message}</div>

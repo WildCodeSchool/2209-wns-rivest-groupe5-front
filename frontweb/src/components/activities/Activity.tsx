@@ -1,4 +1,10 @@
-import { Button, Card, CardContent, Typography } from '@mui/material'
+import {
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Typography,
+} from '@mui/material'
 import BasicModal from '../common/Modal'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from 'react'
@@ -33,7 +39,7 @@ const Activity = ({
   }
 
   if (loading) {
-    return <div>En cours de chargement...</div>
+    return <CircularProgress />
   }
 
   if (error) {
@@ -44,10 +50,11 @@ const Activity = ({
     <Card
       style={{
         marginTop: 15,
-        marginBottom: 15,
+        marginBottom: 40,
         boxShadow:
           '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
         borderRadius: 10,
+        padding: 20,
       }}
       key={activity.activityId}
     >

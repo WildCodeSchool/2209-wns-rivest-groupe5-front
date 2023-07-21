@@ -4,6 +4,7 @@ import HomePageGoodDealCard from './HomePageGoodDealCard'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_GOOD_DEALS } from '../graphql/queries/goodDeals/getAllGoodDeals'
 import { Key } from 'react'
+import { CircularProgress } from '@mui/material'
 
 const responsive = {
   desktop: {
@@ -32,7 +33,7 @@ export default function CarouselContent() {
   })
 
   if (loading) {
-    return <div>Loading...</div>
+    return <CircularProgress />
   }
 
   if (error) {
@@ -75,9 +76,7 @@ export default function CarouselContent() {
         )
         .map((e: any, index: Key | null | undefined) => {
           const src =
-            e.image !== ''
-              ? e.image
-              : require('../assets/default-placeholder.png')
+            e.image !== '' ? e.image : require('../assets/carbon-neutral.jpg')
           return (
             <HomePageGoodDealCard
               title={e.goodDealTitle}

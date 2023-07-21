@@ -126,13 +126,13 @@ const MyAccount = () => {
     <>
       <BasicModal
         text="Etes-vous sûr(e) de vouloir supprimer votre compte ? Toutes vos données liées seront également supprimées."
-        buttonText="Supprimer mon compte"
+        buttonText="Supprimer définitivement"
         openModal={openDeleteAccountConfirmModal}
         handleClose={() => {
           setOpenDeleteAccountConfirmModal(false)
         }}
         action={async () => await handleDeleteMyAccount()}
-        iconType="info"
+        iconType="error"
       />
       <Snackbar
         open={isSnackBarUpdateOpen}
@@ -186,7 +186,7 @@ const MyAccount = () => {
           mb: 4,
         }}
       >
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           Mes infos personnelles
         </Typography>
         <Typography variant="body1" gutterBottom>
@@ -305,7 +305,7 @@ const MyAccount = () => {
           mt: 4,
         }}
       >
-        <Typography variant="h3" color={theme.palette.warning.main}>
+        <Typography variant="h3" color={theme.palette.error.main}>
           Suppression du compte
         </Typography>
         <Typography>
@@ -315,13 +315,13 @@ const MyAccount = () => {
         <ul>
           <li>Vos données d'utilisateur</li>
           <li>Vos activités</li>
-          <li>Vos bons plans et vos votes</li>
+          <li>Vos astuces et vos votes</li>
           <li>Vos abonnements</li>
         </ul>
 
         <Button
           style={{
-            backgroundColor: theme.palette.warning.main,
+            backgroundColor: theme.palette.error.main,
             color: '#fff',
           }}
           size="small"
