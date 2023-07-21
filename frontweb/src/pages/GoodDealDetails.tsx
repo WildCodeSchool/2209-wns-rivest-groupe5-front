@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import { GET_GOOD_DEAL } from '../graphql/queries/goodDeals/getGoodDeal'
-import { useMutation, useQuery } from '@apollo/client'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import Skeleton from '@mui/material/Skeleton'
 import { differenceInDays, differenceInHours } from 'date-fns'
 import Checkbox from '@mui/material/Checkbox'
@@ -58,19 +58,24 @@ const GoodDealDetails = () => {
     }
   )
 
-  const {
-    data: dataGetVote,
-    error: errorGetVote,
-    loading: loadingGetVote,
-  } = useQuery(GET_GOOD_DEAL_VOTE_BY_USER, {
+  const [
+    getGoodDealsVotes,
+    { loading: loadingGetVote, data: dataGetVote, error: errorGetVote },
+  ] = useLazyQuery(GET_GOOD_DEAL_VOTE_BY_USER, {
     fetchPolicy: 'no-cache',
     variables: {
       id: parseInt(goodDealId!),
     },
   })
+  useEffect(() => {
+    if (currentUser) {
+      getGoodDealsVotes()
+    }
+  }, [currentUser, getGoodDealsVotes])
 
   const vote = dataGetVote?.getGoodDealVoteByUser
   useEffect(() => {
+    if (!currentUser) return
     if (vote && vote.length !== 0) {
       if (vote[0].value === 1) {
         setLiked(true)
@@ -297,31 +302,34 @@ const GoodDealDetails = () => {
               />
             </Box>
           </Box>
+
           <Box sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-            <Stack
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                p: 3,
-              }}
-            >
-              <Checkbox
-                icon={<ThumbDownOffAltIcon />}
-                checkedIcon={<ThumbDownAltIcon />}
-                color="error"
-                onClick={handleDislike}
-                checked={disliked}
-              />
-              {goodDeal.total}
-              <Checkbox
-                icon={<ThumbUpOffAltIcon />}
-                checkedIcon={<ThumbUpAltIcon />}
-                onClick={handleLike}
-                checked={liked}
-              />
-            </Stack>
+            {currentUser && (
+              <Stack
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  p: 3,
+                }}
+              >
+                <Checkbox
+                  icon={<ThumbDownOffAltIcon />}
+                  checkedIcon={<ThumbDownAltIcon />}
+                  color="error"
+                  onClick={handleDislike}
+                  checked={disliked}
+                />
+                {goodDeal.total}
+                <Checkbox
+                  icon={<ThumbUpOffAltIcon />}
+                  checkedIcon={<ThumbUpAltIcon />}
+                  onClick={handleLike}
+                  checked={liked}
+                />
+              </Stack>
+            )}
             <Box>
               <Typography
                 variant="h1"
@@ -371,7 +379,7 @@ const GoodDealDetails = () => {
                 </Typography>
               </Box>
             </Box>
-            {goodDeal.user.userId === currentUser?.userId && (
+            {currentUser && goodDeal.user.userId === currentUser?.userId && (
               <div
                 style={{
                   display: 'flex',

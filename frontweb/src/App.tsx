@@ -54,6 +54,10 @@ function App() {
       }
     />
   )
+
+  const goodDealsDetailsRoute = (
+    <Route path="/good-deal/:goodDealId" element={<GoodDealDetails />} />
+  )
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -80,11 +84,13 @@ function App() {
               <Route element={<LayoutRoot />}>
                 <Route path="/profile/:userId" element={<ProfilePage />} />
                 {goodDealsFeedRoute}
+                {goodDealsDetailsRoute}
               </Route>
             ) : (
               <Route element={<PublicLayout />}>
                 <Route path="/profile/:userId" element={<ProfilePage />} />
                 {goodDealsFeedRoute}
+                {goodDealsDetailsRoute}
               </Route>
             )}
 
@@ -117,13 +123,9 @@ function App() {
                     />
                   }
                 />
-
                 <Route path="/my-account" element={<MyAccount />} />
                 <Route path="/profile/:userId" element={<ProfilePage />} />
-                <Route
-                  path="/good-deal/:goodDealId"
-                  element={<GoodDealDetails />}
-                />
+
                 <Route
                   path="/my-activities"
                   element={<ActivityListPage isAllList={true} />}
